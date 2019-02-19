@@ -1,0 +1,511 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Definitions &mdash; Arena 0.1.17.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Arena 0.1.17.0 documentation" href="index.html"/>
+        <link rel="up" title="Arena C" href="c_arena.html"/>
+        <link rel="next" title="ImageFactory" href="c_arena_imagefactory.html"/>
+        <link rel="prev" title="Arena C" href="c_arena.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home">
+          
+
+          <!--
+            
+            <img src="_static/lucid-white.png" class="logo" />
+          -->
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.17
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contact_us.html">Contact Us</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started_sdk_datasheet.html">Arena SDK Datasheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arena_sdk_windows.html">Arena SDK for Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arena_sdk_linux.html">Arena SDK for Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="sdk.html">Code Reference &amp; Samples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="gentl.html">GenTL Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cpp.html">Arena C++</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="c.html">Arena C</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="c_arena.html">Arena C</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Definitions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_arena_imagefactory.html">ImageFactory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_arena_device.html">Device</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_arena_chunkdata.html">ChunkData</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_arena_image.html">Image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_arena_arena.html">Arena</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_arena_nodemap.html">NodeMap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_arena_buffer.html">Buffer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_arena_featurestream.html">FeatureStream</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_arena_callback.html">Callback</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_arena_system.html">System</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_arena_nodes.html">Nodes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="c_save.html">Save C</a></li>
+<li class="toctree-l3"><a class="reference internal" href="c_examples.html">C Code Samples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Arena</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="sdk.html">Code Reference &amp; Samples</a> &raquo;</li>
+        
+          <li><a href="c.html">Arena C</a> &raquo;</li>
+        
+          <li><a href="c_arena.html">Arena C</a> &raquo;</li>
+        
+      <li>Definitions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="definitions">
+<h1>Definitions<a class="headerlink" href="#definitions" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="acsystem">
+<h2>acSystem<a class="headerlink" href="#acsystem" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “acSystem” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="acdevice">
+<h2>acDevice<a class="headerlink" href="#acdevice" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “acDevice” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="acbuffer">
+<h2>acBuffer<a class="headerlink" href="#acbuffer" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “acBuffer” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="acfeaturestream">
+<h2>acFeatureStream<a class="headerlink" href="#acfeaturestream" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “acFeatureStream” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="acnodemap">
+<h2>acNodeMap<a class="headerlink" href="#acnodemap" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “acNodeMap” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="acnode">
+<h2>acNode<a class="headerlink" href="#acnode" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “acNode” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="accallback">
+<h2>acCallback<a class="headerlink" href="#accallback" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “acCallback” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="accallbackfunction">
+<h2>acCallbackFunction<a class="headerlink" href="#accallbackfunction" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “acCallbackFunction” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-error-list">
+<h2>AC_ERROR_LIST<a class="headerlink" href="#ac-error-list" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenenum: Cannot find enum “AC_ERROR_LIST” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-error">
+<h2>AC_ERROR<a class="headerlink" href="#ac-error" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “AC_ERROR” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-access-mode-list">
+<h2>AC_ACCESS_MODE_LIST<a class="headerlink" href="#ac-access-mode-list" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenenum: Cannot find enum “AC_ACCESS_MODE_LIST” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-access-mode">
+<h2>AC_ACCESS_MODE<a class="headerlink" href="#ac-access-mode" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “AC_ACCESS_MODE” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-caching-mode-list">
+<h2>AC_CACHING_MODE_LIST<a class="headerlink" href="#ac-caching-mode-list" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenenum: Cannot find enum “AC_CACHING_MODE_LIST” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-caching-mode">
+<h2>AC_CACHING_MODE<a class="headerlink" href="#ac-caching-mode" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “AC_CACHING_MODE” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-namespace-list">
+<h2>AC_NAMESPACE_LIST<a class="headerlink" href="#ac-namespace-list" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenenum: Cannot find enum “AC_NAMESPACE_LIST” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-namespace">
+<h2>AC_NAMESPACE<a class="headerlink" href="#ac-namespace" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “AC_NAMESPACE” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-interface-type-list">
+<h2>AC_INTERFACE_TYPE_LIST<a class="headerlink" href="#ac-interface-type-list" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenenum: Cannot find enum “AC_INTERFACE_TYPE_LIST” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-interface-type">
+<h2>AC_INTERFACE_TYPE<a class="headerlink" href="#ac-interface-type" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “AC_INTERFACE_TYPE” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-visibility-list">
+<h2>AC_VISIBILITY_LIST<a class="headerlink" href="#ac-visibility-list" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenenum: Cannot find enum “AC_VISIBILITY_LIST” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-visibility">
+<h2>AC_VISIBILITY<a class="headerlink" href="#ac-visibility" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “AC_VISIBILITY” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-inc-mode-list">
+<h2>AC_INC_MODE_LIST<a class="headerlink" href="#ac-inc-mode-list" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenenum: Cannot find enum “AC_INC_MODE_LIST” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-inc-mode">
+<h2>AC_INC_MODE<a class="headerlink" href="#ac-inc-mode" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “AC_INC_MODE” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-representation-list">
+<h2>AC_REPRESENTATION_LIST<a class="headerlink" href="#ac-representation-list" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenenum: Cannot find enum “AC_REPRESENTATION_LIST” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-representation">
+<h2>AC_REPRESENTATION<a class="headerlink" href="#ac-representation" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “AC_REPRESENTATION” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-display-notation-list">
+<h2>AC_DISPLAY_NOTATION_LIST<a class="headerlink" href="#ac-display-notation-list" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenenum: Cannot find enum “AC_DISPLAY_NOTATION_LIST” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-display-notation">
+<h2>AC_DISPLAY_NOTATION<a class="headerlink" href="#ac-display-notation" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “AC_DISPLAY_NOTATION” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-payload-type-list">
+<h2>AC_PAYLOAD_TYPE_LIST<a class="headerlink" href="#ac-payload-type-list" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenenum: Cannot find enum “AC_PAYLOAD_TYPE_LIST” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-payload-type">
+<h2>AC_PAYLOAD_TYPE<a class="headerlink" href="#ac-payload-type" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “AC_PAYLOAD_TYPE” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-pixel-endianness-list">
+<h2>AC_PIXEL_ENDIANNESS_LIST<a class="headerlink" href="#ac-pixel-endianness-list" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenenum: Cannot find enum “AC_PIXEL_ENDIANNESS_LIST” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-pixel-endianness">
+<h2>AC_PIXEL_ENDIANNESS<a class="headerlink" href="#ac-pixel-endianness" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “AC_PIXEL_ENDIANNESS” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-bayer-algorithm-list">
+<h2>AC_BAYER_ALGORITHM_LIST<a class="headerlink" href="#ac-bayer-algorithm-list" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenenum: Cannot find enum “AC_BAYER_ALGORITHM_LIST” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-bayer-algorithm">
+<h2>AC_BAYER_ALGORITHM<a class="headerlink" href="#ac-bayer-algorithm" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “AC_BAYER_ALGORITHM” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-start-stream-flags-list">
+<h2>AC_START_STREAM_FLAGS_LIST<a class="headerlink" href="#ac-start-stream-flags-list" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygenenum: Cannot find enum “AC_START_STREAM_FLAGS_LIST” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+<div class="section" id="ac-start-stream-flags">
+<h2>AC_START_STREAM_FLAGS<a class="headerlink" href="#ac-start-stream-flags" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">doxygentypedef: Cannot find typedef “AC_START_STREAM_FLAGS” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="c_arena_imagefactory.html" class="btn btn-neutral float-right" title="ImageFactory" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="c_arena.html" class="btn btn-neutral" title="Arena C" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Lucid Vision Labs, Inc.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.17.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
