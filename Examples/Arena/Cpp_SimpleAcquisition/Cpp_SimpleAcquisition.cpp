@@ -86,6 +86,9 @@ void EnumerateDeviceAndAcquireImage()
 
 int main()
 {
+	// flag to track when an exception has been thrown
+	bool exceptionThrown = false;
+
 	std::cout << "Cpp_SimpleAcquisition\n";
 
 	try
@@ -98,20 +101,24 @@ int main()
 	catch (GenICam::GenericException& ge)
 	{
 		std::cout << "\nGenICam exception thrown: " << ge.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (std::exception& ex)
 	{
 		std::cout << "Standard exception thrown: " << ex.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (...)
 	{
 		std::cout << "Unexpected exception thrown\n";
-		return -1;
+		exceptionThrown = true;
 	}
 
-	std::cout << "Press any key to complete\n";
+	std::cout << "Press enter to complete\n";
 	std::getchar();
-	return 0;
+
+	if (exceptionThrown)
+		return -1;
+	else
+		return 0;
 }

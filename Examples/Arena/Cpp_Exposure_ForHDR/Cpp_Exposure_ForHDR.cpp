@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/
+ ***************************************************************************************/      
 
 #include "stdafx.h"
 #include "ArenaApi.h"
@@ -28,7 +28,7 @@
 //    to grab images appropriate for high dynamic range (or HDR) imaging. HDR
 //    images can be created by combining a number of images acquired at various
 //    exposure times. This example demonstrates grabbing three images for this
-//    purpose, without the actual creation of an HDR image.
+//    purpose, without the actual creation of an HDR image. 
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
@@ -41,7 +41,7 @@
 
 // Image timeout
 //    Timeout for grabbing images (in milliseconds). Have the timeout at least
-//    a bit larger than the highest exposure time to avoid timing out.
+//    a bit larger than the highest exposure time to avoid timing out. 
 #define TIMEOUT INFINITE
 
 // number of images to grab
@@ -239,6 +239,9 @@ void AcquireHDRImages(Arena::IDevice* pDevice)
 
 int main()
 {
+	// flag to track when an exception has been thrown
+	bool exceptionThrown = false;
+
 	std::cout << "Cpp_Exposure_ForHDR\n";
 
 	try
@@ -249,7 +252,8 @@ int main()
 		std::vector<Arena::DeviceInfo> deviceInfos = pSystem->GetDevices();
 		if (deviceInfos.size() == 0)
 		{
-			std::cout << "\nNo camera(s) connected\n";
+			std::cout << "\nNo camera connected\nPress enter to complete\n";
+			std::getchar();
 			return 0;
 		}
 		Arena::IDevice* pDevice = pSystem->CreateDevice(deviceInfos[0]);
@@ -266,20 +270,24 @@ int main()
 	catch (GenICam::GenericException& ge)
 	{
 		std::cout << "\nGenICam exception thrown: " << ge.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (std::exception& ex)
 	{
 		std::cout << "\nStandard exception thrown: " << ex.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (...)
 	{
 		std::cout << "\nUnexpected exception thrown\n";
-		return -1;
+		exceptionThrown = true;
 	}
 
-	std::cout << "Press any key to complete\n";
+	std::cout << "Press enter to complete\n";
 	std::getchar();
-	return 0;
+
+	if (exceptionThrown)
+		return -1;
+	else
+		return 0;
 }

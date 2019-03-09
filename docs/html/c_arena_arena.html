@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Arena &mdash; Arena 0.1.17.0 documentation</title>
+  <title>Arena &mdash; Arena 0.1.22.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.17.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.22.0 documentation" href="index.html"/>
         <link rel="up" title="Arena C" href="c_arena.html"/>
         <link rel="next" title="NodeMap" href="c_arena_nodemap.html"/>
         <link rel="prev" title="Image" href="c_arena_image.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.17
+                0.1.22
               </div>
             
           
@@ -198,45 +198,213 @@
 </div>
 <div class="section" id="acopensystem">
 <h2>acOpenSystem<a class="headerlink" href="#acopensystem" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acOpenSystem” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_8h_1ac21f697ea2517e0b72d1e21f8a78736c"></span><code class="descname">AC_ERROR AC_API acOpenSystem(acSystem * phSystem)</code></dt>
+<dd><p><strong> acOpenSystem </strong> initializes the Arena SDK and retrieves the system object (acSystem). The system must be closed or memory will leak.<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">phSystem</span></code>: <ul>
+<li>Type: acSystem*</li>
+<li>[Out] parameter</li>
+<li>The system object</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p><dl class="docutils">
+<dt><strong>See</strong></dt>
+<dd><ul class="simple">
+<li>acSystem </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="acclosesystem">
 <h2>acCloseSystem<a class="headerlink" href="#acclosesystem" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acCloseSystem” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_8h_1a7ca52adf335dd32054de52dd8895bcbf"></span><code class="descname">AC_ERROR AC_API acCloseSystem(acSystem hSystem)</code></dt>
+<dd><p><strong> acCloseSystem </strong> cleans up the system (acSystem) and deinitializes the Arena SDK, deallocating all memory.<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">hSystem</span></code>: <ul>
+<li>Type: acSystem</li>
+<li>[In] parameter</li>
+<li>The system object</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p><dl class="docutils">
+<dt><strong>See</strong></dt>
+<dd><ul class="simple">
+<li>acSystem </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="acgetbitsperpixel">
 <h2>acGetBitsPerPixel<a class="headerlink" href="#acgetbitsperpixel" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acGetBitsPerPixel” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_8h_1a7ee47c9cb59f1613c5850536cde36a16"></span><code class="descname">AC_ERROR AC_API acGetBitsPerPixel(uint64_t pixelFormat, size_t * pBitsPerPixel)</code></dt>
+<dd><p><strong> acGetBitsPerPixel </strong> get the number of bits per pixel of the image from the integer value of the pixel format (PfncFormat). <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pixelFormat</span></code>: <ul>
+<li>Type: uint64_t</li>
+<li>[In] parameter</li>
+<li>Pixel format to get bits per pixel</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">pBitsPerPixel</span></code>: <ul>
+<li>Type: size_t*</li>
+<li>[Out] parameter</li>
+<li>Number of bits per pixel for given pixel format</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="accalculatecrc32">
 <h2>acCalculateCRC32<a class="headerlink" href="#accalculatecrc32" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acCalculateCRC32” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_8h_1af81827b23fb21d1cc6681c2df8d1c43c"></span><code class="descname">AC_ERROR AC_API acCalculateCRC32(const uint8_t * pData, size_t pDataLen, size_t * pCRCValue)</code></dt>
+<dd><p><strong> acCalculatedCRC32 </strong> calculates a CRC value (cyclical redundancy check) on a dataset. This is used to check whether the dataset has been sent in its entirety. <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pData</span></code>: <ul>
+<li>Type: const uint8_t*</li>
+<li>[In] parameter</li>
+<li>A pointer to the data to use to calculate the CRC</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">pDataLen</span></code>: <ul>
+<li>Type: size_t</li>
+<li>[In] parameter</li>
+<li>The size of the data</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">pCRCValue</span></code>: <ul>
+<li>Type: size_t*</li>
+<li>[Out] parameter</li>
+<li>The calculated CRC value</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="acisreadable">
 <h2>acIsReadable<a class="headerlink" href="#acisreadable" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acIsReadable” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_8h_1a13e4a3b96f7863854275de019099ab7b"></span><code class="descname">AC_ERROR AC_API acIsReadable(acNode hNode, bool8_t * pIsReadable)</code></dt>
+<dd><p><strong> acIsReadable </strong> checks whether a node is readable. <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">hNode</span></code>: <ul>
+<li>Type: acNode</li>
+<li>[In] parameter</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">pIsReadable</span></code>: <ul>
+<li>Type: bool8_t*</li>
+<li>[Out] parameter</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="aciswritable">
 <h2>acIsWritable<a class="headerlink" href="#aciswritable" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acIsWritable” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_8h_1a8132af9d0c022554906a857b99778bea"></span><code class="descname">AC_ERROR AC_API acIsWritable(acNode hNode, bool8_t * pIsWritable)</code></dt>
+<dd><p><strong> acIsWritable </strong> checks whether a node is writable. <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">hNode</span></code>: <ul>
+<li>Type: acNode</li>
+<li>[In] parameter</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">pIsWritable</span></code>: <ul>
+<li>Type: bool8_t*</li>
+<li>[Out] parameter</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -283,7 +451,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.17.0',
+            VERSION:'0.1.22.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

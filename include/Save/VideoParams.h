@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 #pragma once
 
 namespace Save
@@ -23,7 +23,6 @@ namespace Save
 	class SAVE_API VideoParams
 	{
 	public:
-
 		/**
 		 * @fn VideoParams()
 		 *
@@ -34,7 +33,7 @@ namespace Save
 		VideoParams();
 
 		/**
-		 * @fn VideoParams(size_t width, size_t height, size_t framesPerSecondDividend, size_t framesPerSecondDivisor = 1)
+		 * @fn VideoParams(size_t width, size_t height, size_t framesPerSecondDivisor, size_t framesPerSecondDividend = 1)
 		 *
 		 * @param width
 		 *  - Type: size_t 
@@ -44,18 +43,18 @@ namespace Save
 		 *  - Type: size_t 
 		 *  - Video height
 		 *
-		 * @param framesPerSecondDividend
-		 *  - Type: size_t 
-		 *  - Frames per second dividend
-		 *
 		 * @param framesPerSecondDivisor
 		 *  - Type: size_t 
-		 *  - Default: 1 
 		 *  - Frames per second divisor
+		 *
+		 * @param framesPerSecondDividend
+		 *  - Type: size_t 
+		 *  - Default: 1 
+		 *  - Frames per second dividend
 		 *
 		 * A constructor.
 		 */
-		VideoParams(size_t width, size_t height, size_t framesPerSecondDividend, size_t framesPerSecondDivisor = 1);
+		VideoParams(size_t width, size_t height, size_t framesPerSecondDivisor, size_t framesPerSecondDividend = 1);
 
 		/**
 		 * @fn VideoParams(const VideoParams& params)
@@ -119,15 +118,15 @@ namespace Save
 		virtual void SetHeight(size_t height);
 
 		/**
-		 * @fn virtual void SetFPS(size_t dividend, size_t divisor = 1)
-		 *
-		 * @param dividend
-		 *  - Type: size_t 
-		 *  - Frames per second dividend
+		 * @fn virtual void SetFPS(size_t divisor, size_t dividend = 1)
 		 *
 		 * @param divisor
 		 *  - Type: size_t 
 		 *  - Frames per second divisor
+		 *
+		 * @param dividend
+		 *  - Type: size_t 
+		 *  - Frames per second dividend
 		 *
 		 * @return 
 		 *  - none
@@ -137,7 +136,7 @@ namespace Save
 		 * @warning 
 		 *  - divisor cannot be 0
 		 */
-		virtual void SetFPS(size_t dividend, size_t divisor = 1);
+		virtual void SetFPS(size_t divisor, size_t dividend = 1);
 
 		/**
 		 * @fn virtual size_t GetWidth() const
@@ -173,6 +172,17 @@ namespace Save
 		virtual double GetFPS() const;
 
 		/**
+		* @fn virtual size_t GetFPSDivisor() const
+		*
+		* @return
+		*  - Type: size_t
+		*  - Frames per second divisor
+		*
+		* <B> size_t </B> retrieves the frames per second divisor as an integer.
+		*/
+		virtual size_t GetFPSDivisor() const;
+
+		/**
 		 * @fn virtual size_t GetFPSDividend() const
 		 *
 		 * @return 
@@ -184,19 +194,7 @@ namespace Save
 		 */
 		virtual size_t GetFPSDividend() const;
 
-		/**
-		 * @fn virtual size_t GetFPSDivisor() const
-		 *
-		 * @return 
-		 *  - Type: size_t 
-		 *  - Frames per second divisor
-		 *
-		 * <B> size_t </B> retrieves the frames per second divisor as an integer.
-		 */
-		virtual size_t GetFPSDivisor() const;
-
 	private:
-
 		void* m_pInternal;
 	};
 }

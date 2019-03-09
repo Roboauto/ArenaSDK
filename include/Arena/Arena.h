@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 #pragma once
 
 #include "ISystem.h"
@@ -55,6 +55,9 @@ namespace Arena
 	 *  - Type: ISystem* 
 	 *  - The system object
 	 *
+	 * @return 
+	 *  - none
+	 *
 	 * <B> CloseSystem </B> cleans up the system (Arena::ISystem) and
 	 * deinitializes the Arena SDK, deallocating all memory.
 	 *
@@ -66,4 +69,21 @@ namespace Arena
 	 *  - Arena::ISystem
 	 */
 	ARENA_API void CloseSystem(ISystem* pSystem);
+
+	/**
+	 * uint64_t CalculateMaximumNumberOfBuffers(size_t payloadSize)
+	 *
+	 * @param payloadSize
+	 *	- Type: size_t
+	 *	- Unit: bytes
+	 *	- Payload size of an image
+	 *
+	 * @return
+	 *	- Type: uint64_t
+	 *	- Maximum number of buffers
+	 *
+	 * <B> CalculateMaximumNumberOfBuffers </B> calculates the number of 
+	 * buffers it would take to fill 80% of the available memory. 
+	 */
+	ARENA_API size_t CalculateMaximumNumberOfBuffers(size_t payloadSize);
 }

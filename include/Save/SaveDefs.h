@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 #pragma once
 
 namespace Save
@@ -21,21 +21,62 @@ namespace Save
 	 * The <B> EFileFormat </B> enum represents different file formats used in
 	 * saving and loading images and videos.
 	 */
-	typedef enum _EFileFormat 
-	{
+	typedef enum _EFileFormat {
 		Unknown, /*!< Unknown file format */
-		Raw,     /*!< Raw file format */
-		Jpeg,    /*!< JPEG image file format */
-		Png,     /*!< PNG image file format */
-		Bmp,     /*!< BMP image file format */
-		Tiff,    /*!< TIFF image file format */
-		Avi,     /*!< AVI video file format */
-		Mov,     /*!< MOV video file format */
-		Mp4      /*!< MPEG-4 video file format */
+		Raw, /*!< Raw file format */
+		Jpeg, /*!< JPEG image file format */
+		Png, /*!< PNG image file format */
+		Bmp, /*!< BMP image file format */
+		Tiff, /*!< TIFF image file format */
+		Avi, /*!< AVI video file format */
+		Mov, /*!< MOV video file format */
+		Mp4 /*!< MPEG-4 video file format */
 	} EFileFormat;
 
-	typedef enum PfncFormat_ 
-	{
+	/**
+	 * @typedef ECountScope
+	 *
+	 * The <B> ECountScope </B> enum represents the different count scopes that
+	 * can be used in file name patterns.
+	 */
+	typedef enum _ECountScope {
+		Local, /*!< Local to a specific image writer or video recorder */
+		Path, /*!< Local to the same file name pattern across all image writers and video recorders */
+		Global, /*!< Global across all image writers and video recorders */
+	} ECountScope;
+
+	/**
+	 * @typedef EJpegSubsampling
+	 * 
+	 * The <B> EJpegSubsampling </B> enum represents different types of subsampling
+	 * available to saving JPEG images.
+	 */
+	typedef enum _EJpegSubsampling {
+		NoSubsampling, /*!< Save with no chroma subsampling (4:4:4) */
+		Subsampling411, /*!< Save with high 4x1 chroma subsampling (4:1:1) */
+		Subsampling420, /*!< Save with medium 2x2 chroma subsampling (4:2:0) */
+		Subsampling422, /*!< Save with low 2x1 chroma subsampling (4:2:2) */
+	} EJpegSubsampling;
+
+	/**
+	 * @typedef ETiffCompression
+	 *
+	 * The <B> ETiffCompression </B> enum represents different available compression
+	 * algorithms for saving images as TIFFs.
+	 */
+	typedef enum _ETiffCompression {
+		NoCompression, /*!< Save without any compression */
+		Packbits, /*!< Save using PACKBITS compression */
+		Deflate, /*!< Save using DEFLATE compression (also known as ZLIB compression) */
+		AdobeDeflate, /*!< Save using ADOBE DEFLATE compression */
+		Ccittfax3, /*!< Save using CCITT Group 3 fax encoding */
+		Ccittfax4, /*!< Save using CCITT Group 4 fax encoding */
+		Lzw, /*!< Save using LZW compression */
+		JpegTiff, /*!< Save using JPEG compression (8-bit greyscale and 24-bit only. Default to LZW for other bitdepths) */
+		Logluv /*!< Save using LogLuv compression (only available with RGBF images) � default to LZW compression */
+	} ETiffCompression;
+
+	typedef enum PfncFormat_ {
 		Mono1p = 0x01010037, /* Monochrome 1-bit packed */
 		Mono2p = 0x01020038, /* Monochrome 2-bit packed */
 		Mono4p = 0x01040039, /* Monochrome 4-bit packed */

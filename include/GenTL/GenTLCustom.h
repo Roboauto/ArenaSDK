@@ -31,10 +31,11 @@ namespace GenTL
 		STREAM_INFO_BUFFER_HANDLING_MODE = 1001,		    /* INT64	Buffer Handling Mode. */
 		STREAM_INFO_MISSED_IMAGE_COUNT = 1002,			    /* UINT64	Number of missed images beginning from stream start. */
 		STREAM_INFO_MISSED_PACKET_COUNT = 1003,			    /* UINT64	Number of missed packets beginning from stream start. */
-		STREAM_INFO_TOTAL_MISSED_IMAGE_COUNT = 1004,	    /* UINT64  Number of missed images, not resetting on each stream start. */
-		STREAM_INFO_TOTAL_INCOMPLETE_IMAGE_COUNT = 1005,    /* UINT64  Number of incomplete images, not resetting on each stream start. */
-        STREAM_INFO_PACKET_RESEND_ENABLE = 1006,            /* BOOL    Is packet resend enabled for this stream. */
-        STREAM_INFO_IMAGE_BUFFER_EXPIRY_MS = 1007           /* UINT32  Image buffer will be completed when timeout expires. */
+		STREAM_INFO_TOTAL_MISSED_IMAGE_COUNT = 1004,	    /* UINT64   Number of missed images, not resetting on each stream start. */
+		STREAM_INFO_TOTAL_INCOMPLETE_IMAGE_COUNT = 1005,    /* UINT64   Number of incomplete images, not resetting on each stream start. */
+        STREAM_INFO_PACKET_RESEND_ENABLE = 1006,            /* BOOL     Is packet resend enabled for this stream. */
+        STREAM_INFO_IMAGE_BUFFER_EXPIRY_MS = 1007,          /* UINT32   Image buffer will be completed when timeout expires. */
+        STREAM_INFO_AUTO_PACKET_SIZE_ENABLE = 1008          /* BOOL     Enable/Disable auto packet size negotiation. */
 	};
 
 	/* This enumeration defines commands to retrieve additional information about the interface handle.*/

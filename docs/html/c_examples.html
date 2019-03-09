@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>C Code Samples &mdash; Arena 0.1.17.0 documentation</title>
+  <title>C Code Samples &mdash; Arena 0.1.22.0 documentation</title>
   
 
   
@@ -35,9 +35,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.17.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.22.0 documentation" href="index.html"/>
         <link rel="up" title="Arena C" href="c.html"/>
-        <link rel="next" title="Acquisition, Introduction" href="c_examples_acquisition.html"/>
+        <link rel="next" title="Simple Acquisition, Introduction" href="c_examples_simpleacquisition.html"/>
         <link rel="prev" title="ImageReader" href="c_save_imagereader.html"/> 
 
   
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.17
+                0.1.22
               </div>
             
           
@@ -107,10 +107,18 @@
 <li class="toctree-l3"><a class="reference internal" href="c_arena.html">Arena C</a></li>
 <li class="toctree-l3"><a class="reference internal" href="c_save.html">Save C</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">C Code Samples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_simpleacquisition.html">Simple Acquisition, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_acquisition.html">Acquisition, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_chunkdata.html">Chunk Data, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_chunkdata_crcvalidation.html">Chunk Data, CRC Validation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_enumeration.html">Enumeration, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodemaps.html">Explore, Node Maps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_exposure.html">Exposure, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodes.html">Explore, Nodes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodetypes.html">Explore, Node Types</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_record.html">Record, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_save.html">Save, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_save_filenamepattern.html">Save, File Name Pattern</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_streamables.html">Streamables</a></li>
 </ul>
 </li>
@@ -187,10 +195,18 @@
 <h1>C Code Samples<a class="headerlink" href="#c-code-samples" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="c_examples_simpleacquisition.html">Simple Acquisition, Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="c_examples_acquisition.html">Acquisition, Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c_examples_chunkdata.html">Chunk Data, Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c_examples_chunkdata_crcvalidation.html">Chunk Data, CRC Validation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="c_examples_enumeration.html">Enumeration, Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c_examples_explore_nodemaps.html">Explore, Node Maps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c_examples_exposure.html">Exposure, Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c_examples_explore_nodes.html">Explore, Nodes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c_examples_explore_nodetypes.html">Explore, Node Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="c_examples_record.html">Record, Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="c_examples_save.html">Save, Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c_examples_save_filenamepattern.html">Save, File Name Pattern</a></li>
 <li class="toctree-l1"><a class="reference internal" href="c_examples_streamables.html">Streamables</a></li>
 </ul>
 </div>
@@ -206,7 +222,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="c_examples_acquisition.html" class="btn btn-neutral float-right" title="Acquisition, Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="c_examples_simpleacquisition.html" class="btn btn-neutral float-right" title="Simple Acquisition, Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="c_save_imagereader.html" class="btn btn-neutral" title="ImageReader" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -239,7 +255,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.17.0',
+            VERSION:'0.1.22.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

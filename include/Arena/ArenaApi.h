@@ -29,11 +29,11 @@
 #endif
 #include <GenICam.h>
 #include <GenApi/Types.h>
+#include <GenApi/EnumClasses.h>
 
 #if defined __linux__
 #pragma GCC diagnostic pop
 #endif
-
 
 #include "Arena.h"
 #include "ArenaDefs.h"

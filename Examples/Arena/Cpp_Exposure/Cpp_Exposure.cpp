@@ -36,8 +36,7 @@
 
 // Image timeout
 //    Timeout for grabbing images (in milliseconds). Have the timeout at least
-//    a bit larger than the exposure time to ensure timeout exceptions are
-//    avoided. 
+//    larger than the exposure time to ensure timeout exceptions are avoided. 
 #define TIMEOUT 2000
 
 // number of images to grab
@@ -109,7 +108,7 @@ void ConfigureExposureAndAcquireImages(Arena::IDevice* pDevice)
 		exposureTime = pExposureTime->GetMax();
 	}
 
-	std::cout << TAB1 << "Set exposure time to" << exposureTime << " " << pExposureTime->GetUnit() << "\n";
+	std::cout << TAB1 << "Set exposure time to " << exposureTime << " " << pExposureTime->GetUnit() << "\n";
 
 	pExposureTime->SetValue(exposureTime);
 
@@ -118,7 +117,7 @@ void ConfigureExposureAndAcquireImages(Arena::IDevice* pDevice)
 	//    to avoid receiving an timeout exception. The timeout is in milliseconds
 	//    while the exposure time is in microseconds, so a timeout of 2000 is
 	//    quite a bit longer than an exposure time of 4000. 
-	std::cout << TAB1 << "Get " << NUM_IMAGES << " images\n";
+	std::cout << TAB1 << "Getting " << NUM_IMAGES << " images\n";
 
 	pDevice->StartStream();
 	for (int i = 0; i < NUM_IMAGES; i++)
@@ -141,6 +140,9 @@ void ConfigureExposureAndAcquireImages(Arena::IDevice* pDevice)
 
 int main()
 {
+	// flag to track when an exception has been thrown
+	bool exceptionThrown = false;
+
 	std::cout << "Cpp_Exposure\n";
 
 	try
@@ -151,7 +153,8 @@ int main()
 		std::vector<Arena::DeviceInfo> deviceInfos = pSystem->GetDevices();
 		if (deviceInfos.size() == 0)
 		{
-			std::cout << "\nNo camera(s) connected\n";
+			std::cout << "\nNo camera connected\nPress enter to complete\n";
+			std::getchar();
 			return 0;
 		}
 		Arena::IDevice* pDevice = pSystem->CreateDevice(deviceInfos[0]);
@@ -168,20 +171,24 @@ int main()
 	catch (GenICam::GenericException& ge)
 	{
 		std::cout << "\nGenICam exception thrown: " << ge.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (std::exception& ex)
 	{
 		std::cout << "\nStandard exception thrown: " << ex.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (...)
 	{
 		std::cout << "\nUnexpected exception thrown\n";
-		return -1;
+		exceptionThrown = true;
 	}
 
-	std::cout << "Press any key to complete\n";
+	std::cout << "Press enter to complete\n";
 	std::getchar();
-	return 0;
+
+	if (exceptionThrown)
+		return -1;
+	else
+		return 0;
 }

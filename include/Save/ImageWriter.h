@@ -10,9 +10,10 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 #pragma once
 
+#include "SaveDefs.h"
 #include <cstdint>
 
 namespace Save
@@ -27,7 +28,6 @@ namespace Save
 	class SAVE_API ImageWriter
 	{
 	public:
-
 		/**
 		 * @fn ImageWriter()
 		 *
@@ -87,19 +87,42 @@ namespace Save
 		virtual ~ImageWriter();
 
 		/**
-		 * @fn virtual void SetJpeg(const char* pSetExtension = ".jpg")
+		 * @fn virtual void SetJpeg(const char* pSetExtension = ".jpg", size_t quality = 75, bool progressive = false, EJpegSubsampling subsampling = Sub420, bool optimize = false)
 		 *
 		 * @param pSetExtension
 		 *  - Type: const char* 
 		 *  - Default: ".jpg" 
 		 *  - Extension to use for the files
 		 *
+		 * @param quality
+		 *	- Type: size_t
+		 *	- Default: 75
+		 *	- Range: 1-100
+		 *	- Image quality
+		 *
+		 * @param progressive
+		 *	- Type: bool
+		 *	- Default: false
+		 *	- If true, saves progressive
+		 *	- Otherwise, saves baseline
+		 *
+		 * @param subsampling
+		 *	- Type: EJpegSubsampling
+		 *	- Default: Sub420
+		 *	- The chroma subsampling to apply
+		 *
+		 * @param optimize
+		 *	- Type: bool
+		 *	- Default: false
+		 *	- If true, calculates optimal Huffman coding tables
+		 *	- Otherwise, does not
+		 *
 		 * @return 
 		 *  - none
 		 *
 		 * <B> SetJpeg </B> sets the output file format of the image writer to JPEG.
 		 */
-		virtual void SetJpeg(const char* pSetExtension = ".jpg");
+		virtual void SetJpeg(const char* pSetExtension = ".jpg", size_t quality = 75, bool progressive = false, EJpegSubsampling subsampling = Subsampling420, bool optimize = false);
 
 		/**
 		 * @fn virtual void SetBmp(const char* pSetExtension = ".bmp")
@@ -139,27 +162,50 @@ namespace Save
 		 *  - Default: ".tiff" 
 		 *  - Extension to use for the files
 		 *
+		 * @param compression
+		 *	- Type: ETiffCompression
+		 *	- Default: NoCompression
+		 *	- Compression algorithm
+		 *
+		 * @param cmykTags
+		 *	- Type: bool
+		 *	- Default: false
+		 *	- If true, stores tags for separated CMYK
+		 *	- Otherwise, does not
+		 *
 		 * @return 
 		 *  - none
 		 *
 		 * <B> SetTiff </B> sets the output file format of the image writer to TIFF.
 		 */
-		virtual void SetTiff(const char* pSetExtension = ".tiff");
+		virtual void SetTiff(const char* pSetExtension = ".tiff", ETiffCompression compression = NoCompression, bool cmykTags = false);
 
 		/**
-		 * @fn virtual void SetPng(const char* pSetExtension = ".png")
+		 * @fn virtual void SetPng(const char* pSetExtension = ".png", size_t compression = 0, bool interlaced = false) 
 		 *
 		 * @param pSetExtension
 		 *  - Type: const char* 
 		 *  - Default: ".png" 
 		 *  - Extension to use for the files
 		 *
+		 * @param compression
+		 *	- Type: size_t
+		 *	- Default: 0
+		 *	- Range: 0-9
+		 *	- Compression level
+		 *
+		 * @param interlaced
+		 *	- Type: bool
+		 *	- Default: false
+		 *	- If true, uses Adam7 interlacing
+		 *	- Otherwise, does not
+		 *
 		 * @return 
 		 *  - none
 		 *
 		 * <B> SetPng </B> sets the output file format of the image writer to PNG.
 		 */
-		virtual void SetPng(const char* pSetExtension = ".png");
+		virtual void SetPng(const char* pSetExtension = ".png", size_t compression = 0, bool interlaced = false);
 
 		/**
 		 * @fn virtual void SetExtension(const char* pExt)
@@ -205,18 +251,40 @@ namespace Save
 		virtual void SetFileNamePattern(const char* pFileNamePattern);
 
 		/**
-		 * @fn virtual void SetCount(unsigned long long count)
+		 * @fn virtual void UpdateTag(const char* pTag, const char* pValue)
 		 *
-		 * @param count
-		 *  - Type: unsigned long long 
-		 *  - Count value to set
+		 * @param pTag
+		 *  - Type: const char* 
+		 *  - Tag to replace
+		 *
+		 * @param pValue
+		 *  - Type: const char* 
+		 *  - Value to set
 		 *
 		 * @return 
 		 *  - none
 		 *
-		 * <B> SetCount </B> manually sets the value of an internal counter. The
-		 * counter increments with each saved image. The value of the counter can be
-		 * used by adding '<count>' to the file name pattern.
+		 * <B> UpdateTag </B> updates the value to replace a given tag when an image
+		 * is saved.
+		 */
+		virtual void UpdateTag(const char* pTag, const char* pValue);
+
+		/**
+		 * @fn virtual void SetCount(unsigned long long count, ECountScope scope = Local)
+		 *
+		 * @param count
+		 *  - Type: unsigned long long 
+		 *  - Value to set
+		 *
+		 * @param scope
+		 *  - Type: ECountScope 
+		 *  - Default: Local 
+		 *  - Counter to set
+		 *
+		 * @return 
+		 *  - none
+		 *
+		 * <B> SetCount </B> sets the value of one of the available counters.
 		 *
 		 * \code{.cpp}
 		 * 	// adding the counter value to saved images
@@ -231,7 +299,7 @@ namespace Save
 		 * 	}
 		 * \endcode
 		 */
-		virtual void SetCount(unsigned long long count);
+		virtual void SetCount(unsigned long long count, ECountScope scope = Local);
 
 		/**
 		 * @fn virtual void SetTimestamp(unsigned long long timestamp)
@@ -259,6 +327,9 @@ namespace Save
 		 * 		}
 		 * 	}
 		 * /endcode
+		 *
+		 * @deprecated 
+		 *  - Deprecated in favor of the more generic tag and value components
 		 */
 		virtual void SetTimestamp(unsigned long long timestamp);
 
@@ -347,16 +418,21 @@ namespace Save
 		virtual std::string PeekFileName(bool withPath = false, bool withExt = true);
 
 		/**
-		 * @fn virtual unsigned long long PeekCount()
+		 * @fn virtual unsigned long long PeekCount(ECountScope scope = Local)
+		 *
+		 * @param scope
+		 *  - Type: ECountScope 
+		 *  - Default: Local 
+		 *  - Counter to peek
 		 *
 		 * @return 
 		 *  - Type: unsigned long long 
 		 *  - Current count value
 		 *
-		 * <B> PeekCount </B> provides a look at the current value of the internal
-		 * counter.
+		 * <B> PeekCount </B> retrieves a peek at the value of one of the available
+		 * counters.
 		 */
-		virtual unsigned long long PeekCount();
+		virtual unsigned long long PeekCount(ECountScope scope = Local);
 
 		/**
 		 * @fn virtual std::string GetLastFileName(bool withPath = false, bool withExt = true)
@@ -405,35 +481,33 @@ namespace Save
 		virtual void Save(const uint8_t* pData, bool createDirectories = true);
 
 		/**
-		 * @fn virtual ImageWriter& operator<<(const char* pFileNamePattern)
+		 * @fn virtual ImageWriter& operator<<(const char* pInput)
 		 *
-		 * @param pFileNamePattern
+		 * @param pInput
 		 *  - Type: const char* 
-		 *  - File name pattern
+		 *  - Accepts both tags and values
 		 *
 		 * @return 
 		 *  - Type: Save::ImageWriter& 
 		 *  - The object returns itself in order to cascade
 		 *
-		 * The cascading I/O operator sets the file name pattern
-		 * (Save::ImageWriter::SetFileNamePattern) when a character string is passed
-		 * in.
+		 * The cascading I/O operator allows for the setting of tags and their values
+		 * on the fly.
 		 *
 		 * \code{.cpp}
-		 * 	// Using cascading I/O operator to save a set of images
-		 * 	// Using cascading I/O operator to update file names
+		 * 	// Using the cascading I/O operator (<<) to replace tags with values
+		 * 	// Using the cascading I/O operator (<<) to save an image
 		 * 	{
-		 * 		Save::ImageWriter writer(params);
-		 * 		for (size_t i = 0; i < numImages; i++)
-		 * 		{
-		 * 			const char* pFileName;
-		 * 			// update file name
-		 * 			writer << pFileName << pImageData;
-		 * 		}
+		 * 		Save::ImageWriter writer(params, "path/img-<model>-<serial>.raw");
+		 * 		
+		 * 		// update file name and save
+		 * 		writer << "<model>" << deviceModelName
+		 * 		<< "<serial>" << deviceSerialNumber
+		 * 		<< pImageData;
 		 * 	}
 		 * \endcode
 		 */
-		virtual ImageWriter& operator<<(const char* pFileNamePattern);
+		virtual ImageWriter& operator<<(const char* pInput);
 
 		/**
 		 * @fn virtual ImageWriter& operator<<(unsigned long long timestamp)
@@ -462,6 +536,9 @@ namespace Save
 		 * 		}
 		 * 	}
 		 * \endcode
+		 *
+		 * @deprecated 
+		 *  - Deprecated in favor of the more generic tag and value components
 		 */
 		virtual ImageWriter& operator<<(unsigned long long timestamp);
 
@@ -502,7 +579,6 @@ namespace Save
 		virtual ImageWriter& operator<<(ImageParams params);
 
 	private:
-
 		void* m_pInternal;
 	};
 }

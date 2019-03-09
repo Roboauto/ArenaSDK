@@ -15,14 +15,14 @@
 #include "stdafx.h"
 #include "GenTL.h"
 
-#ifdef  __linux__
+#ifdef __linux__
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 #endif
 
 #include "GenICam.h"
 
-#ifdef  __linux__
+#ifdef __linux__
 #pragma GCC diagnostic pop
 #endif
 
@@ -35,7 +35,7 @@
 // Trigger: Introduction
 //    This example introduces basic trigger configuration and use. In order to
 //    configure trigger, enable trigger mode and set the source and selector.
-//    In order to use it, trigger and retrieve an image. 
+//    In order to use it, trigger and retrieve an image.
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
@@ -59,14 +59,14 @@ void ConfigureTriggerAndAcquireImage(Arena::IDevice* pDevice)
 {
 	// get node values that will be changed in order to return their values
 	// at the end of the example
-	GenICam::gcstring triggerModeInitial = Arena::GetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "AcquisitionMode");
+	GenICam::gcstring triggerModeInitial = Arena::GetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "TriggerMode");
 	GenICam::gcstring triggerSourceInitial = Arena::GetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "TriggerSource");
 	GenICam::gcstring triggerSelectorInitial = Arena::GetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "TriggerSelector");
 
 	// Set trigger mode
 	//    Enable trigger mode before setting the source and selector and before
 	//    starting the stream. Trigger mode cannot be turned on and off while the
-	//    device is streaming. 
+	//    device is streaming.
 	std::cout << TAB1 << "Enable trigger mode\n";
 
 	Arena::SetNodeValue<GenICam::gcstring>(
@@ -77,7 +77,7 @@ void ConfigureTriggerAndAcquireImage(Arena::IDevice* pDevice)
 	// Set trigger source
 	//    Set the trigger source to software in order to trigger images without
 	//    the use of any additional hardware. Lines of the GPIO can also be used
-	//    to trigger. 
+	//    to trigger.
 	std::cout << TAB1 << "Set trigger source to Software\n";
 
 	Arena::SetNodeValue<GenICam::gcstring>(
@@ -88,7 +88,7 @@ void ConfigureTriggerAndAcquireImage(Arena::IDevice* pDevice)
 	// Set trigger selector
 	//    Set the trigger selector to FrameStart. When triggered, the device will
 	//    start acquiring a single frame. This can also be set to AcquisitionStart
-	//    or FrameBurstStart. 
+	//    or FrameBurstStart.
 	std::cout << TAB1 << "Set trigger selector to FrameStart\n";
 
 	Arena::SetNodeValue<GenICam::gcstring>(
@@ -100,7 +100,7 @@ void ConfigureTriggerAndAcquireImage(Arena::IDevice* pDevice)
 	//    When trigger mode is off and the acquisition mode is set to stream
 	//    continuously, starting the stream will have the camera begin acquiring a
 	//    steady stream of images. However, with trigger mode enabled, the device
-	//    will wait for the trigger before acquiring any. 
+	//    will wait for the trigger before acquiring any.
 	std::cout << TAB1 << "Start stream\n";
 
 	pDevice->StartStream();
@@ -108,7 +108,7 @@ void ConfigureTriggerAndAcquireImage(Arena::IDevice* pDevice)
 	// Trigger an image
 	//    Trigger an image manually, since trigger mode is enabled. This triggers
 	//    the camera to acquire a single image. A buffer is then filled and moved
-	//    to the output queue, where it will wait to be retrieved. 
+	//    to the output queue, where it will wait to be retrieved.
 	std::cout << TAB2 << "Trigger image\n";
 
 	Arena::ExecuteNode(
@@ -116,9 +116,9 @@ void ConfigureTriggerAndAcquireImage(Arena::IDevice* pDevice)
 		"TriggerSoftware");
 
 	// Get image
-	//    Once an image has been triggered, it can be retrieved. If no image, has
+	//    Once an image has been triggered, it can be retrieved. If no image has
 	//    been triggered, trying to retrieve an image will hang for the duration
-	//    of the timeout and then throw an exception. 
+	//    of the timeout and then throw an exception.
 	std::cout << TAB2 << "Get image";
 
 	Arena::IImage* pImage = pDevice->GetImage(TIMEOUT);
@@ -138,7 +138,7 @@ void ConfigureTriggerAndAcquireImage(Arena::IDevice* pDevice)
 	// return nodes to their initial values
 	Arena::SetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "TriggerSelector", triggerSelectorInitial);
 	Arena::SetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "TriggerSource", triggerSourceInitial);
-	Arena::SetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "AcquisitionMode", triggerModeInitial);
+	Arena::SetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "TriggerMode", triggerModeInitial);
 }
 
 // =-=-=-=-=-=-=-=-=-
@@ -148,6 +148,11 @@ void ConfigureTriggerAndAcquireImage(Arena::IDevice* pDevice)
 
 int main()
 {
+	// flag to track when an exception has been thrown
+	bool exceptionThrown = false;
+
+	std::cout << "Cpp_Trigger\n";
+
 	try
 	{
 		// prepare example
@@ -156,7 +161,8 @@ int main()
 		std::vector<Arena::DeviceInfo> deviceInfos = pSystem->GetDevices();
 		if (deviceInfos.size() == 0)
 		{
-			std::cout << "\nNo camera(s) connected\n";
+			std::cout << "\nNo camera connected\nPress enter to complete\n";
+			std::getchar();
 			return 0;
 		}
 		Arena::IDevice* pDevice = pSystem->CreateDevice(deviceInfos[0]);
@@ -173,20 +179,24 @@ int main()
 	catch (GenICam::GenericException& ge)
 	{
 		std::cout << "\nGenICam exception thrown: " << ge.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (std::exception& ex)
 	{
 		std::cout << "Standard exception thrown: " << ex.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (...)
 	{
 		std::cout << "Unexpected exception thrown\n";
-		return -1;
+		exceptionThrown = true;
 	}
 
-	std::cout << "Press any key to complete\n";
+	std::cout << "Press enter to complete\n";
 	std::getchar();
-	return 0;
+
+	if (exceptionThrown)
+		return -1;
+	else
+		return 0;
 }

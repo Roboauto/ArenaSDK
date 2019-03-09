@@ -38,11 +38,11 @@
 #endif
 
 // File name
-//    The relative path and file name to save to. After running the example,
-//    an image should exist at the location specified. The image writer
-//    chooses the file format by the image's extension. Aside from PNG (.png),
-//    images can be saved as JPEG (.jpg), TIFF (.tiff), BMP (.bmp), and raw
-//    (.raw) files.
+//    The relative path and file name to save to. After running the example, an
+//    image should exist at the location specified. The image writer chooses
+//    the file format by the image's extension. Aside from PNG (.png), images
+//    can be saved as JPEG (.jpg), TIFF (.tiff), BMP (.bmp), and raw (.raw)
+//    files. 
 #define FILE_NAME "Images/Cpp_Save/image.png"
 
 // =-=-=-=-=-=-=-=-=-
@@ -111,6 +111,9 @@ void SaveImage(Arena::IImage* pImage)
 
 int main()
 {
+	// flag to track when an exception has been thrown
+	bool exceptionThrown = false;
+
 	std::cout << "Cpp_Save\n";
 
 	try
@@ -121,7 +124,8 @@ int main()
 		std::vector<Arena::DeviceInfo> devices = pSystem->GetDevices();
 		if (devices.size() == 0)
 		{
-			std::cout << "\nNo camera(s) connected\n";
+			std::cout << "\nNo camera connected\nPress enter to complete\n";
+			std::getchar();
 			return 0;
 		}
 		Arena::IDevice* pDevice = pSystem->CreateDevice(devices[0]);
@@ -142,20 +146,24 @@ int main()
 	catch (GenICam::GenericException& ge)
 	{
 		std::cout << "\nGenICam exception thrown: " << ge.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (std::exception& ex)
 	{
 		std::cout << "\nStandard exception thrown: " << ex.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (...)
 	{
 		std::cout << "\nUnexpected exception thrown\n";
-		return -1;
+		exceptionThrown = true;
 	}
 
-	std::cout << "Press any key to complete\n";
+	std::cout << "Press enter to complete\n";
 	std::getchar();
-	return 0;
+
+	if (exceptionThrown)
+		return -1;
+	else
+		return 0;
 }

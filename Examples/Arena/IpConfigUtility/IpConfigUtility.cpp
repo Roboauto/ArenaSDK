@@ -29,7 +29,7 @@
 #include <iostream>
 #include <algorithm>
 #include <iomanip>
-#pragma GCC diagnostic  push
+#pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 #include "GenICam.h"
 #pragma diagnostic pop

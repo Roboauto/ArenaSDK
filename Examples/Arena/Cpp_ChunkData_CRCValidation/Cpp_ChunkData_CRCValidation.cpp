@@ -156,6 +156,9 @@ void ConfigureAndValidateCRC(Arena::IDevice* pDevice)
 
 int main()
 {
+	// flag to track when an exception has been thrown
+	bool exceptionThrown = false;
+
 	std::cout << "Cpp_ChunkData_CRCValidation\n";
 
 	try
@@ -166,7 +169,8 @@ int main()
 		std::vector<Arena::DeviceInfo> deviceInfos = pSystem->GetDevices();
 		if (deviceInfos.size() == 0)
 		{
-			std::cout << "\nNo camera(s) connected\n";
+			std::cout << "\nNo camera connected\nPress enter to complete\n";
+			std::getchar();
 			return 0;
 		}
 		Arena::IDevice* pDevice = pSystem->CreateDevice(deviceInfos[0]);
@@ -196,7 +200,11 @@ int main()
 		return -1;
 	}
 
-	std::cout << "Press any key to complete\n";
+	std::cout << "Press enter to complete\n";
 	std::getchar();
-	return 0;
+
+	if (exceptionThrown)
+		return -1;
+	else
+		return 0;
 }

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ImageReader &mdash; Arena 0.1.17.0 documentation</title>
+  <title>ImageReader &mdash; Arena 0.1.22.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.17.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.22.0 documentation" href="index.html"/>
         <link rel="up" title="Save C++" href="cpp_save.html"/>
         <link rel="next" title="ImageWriter" href="cpp_save_imagewriter.html"/>
         <link rel="prev" title="VideoParams" href="cpp_save_videoparams.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.17
+                0.1.22
               </div>
             
           
@@ -193,66 +193,196 @@
 </div>
 <div class="section" id="id1">
 <h2>ImageReader<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenclass: Cannot find class “Save::ImageReader” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="class">
+<dt id="_CPPv3N4Save11ImageReaderE">
+<span id="_CPPv2N4Save11ImageReaderE"></span><span id="Save::ImageReader"></span><span class="target" id="class_save_1_1_image_reader"></span><em class="property">class </em><code class="descname">ImageReader</code><a class="headerlink" href="#_CPPv3N4Save11ImageReaderE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The image reader facilitates the loading of image data from files. </p>
+</dd></dl>
+
 </div>
 <div class="section" id="id2">
 <h2>ImageReader<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “Save::ImageReader::ImageReader” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt id="_CPPv3N4Save11ImageReader11ImageReaderEPKcb">
+<span id="_CPPv2N4Save11ImageReader11ImageReaderEPKcb"></span><span id="Save::ImageReader::ImageReader__cCP.b"></span><span class="target" id="class_save_1_1_image_reader_1a1e2595ea8b98012d5e89972b3a5cedfa"></span><code class="descclassname">Save::<a class="reference internal" href="#_CPPv3N4Save11ImageReaderE" title="Save::ImageReader">ImageReader</a><code class="descclassname">::</code></code><code class="descname">ImageReader</code><span class="sig-paren">(</span><em class="property">const</em> char *<em>pFileName</em>, bool <em>topToBottom</em> = true<span class="sig-paren">)</span><br /></dt>
+<dd><p><p>A constructor. Internally, it loads an image (</p>
+<a class="reference internal" href="#class_save_1_1_image_reader_1a51a8e15e1632cc4317d969964f0fea1d"><span class="std std-ref">Save::ImageReader::Load</span></a>). <dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pFileName</span></code>: <ul>
+<li>Type: const char*</li>
+<li>Name of the file to load</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">topToBottom</span></code>: <ul>
+<li>Type: Type: bool</li>
+<li>Default: true</li>
+<li>If true, read the file from top to bottom</li>
+<li>Otherwise, from bottom to top</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="id3">
 <h2>ImageReader<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “Save::ImageReader::ImageReader” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt id="_CPPv3N4Save11ImageReader11ImageReaderERK11ImageReader">
+<span id="_CPPv2N4Save11ImageReader11ImageReaderERK11ImageReader"></span><span id="Save::ImageReader::ImageReader__ImageReaderCR"></span><span class="target" id="class_save_1_1_image_reader_1a67082f137c997c4d86263925d7c4d0aa"></span><code class="descclassname">Save::<a class="reference internal" href="#_CPPv3N4Save11ImageReaderE" title="Save::ImageReader">ImageReader</a><code class="descclassname">::</code></code><code class="descname">ImageReader</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv3N4Save11ImageReader11ImageReaderEPKcb" title="Save::ImageReader::ImageReader">ImageReader</a> &amp;<em>imageReader</em><span class="sig-paren">)</span><br /></dt>
+<dd><p><p>A copy constructor. </p>
+<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">imageReader</span></code>: <ul>
+<li>Type: const <a class="reference internal" href="#class_save_1_1_image_reader"><span class="std std-ref">Save::ImageReader</span></a>&amp;</li>
+<li>Image reader to copy</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="operator">
 <h2>Operator =<a class="headerlink" href="#operator" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “Save::ImageReader::operator=” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt id="_CPPv3N4Save11ImageReaderaSE11ImageReader">
+<span id="_CPPv2N4Save11ImageReaderaSE11ImageReader"></span><span id="Save::ImageReader::assign-operator__ImageReader"></span><span class="target" id="class_save_1_1_image_reader_1a2407f55fc587e078f3e8e3c16a6b83df"></span><a class="reference internal" href="#_CPPv3N4Save11ImageReaderE" title="Save::ImageReader">ImageReader</a> &amp;<code class="descclassname">Save::<a class="reference internal" href="#_CPPv3N4Save11ImageReaderE" title="Save::ImageReader">ImageReader</a><code class="descclassname">::</code></code><code class="descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv3N4Save11ImageReaderE" title="Save::ImageReader">ImageReader</a> <em>imageReader</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv3N4Save11ImageReaderaSE11ImageReader" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><p>A copy assignment operator. </p>
+<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: <a class="reference internal" href="#class_save_1_1_image_reader"><span class="std std-ref">ImageReader</span></a>&amp;</li>
+<li>Copied image reader</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">imageReader</span></code>: <ul>
+<li>Type: <a class="reference internal" href="#class_save_1_1_image_reader"><span class="std std-ref">ImageReader</span></a></li>
+<li>Image reader to copy</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="id4">
 <h2>~ImageReader<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “Save::ImageReader::~ImageReader” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt id="_CPPv3N4Save11ImageReaderD0Ev">
+<span id="_CPPv2N4Save11ImageReaderD0Ev"></span><span id="Save::ImageReader::~ImageReader"></span><span class="target" id="class_save_1_1_image_reader_1a0d157c87dffdc46f406f90520aeae5db"></span><code class="descclassname">Save::<a class="reference internal" href="#_CPPv3N4Save11ImageReaderE" title="Save::ImageReader">ImageReader</a><code class="descclassname">::</code></code><code class="descname">~ImageReader</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv3N4Save11ImageReaderD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A destructor. </p>
+</dd></dl>
+
 </div>
 <div class="section" id="load">
 <h2>Load<a class="headerlink" href="#load" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “Save::ImageReader::Load” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt id="_CPPv3N4Save11ImageReader4LoadEPKcb">
+<span id="_CPPv2N4Save11ImageReader4LoadEPKcb"></span><span id="Save::ImageReader::Load__cCP.b"></span><span class="target" id="class_save_1_1_image_reader_1a51a8e15e1632cc4317d969964f0fea1d"></span>void <code class="descclassname">Save::<a class="reference internal" href="#_CPPv3N4Save11ImageReaderE" title="Save::ImageReader">ImageReader</a><code class="descclassname">::</code></code><code class="descname">Load</code><span class="sig-paren">(</span><em class="property">const</em> char *<em>pFileName</em>, bool <em>topToBottom</em> = true<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv3N4Save11ImageReader4LoadEPKcb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><strong> Load </strong> loads image data from a file to memory. After loading an image, the image parameters can be retrieved (<a class="reference internal" href="#class_save_1_1_image_reader_1a0aa8be99f054dd9744b12ab05cadb9b8"><span class="std std-ref">Save::ImageReader::GetParams</span></a>) or the image data (<a class="reference internal" href="#class_save_1_1_image_reader_1a41a3c6e93de7155491cff8c1a545bd5c"><span class="std std-ref">Save::ImageReader::GetData</span></a>). <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>none</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pFileName</span></code>: <ul>
+<li>Type: const char*</li>
+<li>Name of the file to load</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="getparams">
 <h2>GetParams<a class="headerlink" href="#getparams" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “Save::ImageReader::GetParams” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt id="_CPPv3NK4Save11ImageReader9GetParamsEv">
+<span id="_CPPv2NK4Save11ImageReader9GetParamsEv"></span><span id="Save::ImageReader::GetParamsC"></span><span class="target" id="class_save_1_1_image_reader_1a0aa8be99f054dd9744b12ab05cadb9b8"></span><a class="reference internal" href="cpp_save_imageparams.html#_CPPv3N4Save11ImageParamsE" title="Save::ImageParams">ImageParams</a> <code class="descclassname">Save::<a class="reference internal" href="#_CPPv3N4Save11ImageReaderE" title="Save::ImageReader">ImageReader</a><code class="descclassname">::</code></code><code class="descname">GetParams</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv3NK4Save11ImageReader9GetParamsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><strong> GetParams </strong> retrieves the parameters of a loaded image. <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: <a class="reference internal" href="cpp_save_imageparams.html#class_save_1_1_image_params"><span class="std std-ref">Save::ImageParams</span></a></li>
+<li>Parameters of a loaded image</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="getdata">
 <h2>GetData<a class="headerlink" href="#getdata" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “Save::ImageReader::GetData” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt id="_CPPv3NK4Save11ImageReader7GetDataEv">
+<span id="_CPPv2NK4Save11ImageReader7GetDataEv"></span><span id="Save::ImageReader::GetDataC"></span><span class="target" id="class_save_1_1_image_reader_1a41a3c6e93de7155491cff8c1a545bd5c"></span><em class="property">const</em> uint8_t *<code class="descclassname">Save::<a class="reference internal" href="#_CPPv3N4Save11ImageReaderE" title="Save::ImageReader">ImageReader</a><code class="descclassname">::</code></code><code class="descname">GetData</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv3NK4Save11ImageReader7GetDataEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><strong> GetData </strong> retrieves the data of a loaded image. <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: const uint8_t*</li>
+<li>Data of a loaded image</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="loadrawdata">
 <h2>LoadRawData<a class="headerlink" href="#loadrawdata" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “Save::ImageReader::LoadRawData” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt id="_CPPv3N4Save11ImageReader11LoadRawDataEPKcP7uint8_tK6size_t">
+<span id="_CPPv2N4Save11ImageReader11LoadRawDataEPKcP7uint8_tK6size_t"></span><span id="Save::ImageReader::LoadRawData__cCP.uint8_tP.sC"></span><span class="target" id="class_save_1_1_image_reader_1a2a4224614c465ea567092fbc183c5f7e"></span><em class="property">static</em> void <code class="descclassname">Save::<a class="reference internal" href="#_CPPv3N4Save11ImageReaderE" title="Save::ImageReader">ImageReader</a><code class="descclassname">::</code></code><code class="descname">LoadRawData</code><span class="sig-paren">(</span><em class="property">const</em> char *<em>pFileName</em>, uint8_t *<em>pImageData</em>, <em class="property">const</em> size_t <em>size</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv3N4Save11ImageReader11LoadRawDataEPKcP7uint8_tK6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><strong> LoadRawData </strong> is a static function that loads the raw data of a file.<dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pFileName</span></code>: <ul>
+<li>Type: const char*</li>
+<li>Name of the file to load</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">pImageData</span></code>: <ul>
+<li>Type: uint8_t*</li>
+<li>Out parameter</li>
+<li>Requires a preallocated buffer</li>
+<li>Returns data from the loaded file</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">size</span></code>: <ul>
+<li>Type: const size_t</li>
+<li>Size of the file to read</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p><dl class="docutils">
+<dt><strong>Warning</strong></dt>
+<dd><ul class="simple">
+<li>Reads files top to bottom </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -299,7 +429,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.17.0',
+            VERSION:'0.1.22.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

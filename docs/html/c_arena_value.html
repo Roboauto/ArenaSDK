@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Value &mdash; Arena 0.1.17.0 documentation</title>
+  <title>Value &mdash; Arena 0.1.22.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.17.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.22.0 documentation" href="index.html"/>
         <link rel="up" title="Nodes" href="c_arena_nodes.html"/>
         <link rel="next" title="Boolean" href="c_arena_boolean.html"/>
         <link rel="prev" title="Node" href="c_arena_node.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.17
+                0.1.22
               </div>
             
           
@@ -200,24 +200,117 @@
 </div>
 <div class="section" id="acvaluetostring">
 <h2>acValueToString<a class="headerlink" href="#acvaluetostring" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acValueToString” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_value_8h_1a0a19adf9815843d6c75005f86d417747"></span><code class="descname">AC_ERROR AC_API acValueToString(acNode hNode, char * pValueBuf, size_t * pBufLen)</code></dt>
+<dd><p><strong> acValueToString </strong> gets a node’s value as a string. <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">hNode</span></code>: <ul>
+<li>Type: acNode</li>
+<li>[In] parameter</li>
+<li>A node</li>
+<li>Accepts any node type</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">pValueBuf</span></code>: <ul>
+<li>Type: char*</li>
+<li>[Out] parameter</li>
+<li>Accepts null</li>
+<li>Value as a string</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">pBufLen</span></code>: <ul>
+<li>Type: size_t*</li>
+<li>[In/out] parameter</li>
+<li>(In) Length of the buffer</li>
+<li>(Out) Length of the value</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="acvaluefromstring">
 <h2>acValueFromString<a class="headerlink" href="#acvaluefromstring" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acValueFromString” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_value_8h_1a3ad0c9b8fc5f951b3c836eaeaa0ed7ab"></span><code class="descname">AC_ERROR AC_API acValueFromString(acNode hNode, const char * pValue)</code></dt>
+<dd><p><strong> acValueFromString </strong> sets a node’s value from a string. <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">hNode</span></code>: <ul>
+<li>Type: acNode</li>
+<li>[In] parameter</li>
+<li>A node</li>
+<li>Accepts any node type</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">pValue</span></code>: <ul>
+<li>Type: const char*</li>
+<li>[In] parameter</li>
+<li>Value as a string</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="acvalueisvaluecachevalid">
 <h2>acValueIsValueCacheValid<a class="headerlink" href="#acvalueisvaluecachevalid" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acValueIsValueCacheValid” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_value_8h_1aa798f32b6eb184b9276cbd1d0faf894e"></span><code class="descname">AC_ERROR AC_API acValueIsValueCacheValid(acNode hNode, bool8_t * pIsValid)</code></dt>
+<dd><p><strong> acValueIsValueCacheValid </strong> retrieves whether or not a node’s value cache is valid. <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">hNode</span></code>: <ul>
+<li>Type: acNode</li>
+<li>[In] parameter</li>
+<li>A node</li>
+<li>Accepts any node type</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">pIsValid</span></code>: <ul>
+<li>Type: bool8_t*</li>
+<li>[Out] parameter</li>
+<li>True if cache value is valid</li>
+<li>Otherwise, false</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -264,7 +357,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.17.0',
+            VERSION:'0.1.22.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

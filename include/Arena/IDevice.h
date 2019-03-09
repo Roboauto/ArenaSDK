@@ -938,6 +938,8 @@ namespace Arena
 		 */
 		virtual GenApi::INodeMap* GetTLInterfaceNodeMap() = 0;
 
+        virtual void SendActionCommand(uint32_t deviceKey, uint32_t groupKey, uint32_t groupMask, uint64_t actionTime) = 0;
+
 		/**
 		 * @fn virtual ~IDevice()
 		 *
