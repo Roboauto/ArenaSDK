@@ -1,16 +1,16 @@
 /***************************************************************************************
-***                                                                                 ***
-***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
-***                                                                                 ***
-***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
-***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
-***  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    ***
-***  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         ***
-***  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  ***
-***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
-***  SOFTWARE.                                                                      ***
-***                                                                                 ***
-***************************************************************************************/
+ ***                                                                                 ***
+ ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***                                                                                 ***
+ ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
+ ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
+ ***  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    ***
+ ***  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         ***
+ ***  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  ***
+ ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
+ ***  SOFTWARE.                                                                      ***
+ ***                                                                                 ***
+ ***************************************************************************************/      
 
 #include "stdafx.h"
 #include "ArenaApi.h"
@@ -31,13 +31,13 @@
 // =-=-=-=-=-=-=-=-=-
 
 // File name pattern
-//    The relative path and file name pattern to save to. File name patterns
-//    can be used with the <count> and <timestamp> tags to save files according
-//    to a pattern. The <count> tag is replaced by an internal counter that is
-//    automatically updated on each save. The <timestamp> tag, however, must be
-//    updated manually for each image. Aside from BMP (.bmp), images can be
-//    saved as JPEG (.jpg), TIFF (.tiff), PNG (.png), and raw (.raw) files. 
-#define FILE_NAME_PATTERN "Images/Cpp_Save_FileNamePattern/image<count>-<timestamp>.bmp"
+//    File name patterns can use tags to easily customize your file names.
+//    Customizable tags can be added to a file name pattern and later set on
+//    the fly. Two tags, <count> and <datetime> have been built in to the save
+//    library. As seen below, <datetime> can take an argument to specify
+//    output. <count> also accepts arguments (local, path, and global) to
+//    specify what exactly is being counted. 
+#define FILE_NAME_PATTERN "Images/Cpp_Save_FileNamePattern/<vendor>_<model>_<serial>_image<count>-<datetime:yyMMdd_hhmmss_fff>.bmp"
 
 // number of images to acquire and save
 #define NUM_IMAGES 25
@@ -87,7 +87,7 @@ void AcquireAndSaveImages(Arena::IDevice* pDevice)
 		Arena::GetBitsPerPixel(pPixelFormat->GetCurrentEntry()->GetValue()));
 
 	// Prepare image writer
-	//    The image writer requires 3 arguments to save an image: the iamge's
+	//    The image writer requires 3 arguments to save an image: the image's
 	//    parameters, a specified file name or pattern, and the iamge data to
 	//    save. If a file name pattern uses the <timestamp> tag, then a timestamp
 	//    must also be provided. Providing these should result in a successfully
@@ -100,6 +100,40 @@ void AcquireAndSaveImages(Arena::IDevice* pDevice)
 	Save::ImageWriter writer(
 		params,
 		FILE_NAME_PATTERN);
+
+	// Update tags
+	//    Tags are set on the fly by passing strings into the cascading I/O
+	//    operator. Tags are accepted as any string surrounded by angle brackets
+	//    <...> while values are accepted as everything else. A value will be set
+	//    to the last input tag. 
+	std::cout << TAB1 << "Update tags\n";
+
+	// <vendor> tag
+	std::cout << TAB2 << "<vendor> to LUCID\n";
+
+	// get <model> tag
+	GenICam::gcstring model = Arena::GetNodeValue<GenICam::gcstring>(
+		pDevice->GetNodeMap(),
+		"DeviceModelName");
+
+	std::cout << TAB2 << "<model> to " << model << "\n";
+
+	// get <serial> tag
+	GenICam::gcstring serial = Arena::GetNodeValue<GenICam::gcstring>(
+		pDevice->GetNodeMap(),
+		"DeviceSerialNumber");
+
+	std::cout << TAB2 << "<serial> to " << serial << "\n";
+
+	// update
+	writer << "<vendor>"
+		 << "LUCID"
+
+		 << "<model>"
+		 << model
+
+		 << "<serial>"
+		 << serial;
 
 	// start stream
 	std::cout << TAB1 << "Start stream\n";
@@ -116,12 +150,8 @@ void AcquireAndSaveImages(Arena::IDevice* pDevice)
 		// get image
 		Arena::IImage* pImage = pDevice->GetImage(TIMEOUT);
 
-		// Update timestamp and save image
-		//    Timestamps can easily be added to a file name or path by using the
-		//    <timestamp> tag within the file name pattern. Using the timestamp tag
-		//    requires the timestamp to be updated before each save. The << operator
-		//    easily allows for this type of dynamic updating. 
-		writer << pImage->GetTimestampNs() << pImage->GetData();
+		// save image
+		writer << pImage->GetData();
 
 		// Get last file name
 		//    The image writer allows for the retrieval of paths, file names, and
@@ -135,8 +165,6 @@ void AcquireAndSaveImages(Arena::IDevice* pDevice)
 	}
 
 	// stop stream
-	std::cout << "Stop stream\n";
-
 	pDevice->StopStream();
 }
 
@@ -151,6 +179,9 @@ void AcquireAndSaveImages(Arena::IDevice* pDevice)
 //    closing the system. 
 int main()
 {
+	// flag to track when an exception has been thrown
+	bool exceptionThrown = false;
+
 	std::cout << "Cpp_Save_FileNamePattern\n";
 
 	try
@@ -161,7 +192,8 @@ int main()
 		std::vector<Arena::DeviceInfo> devices = pSystem->GetDevices();
 		if (devices.size() == 0)
 		{
-			std::cout << "\nNo camera(s) connected\n";
+			std::cout << "\nNo camera connected\nPress enter to complete\n";
+			std::getchar();
 			return 0;
 		}
 		Arena::IDevice* pDevice = pSystem->CreateDevice(devices[0]);
@@ -178,20 +210,24 @@ int main()
 	catch (GenICam::GenericException& ge)
 	{
 		std::cout << "\nGenICam exception thrown: " << ge.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (std::exception& ex)
 	{
 		std::cout << "\nStandard exception thrown: " << ex.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (...)
 	{
 		std::cout << "\nUnexpected exception thrown\n";
-		return -1;
+		exceptionThrown = true;
 	}
 
-	std::cout << "Press any key to complete\n";
+	std::cout << "Press enter to complete\n";
 	std::getchar();
-	return 0;
+
+	if (exceptionThrown)
+		return -1;
+	else
+		return 0;
 }

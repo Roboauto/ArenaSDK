@@ -10,9 +10,8 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/
+ ***************************************************************************************/      
 #pragma once
-
 
 #if defined (_WIN32)
 
@@ -28,8 +27,6 @@
 #else
 #error Unknown platform, file needs adaption
 #endif
-
-
 
 #include <string>
 

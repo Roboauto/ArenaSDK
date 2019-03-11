@@ -1,0 +1,132 @@
+/***************************************************************************************
+ ***                                                                                 ***
+ ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***                                                                                 ***
+ ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
+ ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
+ ***  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    ***
+ ***  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         ***
+ ***  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  ***
+ ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
+ ***  SOFTWARE.                                                                      ***
+ ***                                                                                 ***
+ ***************************************************************************************/      
+#pragma once
+
+#include <stdint.h>
+
+#if defined (_WIN32)
+# ifdef SAVEC_EXPORTS
+# define SC_API __declspec(dllexport)
+# else
+# define SC_API __declspec(dllimport)
+# endif
+#elif defined (__GNUC__) && (__GNUC__ >= 4) && defined (__linux__)
+# define SC_API __attribute__((visibility("default")))
+#else
+# define SC_API
+#endif
+
+#ifndef GC_TLI_CLIENT_H_
+#if defined(__cplusplus)
+typedef bool bool8_t;
+#else
+typedef uint8_t bool8_t;
+#endif
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/**
+ * @typedef saveReader;
+ *
+ * Handle to an image reader, used to read images from disk into Save C.
+ */
+typedef void* saveReader;
+
+/**
+ * @typedef saveWriter;
+ *
+ * Handle to an image writer, used to save images to disk.
+ */
+typedef void* saveWriter;
+
+typedef void* saveRecorder;
+
+/**
+ * @enum SC_ERROR_LIST
+ *
+ * This enum represents the different errors that a function might return.
+ *
+ * @warning 
+ *  - Use SC_ERROR integer values in place of SC_ERROR_LIST enum values
+ */
+enum SC_ERROR_LIST
+{
+	SC_ERR_SUCCESS = 0,                /*!< Success, no error */
+	SC_ERR_ERROR = -1001,              /*!< Generic error */
+	SC_ERR_NOT_INITIALIZED = -1002,    /*!< Arena SDK not initialized */
+	SC_ERR_NOT_IMPLEMENTED = -1003,    /*!< Function not implemented */
+	SC_ERR_RESOURCE_IN_USE = -1004,    /*!< Resource already in use */
+	SC_ERR_ACCESS_DENIED = -1005,      /*!< Incorrect access */
+	SC_ERR_INVALID_HANDLE = -1006,     /*!< Null/incorrect handle */
+	SC_ERR_INVALID_ID = -1007,         /*!< Incorrect ID */
+	SC_ERR_NO_DATA = -1008,            /*!< No data available */
+	SC_ERR_INVALID_PARAMETER = -1009,  /*!< Null/incorrect parameter */
+	SC_ERR_IO = -1010,                 /*!< Input/output error */
+	SC_ERR_TIMEOUT = -1011,            /*!< Timed out */
+	SC_ERR_ABORT = -1012,              /*!< Function aborted */
+	SC_ERR_INVALID_BUFFER = -1013,     /*!< Invalid buffer */
+	SC_ERR_NOT_AVAILABLE = -1014,      /*!< Function not available */
+	SC_ERR_INVALID_ADDRESS = -1015,    /*!< Invalid register address */
+	SC_ERR_BUFFER_TOO_SMALL = -1016,   /*!< Buffer too small */
+	SC_ERR_INVALID_INDEX = -1017,      /*!< Invalid index */
+	SC_ERR_PARSING_CHUNK_DATA = -1018, /*!< Error parsing chunk data */
+	SC_ERR_INVALID_VALUE = -1019,      /*!< Invalid value */
+	SC_ERR_RESOURCE_EXHAUSTED = -1020, /*!< Resource cannot perform more actions */
+	SC_ERR_OUT_OF_MEMORY = -1021,      /*!< Not enough memory */
+	SC_ERR_BUSY = -1022,               /*!< Busy on anothe process */
+	SC_ERR_CUSTOM_ID = -10000          /*!< Start adding custom error LIST here */
+};
+
+/**
+ * @typedef SC_ERROR;
+ *
+ * Integer representation of the error enum (SC_ERROR_LIST).
+ */
+typedef int32_t SC_ERROR;
+
+/**
+ * @enum SC_FORMAT_LIST
+ *
+ * This enum represents the different file formats that Save C is able to
+ * read/write.
+ *
+ * @warning 
+ *  - Use SC_FORMAT integer values in place of SC_FORMAT_LIST enum values
+ */
+enum SC_FORMAT_LIST
+{
+	SC_FORMAT_UNKNOWN = 0, /*!< Unknown file format */
+	SC_FORMAT_JPEG = 1,    /*!< Jpeg file format */
+	SC_FORMAT_PNG = 2,     /*!< Png file format */
+	SC_FORMAT_TIFF = 3,    /*!< Tiff file format */
+	SC_FORMAT_BMP = 4,     /*!< Bmp file format */
+	SC_FORMAT_RAW = 6,     /*!< Raw file format */
+	SC_FORMAT_AVI = 7,
+	SC_FORMAT_MOV = 8,
+	SC_FORMAT_MP4 = 9
+};
+
+/**
+ * @typedef SC_FORMAT;
+ *
+ * Integer representation of the file format enum (SC_FORMAT_LIST).
+ */
+typedef int32_t SC_FORMAT;
+
+#ifdef __cplusplus
+} // extern "C"
+#endif

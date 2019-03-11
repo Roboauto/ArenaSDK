@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Record, Introduction &mdash; Arena 0.1.17.0 documentation</title>
+  <title>Record, Introduction &mdash; Arena 0.1.4.0 documentation</title>
   
 
   
@@ -35,10 +35,10 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.17.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
         <link rel="up" title="C Code Samples" href="c_examples.html"/>
         <link rel="next" title="Save, Introduction" href="c_examples_save.html"/>
-        <link rel="prev" title="Enumeration, Introduction" href="c_examples_enumeration.html"/> 
+        <link rel="prev" title="LUT, Introduction" href="c_examples_lut.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.17
+                0.1.4
               </div>
             
           
@@ -107,11 +107,23 @@
 <li class="toctree-l3"><a class="reference internal" href="c_arena.html">Arena C</a></li>
 <li class="toctree-l3"><a class="reference internal" href="c_save.html">Save C</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="c_examples.html">C Code Samples</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="c_examples_simpleacquisition.html">Simple Acquisition, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_acquisition.html">Acquisition, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_acquisition_rapidacquisition.html">Acquisition, Rapid Acquisition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_onnodechange.html">Callback, On Node Change</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_chunkdata.html">Chunk Data, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_chunkdata_crcvalidation.html">Chunk Data, CRC Validation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_enumeration.html">Enumeration, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodemaps.html">Explore, Node Maps</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_exposure.html">Exposure, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodes.html">Explore, Nodes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodetypes.html">Explore, Node Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_lut.html">LUT, Introduction</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Record, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_save.html">Save, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_save_filenamepattern.html">Save, File Name Pattern</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_streamables.html">Streamables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_usersets.html">User Sets, Introduction</a></li>
 </ul>
 </li>
 </ul>
@@ -187,7 +199,7 @@
             
   <div class="section" id="record-introduction">
 <h1>Record, Introduction<a class="headerlink" href="#record-introduction" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cm">/***************************************************************************************</span>
+<div class="highlight-c++"><div class="highlight"><pre><span class="cm">/***************************************************************************************</span>
 <span class="cm"> ***                                                                                 ***</span>
 <span class="cm"> ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***</span>
 <span class="cm"> ***                                                                                 ***</span>
@@ -224,7 +236,7 @@
 <span class="c1">//    the image is configured for real-time video, but this is only</span>
 <span class="c1">//    incidental. 250 images and 25 frames per second will produce</span>
 <span class="c1">//    a 10 second video.</span>
-<span class="cp">#define FRAMES_PER_SECOND 25</span>
+<span class="cp">#define FRAMES_PER_SECOND 25.0</span>
 
 <span class="c1">// number of images to grab</span>
 <span class="cp">#define NUM_IMAGES 250</span>
@@ -265,7 +277,7 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">SC_ERR_SUCCESS</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
 
-        <span class="n">printf</span><span class="p">(</span><span class="s">&quot; (%zux%zu, %d FPS)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">FRAMES_PER_SECOND</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot; (%zux%zu, %f FPS)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">FRAMES_PER_SECOND</span><span class="p">);</span>
 
         <span class="c1">// Prepare video recorder</span>
         <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%sPrepare video recorder</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">TAB1</span><span class="p">);</span>
@@ -275,7 +287,6 @@
                 <span class="n">width</span><span class="p">,</span>
                 <span class="n">height</span><span class="p">,</span>
                 <span class="n">FRAMES_PER_SECOND</span><span class="p">,</span>
-                <span class="mi">1</span><span class="p">,</span>
                 <span class="o">&amp;</span><span class="n">hRecorder</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">SC_ERR_SUCCESS</span><span class="p">)</span>
@@ -384,6 +395,13 @@
         <span class="n">CHECK_RETURN</span><span class="p">;</span>
         <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_IMAGES</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
         <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">25</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                        <span class="n">printf</span><span class="p">(</span><span class="n">TAB2</span><span class="p">);</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="n">NUM_IMAGES</span> <span class="o">==</span> <span class="n">NUM_IMAGES</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">25</span> <span class="o">==</span> <span class="mi">24</span><span class="p">)</span>
+                        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\r</span><span class="s">%s</span><span class="se">\r</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">ERASE_LINE</span><span class="p">);</span>
                 <span class="n">acBuffer</span> <span class="n">hBuffer</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
                 <span class="n">err</span> <span class="o">=</span> <span class="n">acDeviceGetBuffer</span><span class="p">(</span><span class="n">hDevice</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hBuffer</span><span class="p">);</span>
                 <span class="n">CHECK_RETURN</span><span class="p">;</span>
@@ -433,7 +451,7 @@
         <a href="c_examples_save.html" class="btn btn-neutral float-right" title="Save, Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="c_examples_enumeration.html" class="btn btn-neutral" title="Enumeration, Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="c_examples_lut.html" class="btn btn-neutral" title="LUT, Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -463,7 +481,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.17.0',
+            VERSION:'0.1.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -473,7 +491,6 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 
 #include "stdafx.h"
 #include "ArenaApi.h"
@@ -22,7 +22,7 @@
 //    This example demonstrates configuring device settings in order to reduce
 //    bandwidth and increase framerate. This includes reducing the region of
 //    interest, reducing bits per pixel, increasing packet size, reducing
-//    exposure time, and setting a large number of buffers. 
+//    exposure time, and setting a large number of buffers.
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
@@ -36,13 +36,13 @@
 #define PIXEL_FORMAT "Mono8"
 
 // Number of images
-#define NUM_IMAGES 5000
+#define NUM_IMAGES 500
 
 // Maximum packet size
 //    In order to grab images at the maximum packet size, the ethernet adapter
 //    must be configured appropriately: 'Jumbo packet' must be set to its
 //    maximum, 'UDP checksum offload' must be set to 'Rx & Tx Enabled', and
-//    'Received Buffers' must be set to its maximum. 
+//    'Receive Buffers' must be set to its maximum.
 #define MAX_PACKET_SIZE false
 
 // image timeout
@@ -67,12 +67,12 @@ int64_t SetIntValue(GenApi::INodeMap* pNodeMap, const char* nodeName, int64_t va
 	//    multiples of the increment can be set. Ensure this by dividing and then
 	//    multiplying by the increment. If a value is between two increments, this
 	//    will push it to the lower value. Most minimum values are divisible by
-	//    the increment. If not, this must also be considered in the calculation. 
+	//    the increment. If not, this must also be considered in the calculation.
 	value = (((value - pInteger->GetMin()) / pInteger->GetInc()) * pInteger->GetInc()) + pInteger->GetMin();
 
 	// Check min/max values
-	//    Values must not deceed the minimum or exceed the maximum value of a
-	//    node. If a value does so, simply push it within range. 
+	//    Values must not be less than the minimum or exceed the maximum value of a
+	//    node. If a value does so, simply push it within range.
 	if (value < pInteger->GetMin())
 	{
 		value = pInteger->GetMin();
@@ -114,7 +114,7 @@ void AcquireImagesRapidly(Arena::IDevice* pDevice)
 	// Set low width and height
 	//    Reducing the size of an image reduces the amount of bandwidth required
 	//    for each image. The less bandwidth required per image, the more images
-	//    can be sent over the same bandwidth. 
+	//    can be sent over the same bandwidth.
 	std::cout << TAB1 << "Set low width and height";
 
 	int64_t width = SetIntValue(
@@ -132,7 +132,7 @@ void AcquireImagesRapidly(Arena::IDevice* pDevice)
 	// Set small pixel format
 	//    Similar to reducing the ROI, reducing the number of bits per pixel also
 	//    reduces the bandwidth required for each image. The smallest pixel
-	//    formats are 8-bit bayer and 8-bit mono (i.e. BayerRG8 and Mono8). 
+	//    formats are 8-bit bayer and 8-bit mono (i.e. BayerRG8 and Mono8).
 	std::cout << TAB1 << "Set small pixel format (" << PIXEL_FORMAT << ")\n";
 
 	Arena::SetNodeValue<GenICam::gcstring>(
@@ -148,7 +148,7 @@ void AcquireImagesRapidly(Arena::IDevice* pDevice)
 	//    maximum packet size, the ethernet adapter must be configured
 	//    appropriately: 'Jumbo packet' must be set to its maximum, 'UDP checksum
 	//    offload' must be set to 'Rx & Tx Enabled', and 'Received Buffers' must
-	//    be set to its maximum. 
+	//    be set to its maximum.
 	if (MAX_PACKET_SIZE)
 	{
 		std::cout << TAB1 << "Set maximum device stream channel packet size";
@@ -169,7 +169,7 @@ void AcquireImagesRapidly(Arena::IDevice* pDevice)
 	//    of time it takes to grab an image. Reducing the exposure time past
 	//    certain thresholds can cause problems related to not having enough
 	//    light. In certain situations this can be mitigated by increasing gain
-	//    and/or environmental light. 
+	//    and/or environmental light.
 	std::cout << TAB1 << "Set minimum exposure time";
 
 	Arena::SetNodeValue<GenICam::gcstring>(
@@ -186,13 +186,13 @@ void AcquireImagesRapidly(Arena::IDevice* pDevice)
 
 	std::cout << " (" << pExposureTime->GetMin() << " " << pExposureTime->GetUnit() << ")\n";
 
-	pExposureTime->SetValue(pExposureTime->GetMax());
+	pExposureTime->SetValue(pExposureTime->GetMin());
 
 	// Start stream with high number of buffers
 	//    Increasing the number of buffers can increase speeds by reducing the
 	//    amount of time taken to requeue buffers. In this example, one buffer is
 	//    used for each image. Of course, the amount of buffers that can be used
-	//    is limited by the amount of space in memory. 
+	//    is limited by the amount of space in memory.
 	std::cout << TAB1 << "Start stream with " << NUM_IMAGES << " buffers\n";
 	std::vector<Arena::IImage*> images;
 
@@ -203,9 +203,9 @@ void AcquireImagesRapidly(Arena::IDevice* pDevice)
 		// Get image
 		//    By starting the stream with enough buffers for all images without
 		//    requeuing, performance is improved by separating . While effective,
-		//    this method is even more restricted by the amount of available memory. 
-		std::cout << TAB2 << "Get image " << i << ((i % 250 == 0 && i != 0) || i == NUM_IMAGES - 1 ? "\n" : "\r");
-		
+		//    this method is even more restricted by the amount of available memory.
+		std::cout << TAB2 << "Get image " << i << ((i % 250 == 0 && i != 0) || i == NUM_IMAGES ? "\n" : "\r");
+
 		Arena::IImage* pImage = pDevice->GetImage(TIMEOUT);
 		images.push_back(pImage);
 	}
@@ -245,6 +245,9 @@ void AcquireImagesRapidly(Arena::IDevice* pDevice)
 
 int main()
 {
+	// flag to track when an exception has been thrown
+	bool exceptionThrown = false;
+
 	std::cout << "Cpp_Acquisition_RapidAcquisition\n";
 
 	try
@@ -255,7 +258,8 @@ int main()
 		std::vector<Arena::DeviceInfo> deviceInfos = pSystem->GetDevices();
 		if (deviceInfos.size() == 0)
 		{
-			std::cout << "\nNo camera(s) connected\n";
+			std::cout << "\nNo camera connected\nPress enter to complete\n";
+			std::getchar();
 			return 0;
 		}
 		Arena::IDevice* pDevice = pSystem->CreateDevice(deviceInfos[0]);
@@ -272,20 +276,24 @@ int main()
 	catch (GenICam::GenericException& ge)
 	{
 		std::cout << "\nGenICam exception thrown: " << ge.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (std::exception& ex)
 	{
 		std::cout << "\nStandard exception thrown: " << ex.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (...)
 	{
 		std::cout << "\nUnexpected exception thrown\n";
-		return -1;
+		exceptionThrown = true;
 	}
 
-	std::cout << "Press any key to complete\n";
+	std::cout << "Press enter to complete\n";
 	std::getchar();
-	return 0;
+
+	if (exceptionThrown)
+		return -1;
+	else
+		return 0;
 }

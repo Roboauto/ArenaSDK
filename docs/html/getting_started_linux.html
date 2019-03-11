@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Initial Configuration in Linux &mdash; Arena 0.1.17.0 documentation</title>
+  <title>Initial Configuration in Linux &mdash; Arena 0.1.4.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.17.0 documentation" href="index.html"/> 
+    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.1.17
+                0.1.4
               </div>
             
           
@@ -177,7 +177,7 @@
 <div><img alt="_images/ubuntu_adapter_jumbo_frames.png" src="_images/ubuntu_adapter_jumbo_frames.png" />
 </div></blockquote>
 <p>Using the terminal:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo ifconfig enp0s8 mtu <span class="m">9000</span>
+<div class="highlight-shell-session"><div class="highlight"><pre><span class="gp">$</span> sudo ifconfig enp0s8 mtu 9000
 </pre></div>
 </div>
 <p>The above command sets enp0s8 to an MTU size of 9000 to enable jumbo frames.</p>
@@ -186,7 +186,7 @@
 <h2>Receive Buffers<a class="headerlink" href="#receive-buffers" title="Permalink to this headline">¶</a></h2>
 <p>A receive buffer is the size of system memory that can be used by the Ethernet adapter to receive packets. Some network adapter drivers or the operating system itself may set the receive buffer value to a low value by default, which may result in decreased performance. Increasing the receive buffer size, however, will also result in increased system memory usage. On Linux, you can use the utility ethtool to adjust the receive buffer size.</p>
 <p>Using the terminal:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo ethtool -g enp0s8
+<div class="highlight-shell-session"><div class="highlight"><pre><span class="gp">$</span> sudo ethtool -g enp0s8
 <span class="go">Ring parameters for enp0s8:</span>
 <span class="go">Pre-set maximums:</span>
 <span class="go">RX:         4096</span>
@@ -199,7 +199,7 @@
 <span class="go">RX Jumbo:   0</span>
 <span class="go">TX:         256</span>
 
-<span class="gp">$</span> sudo ethtool -G enp0s8 rx <span class="m">4096</span>
+<span class="gp">$</span> sudo ethtool -G enp0s8 rx 4096
 </pre></div>
 </div>
 <p>The above commands query and set the maximum receive buffer size on enp0s8.</p>
@@ -215,7 +215,7 @@
 </tbody>
 </table>
 <p>On most standard Linux installations, the default maximum socket buffer size is a small number which may result in decreased streaming performance. It is also recommended to set the socket buffer size. Using the terminal:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo sh -c <span class="s2">&quot;echo &#39;net.core.rmem_default=1048576&#39; &gt;&gt; /etc/sysctl.conf&quot;</span>
+<div class="highlight-shell-session"><div class="highlight"><pre><span class="gp">$</span> sudo sh -c <span class="s2">&quot;echo &#39;net.core.rmem_default=1048576&#39; &gt;&gt; /etc/sysctl.conf&quot;</span>
 <span class="gp">$</span> sudo sh -c <span class="s2">&quot;echo &#39;net.core.rmem_max=1048576&#39; &gt;&gt; /etc/sysctl.conf&quot;</span>
 <span class="gp">$</span> sudo sysctl -p
 </pre></div>
@@ -283,13 +283,13 @@ For more information on Link-Local Address selection, refer to <a class="referen
 <h2>Reverse Path Filtering<a class="headerlink" href="#reverse-path-filtering" title="Permalink to this headline">¶</a></h2>
 <p>Most Linux systems will check whether a packet can be received through the Ethernet interface as configured.  A device can be ignored if its IP address conflicts with the Ethernet adapter.</p>
 <p>Disabling reverse path filtering skips this check. The following command disables reverse path filtering on enp0s8 and any new Ethernet interfaces:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo sysctl -w net.ipv4.conf.default.rp_filter<span class="o">=</span><span class="m">0</span>
-<span class="gp">$</span> sudo sysctl -w net.ipv4.conf.all.rp_filter<span class="o">=</span><span class="m">0</span>
-<span class="gp">$</span> sudo sysctl -w net.ipv4.conf.enp0s8.rp_filter<span class="o">=</span><span class="m">0</span>
+<div class="highlight-shell-session"><div class="highlight"><pre><span class="gp">$</span> sudo sysctl -w net.ipv4.conf.default.rp_filter<span class="o">=</span>0
+<span class="gp">$</span> sudo sysctl -w net.ipv4.conf.all.rp_filter<span class="o">=</span>0
+<span class="gp">$</span> sudo sysctl -w net.ipv4.conf.enp0s8.rp_filter<span class="o">=</span>0
 </pre></div>
 </div>
 <p>The above commands are not retained when the system reboots. You can also permanently disable reverse path filtering by commenting out or removing any lines mentioning the following in /etc/sysctl.d/10-network-security.conf:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">net.ipv4.conf.default.rp_filter=1</span>
+<div class="highlight-shell-session"><div class="highlight"><pre><span class="go">net.ipv4.conf.default.rp_filter=1</span>
 <span class="go">net.ipv4.conf.all.rp_filter=1</span>
 </pre></div>
 </div>
@@ -298,36 +298,36 @@ For more information on Link-Local Address selection, refer to <a class="referen
 <h2>Setting Up Persistent IP or DHCP on the Camera with IP Config Utility<a class="headerlink" href="#setting-up-persistent-ip-or-dhcp-on-the-camera-with-ip-config-utility" title="Permalink to this headline">¶</a></h2>
 <p>Arena SDK provides a simple command-line utility named IP Config Utility to configure your camera’s IP address.</p>
 <p>The following command shows all connected cameras:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ./IpConfigUtility /list
+<div class="highlight-shell-session"><div class="highlight"><pre><span class="gp">$</span> ./IpConfigUtility /list
 
 <span class="go">[index] MAC             IP              SUBNET          GATEWAY                 IP CONFIG</span>
 <span class="go">[0]     1C0FAF000001    169.254.101.0   255.255.0.0     0.0.0.0                 DHCP= 1 Persistent Ip= 1 LLA = 1</span>
 </pre></div>
 </div>
 <p>The following commands show how to enable and set a persistent IP address on a camera with the MAC address of 1C:0F:AF:00:00:01:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ./IpConfigUtility /config -m 1C0FAF000001 -p <span class="nb">true</span>
-<span class="gp">$</span> ./IpConfigUtility /persist -m 1C0FAF000001 -p <span class="nb">true</span> -a <span class="m">192</span>.168.0.10 -s <span class="m">255</span>.255.0.0 -g <span class="m">0</span>.0.0.0
+<div class="highlight-shell-session"><div class="highlight"><pre><span class="gp">$</span> ./IpConfigUtility /config -m 1C0FAF000001 -p <span class="nb">true</span>
+<span class="gp">$</span> ./IpConfigUtility /persist -m 1C0FAF000001 -p <span class="nb">true</span> -a 192.168.0.10 -s 255.255.0.0 -g 0.0.0.0
 </pre></div>
 </div>
 <p>The following commands show how to enable persistent IP and set a persistent IP address on a camera listed at index 0:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ./IpConfigUtility /config -i <span class="m">0</span> -p <span class="nb">true</span>
-<span class="gp">$</span> ./IpConfigUtility /persist -i <span class="m">0</span> -p <span class="nb">true</span> -a <span class="m">192</span>.168.0.10 -s <span class="m">255</span>.255.0.0 -g <span class="m">0</span>.0.0.0
+<div class="highlight-shell-session"><div class="highlight"><pre><span class="gp">$</span> ./IpConfigUtility /config -i <span class="m">0</span> -p <span class="nb">true</span>
+<span class="gp">$</span> ./IpConfigUtility /persist -i <span class="m">0</span> -p <span class="nb">true</span> -a 192.168.0.10 -s 255.255.0.0 -g 0.0.0.0
 </pre></div>
 </div>
 <p>The following command shows how to enable DHCP on a camera listed at index 0:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ./IpConfigUtility /config -i <span class="m">0</span> -d <span class="nb">true</span>
+<div class="highlight-shell-session"><div class="highlight"><pre><span class="gp">$</span> ./IpConfigUtility /config -i <span class="m">0</span> -d <span class="nb">true</span>
 </pre></div>
 </div>
 <p>The following commands show how to enable persistent IP and DHCP and set a persistent IP address on a camera listed at index 0:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ./IpConfigUtility /config -i <span class="m">0</span> -p <span class="nb">true</span> -d <span class="nb">true</span>
-<span class="gp">$</span> ./IpConfigUtility /persist -i <span class="m">0</span> -p <span class="nb">true</span> -a <span class="m">192</span>.168.0.10 -s <span class="m">255</span>.255.0.0 -g <span class="m">0</span>.0.0.0
+<div class="highlight-shell-session"><div class="highlight"><pre><span class="gp">$</span> ./IpConfigUtility /config -i <span class="m">0</span> -p <span class="nb">true</span> -d <span class="nb">true</span>
+<span class="gp">$</span> ./IpConfigUtility /persist -i <span class="m">0</span> -p <span class="nb">true</span> -a 192.168.0.10 -s 255.255.0.0 -g 0.0.0.0
 </pre></div>
 </div>
 </div>
 <div class="section" id="forcing-an-ip-address-on-the-camera-with-ip-config-utility">
 <h2>Forcing an IP Address on the Camera with IP Config Utility<a class="headerlink" href="#forcing-an-ip-address-on-the-camera-with-ip-config-utility" title="Permalink to this headline">¶</a></h2>
 <p>The following command shows how to force an IP address on a camera with the MAC address of 1C:0F:AF:00:00:01:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> ./IpConfigUtility /force -m 1C0FAF000001 -a <span class="m">192</span>.168.0.10 -s <span class="m">255</span>.255.0.0 -g <span class="m">0</span>.0.0.0
+<div class="highlight-shell-session"><div class="highlight"><pre><span class="gp">$</span> ./IpConfigUtility /force -m 1C0FAF000001 -a 192.168.0.10 -s 255.255.0.0 -g 0.0.0.0
 </pre></div>
 </div>
 </div>
@@ -360,7 +360,7 @@ For more information on Link-Local Address selection, refer to <a class="referen
 </li>
 </ol>
 <p>You can also set up your Ethernet adapter to use the LLA space using the terminal:</p>
-<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> sudo ifconfig enp0s8 <span class="m">169</span>.254.0.1 netmask <span class="m">255</span>.255.0.0
+<div class="highlight-shell-session"><div class="highlight"><pre><span class="gp">$</span> sudo ifconfig enp0s8 169.254.0.1 netmask 255.255.0.0
 </pre></div>
 </div>
 <p>The above command sets enp0s8 to the IP address of 169.254.0.1 with the subnet mask 255.255.0.0.</p>
@@ -401,7 +401,7 @@ For more information on Link-Local Address selection, refer to <a class="referen
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.17.0',
+            VERSION:'0.1.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -411,7 +411,6 @@ For more information on Link-Local Address selection, refer to <a class="referen
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

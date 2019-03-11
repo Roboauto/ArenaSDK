@@ -234,22 +234,45 @@ namespace Save
 		virtual void SetFileNamePattern(const char* pFileNamePattern);
 
 		/**
-		 * @fn virtual void SetCount(uint64_t count)
+		 * @fn virtual void UpdateTag(const char* pTag, const char* pValue)
+		 *
+		 * @param pTag
+		 *  - Type: const char* 
+		 *  - Tag to replace
+		 *
+		 * @param pValue
+		 *  - Type: const char* 
+		 *  - Value to set
+		 *
+		 * @return 
+		 *  - none
+		 *
+		 * <B> UpdateTag </B> updates the value to replace a given tag when a video
+		 * is saved.
+		 */
+		virtual void UpdateTag(const char* pTag, const char* pValue);
+
+		/**
+		 * @fn virtual void SetCount(uint64_t count, ECountScope scope = Local)
 		 *
 		 * @param count
 		 *  - Type: uint64_t 
 		 *  - Value of the internal counter
 		 *
+		 * @param scope
+		 *  - Type: ECountScope 
+		 *  - Default: Local 
+		 *  - Counter to set
+		 *
 		 * @return 
 		 *  - none
 		 *
-		 * <B> SetCount </B> sets the value of the internal counter. The counter
-		 * replaces any instance of '<count>' in the file name pattern.
+		 * <B> SetCount </B> sets the value of one of the available counters.
 		 *
 		 * @warning 
 		 *  - cannot be called while recording
 		 */
-		virtual void SetCount(uint64_t count);
+		virtual void SetCount(uint64_t count, ECountScope scope = Local);
 
 		/**
 		 * @fn virtual void SetTimestamp(uint64_t timestamp)
@@ -266,6 +289,9 @@ namespace Save
 		 *
 		 * @warning 
 		 *  - cannot be called while recording
+		 *
+		 * @deprecated 
+		 *  - Deprecated in favor of the more generic tag and value components
 		 */
 		virtual void SetTimestamp(uint64_t timestamp);
 
@@ -373,15 +399,21 @@ namespace Save
 		virtual std::string PeekFileName(bool withPath = false, bool withExt = true);
 
 		/**
-		 * @fn virtual uint64_t PeekCount()
+		 * @fn virtual uint64_t PeekCount(ECountScope scope = Local)
+		 *
+		 * @param scope
+		 *  - Type: ECountScope 
+		 *  - Default: Local 
+		 *  - Counter to peek
 		 *
 		 * @return 
 		 *  - Type: uint64_t 
 		 *  - Value of the internal counter
 		 *
-		 * <B> PeekCount </B> retrieves a peek at the value of the internal counter.
+		 * <B> PeekCount </B> retrieves a peek at the value of one of the available
+		 * counters.
 		 */
-		virtual uint64_t PeekCount();
+		virtual uint64_t PeekCount(ECountScope scope = Local);
 
 		/**
 		 * @fn virtual std::string GetLastFileName(bool withPath = false, bool withExt = true)
@@ -405,13 +437,7 @@ namespace Save
 		virtual std::string GetLastFileName(bool withPath = false, bool withExt = true);
 
 		/**
-		 * @fn virtual void Open(uint64_t timestamp)
-		 *
-		 * @param timestamp
-		 *  - Type: uint64_t 
-		 *  - Default: 0 
-		 *  - Timestamp for the video title 
-		 *  - Only required if '<timestamp>' in file name pattern
+		 * @fn virtual void Open()
 		 *
 		 * @return 
 		 *  - none
@@ -423,7 +449,7 @@ namespace Save
 		 * @warning 
 		 *  - settings cannot be changed until the recorder is closed
 		 */
-		virtual void Open(uint64_t timestamp = 0);
+		virtual void Open();
 
 		/**
 		 * @fn virtual void AppendImage(const uint8_t* pData)

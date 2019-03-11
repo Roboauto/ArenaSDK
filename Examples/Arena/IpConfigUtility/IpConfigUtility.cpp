@@ -10,9 +10,9 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
-// IpConfigUtility.cpp : Defines the entry point for the console application.
-//
+ ***************************************************************************************/
+ // IpConfigUtility.cpp : Defines the entry point for the console application.
+ //
 
 #include "stdafx.h"
 
@@ -29,11 +29,18 @@
 #include <iostream>
 #include <algorithm>
 #include <iomanip>
-#pragma GCC diagnostic  push
+
+#include "ArenaApi.h"
+
+#if defined(_WIN32) || defined(_WIN64)
+#include "GenICam.h"
+#else
+#pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 #include "GenICam.h"
 #pragma diagnostic pop
-#include "ArenaApi.h"
+#endif
+
 
 //command line input parser
 class CliParser
@@ -155,8 +162,8 @@ int PrintCameraList(Arena::ISystem* pSystem)
 		std::cout << std::left << std::setfill(' ') << std::setw(fillCount) << dev.SubnetMaskStr();
 		std::cout << std::left << std::setfill(' ') << std::setw(fillCount) << dev.DefaultGatewayStr();
 		std::cout << "\tDHCP= " << dev.IsDHCPConfigurationEnabled()
-				 << " Persistent Ip= " << dev.IsPersistentIpConfigurationEnabled()
-				 << " LLA = " << dev.IsLLAConfigurationEnabled() << std::endl;
+			<< " Persistent Ip= " << dev.IsPersistentIpConfigurationEnabled()
+			<< " LLA = " << dev.IsLLAConfigurationEnabled() << std::endl;
 		std::cout << std::endl;
 	}
 	std::cout << std::endl;
@@ -203,7 +210,7 @@ int FindSelectedDevice(Arena::ISystem* pSystem, CliParser& parser)
 		}
 
 		//in this case user just gave us the index directly.
-		return index;
+		return static_cast<int>(index);
 	}
 
 	auto it = std::find_if(begin(devs), end(devs), [&macAddress](Arena::DeviceInfo devInfo) {
@@ -340,7 +347,7 @@ int HandlePersistentIP(Arena::ISystem* pSystem, CliParser& parser)
 		}
 		catch (GenICam::GenericException& e)
 		{
-			std::cout << "Failed to get a device with error: " << e.what() << std::endl	;
+			std::cout << "Failed to get a device with error: " << e.what() << std::endl;
 			// if there is no device, there is nothing that we can do further, so return immediately 
 			return -1;
 		}
@@ -554,7 +561,7 @@ void PrintUsage()
 {
 	std::cout << std::endl;
 	std::cout << "Usage: IpConfigUtility.exe /<command> -<arg> <arg_value>" << std::endl
-			 << std::endl;
+		<< std::endl;
 
 	std::cout << "/list: \t Lists all the devices connected to this machine" << std::endl;
 	std::cout << std::endl;

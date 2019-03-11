@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 
 #include "stdafx.h"
 #include "ArenaApi.h"
@@ -21,7 +21,7 @@
 // Acquisition: Introduction
 //    This example introduces the basics of image acquisition including
 //    acquisition and buffer handling modes, starting and stopping the stream,
-//    grabbing and requeuing buffers, and retrieving data on images. 
+//    grabbing and requeuing buffers, and retrieving data on images.
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
@@ -32,7 +32,7 @@
 //    at the end of the timeout, an exception is thrown. The timeout is the
 //    maximum time to wait for an image; however, getting an image will return
 //    as soon as an image is available, not waiting the full extent of the
-//    timeout. 
+//    timeout.
 #define TIMEOUT 2000
 
 // number of images to grab
@@ -62,7 +62,7 @@ void AcquireImages(Arena::IDevice* pDevice)
 	//    controls the number of images a device acquires once the stream has been
 	//    started. Setting the acquisition mode to 'Continuous' keeps the stream
 	//    from stopping. This example returns the camera to its initial
-	//    acquisition mode near the end of the example. 
+	//    acquisition mode near the end of the example.
 	std::cout << TAB1 << "Set acquisition mode to 'Continuous'\n";
 
 	Arena::SetNodeValue<GenICam::gcstring>(
@@ -76,7 +76,7 @@ void AcquireImages(Arena::IDevice* pDevice)
 	//    handling mode determines the order and behavior of buffers in the
 	//    underlying stream engine. Setting the buffer handling mode to
 	//    'NewestOnly' ensures the most recent image is delivered, even if it
-	//    means skipping frames. 
+	//    means skipping frames.
 	std::cout << TAB1 << "Set buffer handling mode to 'NewestOnly'\n";
 
 	Arena::SetNodeValue<GenICam::gcstring>(
@@ -90,7 +90,7 @@ void AcquireImages(Arena::IDevice* pDevice)
 	//    and begins filling them with data. Starting the stream blocks write
 	//    access to many features such as width, height, and pixel format, as well
 	//    as acquisition and buffer handling modes, among others. The stream needs
-	//    to be stopped later. 
+	//    to be stopped later.
 	std::cout << TAB1 << "Start stream\n";
 
 	pDevice->StartStream();
@@ -103,7 +103,7 @@ void AcquireImages(Arena::IDevice* pDevice)
 		// Get image
 		//    Retrieve images after the stream has started. If the timeout expires
 		//    before an image is retrieved, example will throw. Because of this, the
-		//    timeout should be at least a bit larger than the exposure time. 
+		//    timeout should be at least a bit larger than the exposure time.
 		std::cout << TAB2 << "Get image " << i;
 
 		Arena::IImage* pImage = pDevice->GetImage(TIMEOUT);
@@ -123,7 +123,7 @@ void AcquireImages(Arena::IDevice* pDevice)
 		//    Requeue an image buffer when access to it is no longer needed. Notice
 		//    that failing to requeue buffers may cause memory to leak and may also
 		//    result in the stream engine being starved due to there being no
-		//    available buffers. 
+		//    available buffers.
 		std::cout << " and requeue\n";
 
 		pDevice->RequeueBuffer(pImage);
@@ -131,7 +131,7 @@ void AcquireImages(Arena::IDevice* pDevice)
 
 	// Stop stream
 	//    Stop the stream after all images have been requeued. Failing to stop the
-	//    stream will leak memory. 
+	//    stream will leak memory.
 	std::cout << TAB1 << "Stop stream\n";
 
 	pDevice->StopStream();
@@ -147,6 +147,9 @@ void AcquireImages(Arena::IDevice* pDevice)
 
 int main()
 {
+	// flag to track when an exception has been thrown
+	bool exceptionThrown = false;
+
 	std::cout << "Cpp_Acquisition\n";
 
 	try
@@ -157,7 +160,8 @@ int main()
 		std::vector<Arena::DeviceInfo> deviceInfos = pSystem->GetDevices();
 		if (deviceInfos.size() == 0)
 		{
-			std::cout << "\nNo camera connected\n";
+			std::cout << "\nNo camera connected\nPress enter to complete\n";
+			std::getchar();
 			return 0;
 		}
 		Arena::IDevice* pDevice = pSystem->CreateDevice(deviceInfos[0]);
@@ -174,20 +178,24 @@ int main()
 	catch (GenICam::GenericException& ge)
 	{
 		std::cout << "\nGenICam exception thrown: " << ge.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (std::exception& ex)
 	{
 		std::cout << "\nStandard exception thrown: " << ex.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (...)
 	{
 		std::cout << "\nUnexpected exception thrown\n";
-		return -1;
+		exceptionThrown = true;
 	}
 
-	std::cout << "Press any key to complete\n";
+	std::cout << "Press enter to complete\n";
 	std::getchar();
-	return 0;
+
+	if (exceptionThrown)
+		return -1;
+	else
+		return 0;
 }

@@ -1,3 +1,62 @@
+ARCH_TYPE = $(shell dpkg --print-architecture)
+
+ifeq ($(ARCH_TYPE), amd64)
+
+LDFLAGS = -L../../../lib64 \
+          -L../../../GenICam/library/lib/Linux64_x64 \
+          -L../../../ffmpeg
+
+GENICAMLIBS = -lGCBase_gcc421_v3_0 \
+              -lGenApi_gcc421_v3_0 \
+              -lLog_gcc421_v3_0 \
+              -llog4cpp_gcc421_v3_0 \
+              -lMathParser_gcc421_v3_0 \
+              -lNodeMapData_gcc421_v3_0 \
+              -lXmlParser_gcc421_v3_0
+
+OUTDIR = ../../../OutputDirectory/Linux/x64Release/
+
+else ifeq ($(ARCH_TYPE), armhf)
+
+LDFLAGS = -L../../../lib \
+          -L../../../GenICam/library/lib/Linux32_ARMhf \
+          -L../../../ffmpeg \
+          -L../../../opencv
+
+GENICAMLIBS = -lGCBase_gcc46_v3_0 \
+              -lGenApi_gcc46_v3_0 \
+              -lLog_gcc46_v3_0 \
+              -llog4cpp_gcc46_v3_0 \
+              -lMathParser_gcc46_v3_0 \
+              -lNodeMapData_gcc46_v3_0 \
+              -lXmlParser_gcc46_v3_0
+
+OPENCVLIBS = -lopencv_core \
+             -lopencv_imgproc
+
+OUTDIR = ../../../OutputDirectory/armhf/x32Release/
+else ifeq ($(ARCH_TYPE), arm64)
+
+LDFLAGS = -L../../../lib \
+          -L../../../GenICam/library/lib/Linux64_ARM \
+          -L../../../ffmpeg \
+          -L../../../opencv
+
+GENICAMLIBS = -lGCBase_gcc48_v3_1 \
+              -lGenApi_gcc48_v3_1 \
+              -lLog_gcc48_v3_1 \
+              -llog4cpp_gcc48_v3_1 \
+              -lMathParser_gcc48_v3_1 \
+              -lNodeMapData_gcc48_v3_1 \
+              -lXmlParser_gcc48_v3_1
+
+OPENCVLIBS = -lopencv_core \
+             -lopencv_imgproc
+
+OUTDIR = ../../../OutputDirectory/arm64/x64Release/
+endif
+
+
 CC=g++
 
 INCLUDE = -I../../../include/ArenaC \
@@ -5,33 +64,24 @@ INCLUDE = -I../../../include/ArenaC \
 
 CFLAGS=-Wall -g -O2 -Wno-unknown-pragmas
 
-LDFLAGS = -L../../../lib64 \
-          -L../../../GenICam/library/lib/Linux64_x64 \
-          -L../../../ffmpeg
+FFMPEGLIBS = -lavcodec \
+             -lavdevice \
+             -lavfilter \
+             -lavformat \
+             -lavutil \
+             -lswresample \
+             -lswscale
 
 LIBS = -larenac \
        -larena \
        -lsavec \
        -lsave \
        -lgentl \
-       -lGCBase_gcc421_v3_0 \
-       -lGenApi_gcc421_v3_0 \
-       -lLog_gcc421_v3_0 \
-       -llog4cpp_gcc421_v3_0 \
-       -lMathParser_gcc421_v3_0 \
-       -lNodeMapData_gcc421_v3_0 \
-       -lXmlParser_gcc421_v3_0 \
-       -lavcodec \
-       -lavdevice \
-       -lavfilter \
-       -lavformat \
-       -lavutil \
-       -lswresample \
-       -lswscale
-
+       $(GENICAMLIBS) \
+       $(FFMPEGLIBS) \
+       $(OPENCVLIBS)
 
 RM = rm -f
-OUTDIR = ../../../OutputDirectory/Linux/x64Release/
 
 SRCS = $(wildcard *.c)
 OBJS = $(SRCS:%.c=%.o)
@@ -41,7 +91,7 @@ DEPS = $(OBJS:%.o=%.d)
 all: ${TARGET}
 
 ${TARGET}: ${OBJS}
-	${CC} ${LDFLAGS} $^ ${LIBS} -o $@
+	${CC} ${LDFLAGS} $^ -o $@ $(LIBS)
 	-mkdir -p $(OUTDIR)
 	-cp $(TARGET) $(OUTDIR)
 

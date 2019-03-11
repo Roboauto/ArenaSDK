@@ -683,6 +683,7 @@ extern "C"
 		GC_API DevOpenDataStream(DEV_HANDLE hDevice, const char *sDataStreamID, DS_HANDLE *phDataStream);
 		GC_API DevGetInfo(DEV_HANDLE hDevice, DEVICE_INFO_CMD iInfoCmd, INFO_DATATYPE *piType, void *pBuffer, size_t *piSize);
 		GC_API DevClose(DEV_HANDLE hDevice);
+        GC_API DevSendActionCommand(DEV_HANDLE hDevice, uint32_t device_key, uint32_t group_key, uint32_t group_mask, uint64_t action_time = 0);
 
 		GC_API DSAnnounceBuffer(DS_HANDLE hDataStream, void *pBuffer, size_t iSize, void *pPrivate, BUFFER_HANDLE *phBuffer);
 		GC_API DSAllocAndAnnounceBuffer(DS_HANDLE hDataStream, size_t iSize, void *pPrivate, BUFFER_HANDLE *phBuffer);

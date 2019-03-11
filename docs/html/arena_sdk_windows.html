@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Arena SDK for Windows &mdash; Arena 0.1.17.0 documentation</title>
+  <title>Arena SDK for Windows &mdash; Arena 0.1.4.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.17.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
         <link rel="next" title="Arena SDK for Linux" href="arena_sdk_linux.html"/>
         <link rel="prev" title="Arena SDK Datasheet" href="getting_started_sdk_datasheet.html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.1.17
+                0.1.4
               </div>
             
           
@@ -212,15 +212,15 @@
 <p>Arena SDK provides a simple command-line utility named LUCID Driver Installer that can be used to install the LUCID Lightweight Filter Driver.</p>
 <p>The following command shows how to install the LUCID Lightweight Filter Driver on a 64-bit system:</p>
 <p>Windows 10:</p>
-<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="p">&gt;</span> LUCIDDriverInstaller -i <span class="s2">&quot;C:\Program Files\Lucid Vision Labs\Arena SDK\driver64\Lucid Lwf\Windows 10\Lucidlwf.inf&quot;</span>
+<div class="highlight-batch"><div class="highlight"><pre><span class="p">&gt;</span> LUCIDDriverInstaller -i <span class="s2">&quot;C:\Program Files\Lucid Vision Labs\Arena SDK\driver64\Lucid Lwf\Windows 10\Lucidlwf.inf&quot;</span>
 </pre></div>
 </div>
 <p>Windows 7:</p>
-<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="p">&gt;</span> LUCIDDriverInstaller -i <span class="s2">&quot;C:\Program Files\Lucid Vision Labs\Arena SDK\driver64\Lucid Lwf\Windows 7\Lucidlwf.inf&quot;</span>
+<div class="highlight-batch"><div class="highlight"><pre><span class="p">&gt;</span> LUCIDDriverInstaller -i <span class="s2">&quot;C:\Program Files\Lucid Vision Labs\Arena SDK\driver64\Lucid Lwf\Windows 7\Lucidlwf.inf&quot;</span>
 </pre></div>
 </div>
 <p>The following command shows how to uninstall the LUCID Lightweight Filter Driver:</p>
-<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="p">&gt;</span> LUCIDDriverInstaller -u
+<div class="highlight-batch"><div class="highlight"><pre><span class="p">&gt;</span> LUCIDDriverInstaller -u
 </pre></div>
 </div>
 <table border="1" class="docutils">
@@ -361,28 +361,28 @@ For more information on Link-Local Address selection, refer to <a class="referen
 <h3>Setting Up Persistent IP or DHCP on the Camera with IP Config Utility<a class="headerlink" href="#setting-up-persistent-ip-or-dhcp-on-the-camera-with-ip-config-utility" title="Permalink to this headline">¶</a></h3>
 <p>Arena SDK provides a simple command-line utility named IP Config Utility to configure your camera’s IP address.</p>
 <p>The following command shows all connected cameras:</p>
-<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="p">&gt;</span> IPConfigUtility /list
+<div class="highlight-batch"><div class="highlight"><pre><span class="p">&gt;</span> IPConfigUtility /list
 
 [index] MAC             IP              SUBNET          GATEWAY                 IP CONFIG
 [0]     1C0FAF000001    169.254.101.0   255.255.0.0     0.0.0.0                 DHCP= 1 Persistent Ip= 1 LLA = 1
 </pre></div>
 </div>
 <p>The following commands show how to enable and set a persistent IP address on a camera with the MAC address of 1C:0F:AF:00:00:01:</p>
-<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="p">&gt;</span> IPConfigUtility /config -m 1C0FAF000001 -p true
+<div class="highlight-batch"><div class="highlight"><pre><span class="p">&gt;</span> IPConfigUtility /config -m 1C0FAF000001 -p true
 <span class="p">&gt;</span> IPConfigUtility /persist -m 1C0FAF000001 -p true -a 192.168.0.10 -s 255.255.0.0 -g 0.0.0.0
 </pre></div>
 </div>
 <p>The following commands show how to enable persistent IP and set a persistent IP address on a camera listed at index 0:</p>
-<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="p">&gt;</span> IPConfigUtility /config -i 0 -p true
+<div class="highlight-batch"><div class="highlight"><pre><span class="p">&gt;</span> IPConfigUtility /config -i 0 -p true
 <span class="p">&gt;</span> IPConfigUtility /persist -i 0 -p true -a 192.168.0.10 -s 255.255.0.0 -g 0.0.0.0
 </pre></div>
 </div>
 <p>The following command shows how to enable DHCP on a camera listed at index 0:</p>
-<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="p">&gt;</span> IPConfigUtility /config -i 0 -d true
+<div class="highlight-batch"><div class="highlight"><pre><span class="p">&gt;</span> IPConfigUtility /config -i 0 -d true
 </pre></div>
 </div>
 <p>The following commands show how to enable persistent IP and DHCP and set a persistent IP address on a camera listed at index 0:</p>
-<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="p">&gt;</span> IPConfigUtility /config -i 0 -p true -d true
+<div class="highlight-batch"><div class="highlight"><pre><span class="p">&gt;</span> IPConfigUtility /config -i 0 -p true -d true
 <span class="p">&gt;</span> IPConfigUtility /persist -i 0 -p true -a 192.168.0.10 -s 255.255.0.0 -g 0.0.0.0
 </pre></div>
 </div>
@@ -390,7 +390,7 @@ For more information on Link-Local Address selection, refer to <a class="referen
 <div class="section" id="forcing-an-ip-address-on-the-camera-with-ip-config-utility">
 <h3>Forcing an IP Address on the Camera with IP Config Utility<a class="headerlink" href="#forcing-an-ip-address-on-the-camera-with-ip-config-utility" title="Permalink to this headline">¶</a></h3>
 <p>The following command shows how to force an IP address on a camera with the MAC address of 1C:0F:AF:00:00:01:</p>
-<div class="highlight-batch notranslate"><div class="highlight"><pre><span></span><span class="p">&gt;</span> IPConfigUtility /force -m 1C0FAF000001 -a 192.168.0.10 -s 255.255.0.0 -g 0.0.0.0
+<div class="highlight-batch"><div class="highlight"><pre><span class="p">&gt;</span> IPConfigUtility /force -m 1C0FAF000001 -a 192.168.0.10 -s 255.255.0.0 -g 0.0.0.0
 </pre></div>
 </div>
 </div>
@@ -881,7 +881,7 @@ If you see packet loss or torn images while streaming in ArenaView, you can enab
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.17.0',
+            VERSION:'0.1.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -891,7 +891,6 @@ If you see packet loss or torn images while streaming in ArenaView, you can enab
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

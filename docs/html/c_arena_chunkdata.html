@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ChunkData &mdash; Arena 0.1.17.0 documentation</title>
+  <title>ChunkData &mdash; Arena 0.1.4.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.17.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
         <link rel="up" title="Arena C" href="c_arena.html"/>
         <link rel="next" title="Image" href="c_arena_image.html"/>
         <link rel="prev" title="Device" href="c_arena_device.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.17
+                0.1.4
               </div>
             
           
@@ -198,17 +198,93 @@
 </div>
 <div class="section" id="acchunkdatagetchunk">
 <h2>acChunkDataGetChunk<a class="headerlink" href="#acchunkdatagetchunk" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acChunkDataGetChunk” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_chunk_data_8h_1aee26094aa421fe4986ef0db66c9ed5be"></span><code class="descname">AC_ERROR AC_API acChunkDataGetChunk(acBuffer hBuffer, const char * pName, acNode * phChunk)</code></dt>
+<dd><p><strong> acChunkDataGetChunk </strong> gets a specified chunk, which can be used to retrieve the chunk value and related information available in its node type (maximum, minimum, node display name, etc). <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">hBuffer</span></code>: <ul>
+<li>Type: acBuffer</li>
+<li>[In] parameter</li>
+<li>A chunk data</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">pName</span></code>: <ul>
+<li>Type: const char*</li>
+<li>[In] parameter</li>
+<li>Name of the chunk</li>
+<li>Prefixed with ‘Chunk’</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">phChunk</span></code>: <ul>
+<li>Type: acNode*</li>
+<li>[Out] parameter</li>
+<li>Requested node</li>
+<li>Null on failure</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="acchunkdatagetchunkandaccessmode">
 <h2>acChunkDataGetChunkAndAccessMode<a class="headerlink" href="#acchunkdatagetchunkandaccessmode" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acChunkDataGetChunkAndAccessMode” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_chunk_data_8h_1a18fa9465254f7b985421980dd5e96670"></span><code class="descname">AC_ERROR AC_API acChunkDataGetChunkAndAccessMode(acBuffer hBuffer, const char * pName, acNode * phChunkNode, AC_ACCESS_MODE * pAccessMode)</code></dt>
+<dd><p><strong> acChunkDataGetChunkAndAccessMode </strong> gets a specified chunk and its access mode, returning it as a node in order to preserve metadata related to the chunk. <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">hBuffer</span></code>: <ul>
+<li>Type: acBuffer</li>
+<li>[In] parameter</li>
+<li>A chunk data</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">pName</span></code>: <ul>
+<li>Type: const char*</li>
+<li>[In] parameter</li>
+<li>Name of the chunk</li>
+<li>Prefixed with ‘Chunk’</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">phChunkNode</span></code>: <ul>
+<li>Type: acNode*</li>
+<li>[Out] parameter</li>
+<li>Requested node</li>
+<li>Null on failure</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">pAccessMode</span></code>: <ul>
+<li>Type: AC_ACCESS_MODE*</li>
+<li>[Out] parameter</li>
+<li>Access mode of the requested node</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -255,7 +331,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.17.0',
+            VERSION:'0.1.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -265,7 +341,6 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

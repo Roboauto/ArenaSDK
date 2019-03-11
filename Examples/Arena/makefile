@@ -9,7 +9,6 @@ SUBDIRS =   Cpp_Acquisition                        \
             Cpp_Exposure                           \
             Cpp_Exposure_ForHDR                    \
             Cpp_ForceIp                            \
-            Cpp_PolarizedCamera                    \
             Cpp_Save                               \
             Cpp_Save_FileNamePattern               \
             Cpp_SimpleAcquisition                  \
@@ -39,3 +38,21 @@ clean: $(SUBCLEAN)
 
 $(SUBCLEAN): %.clean:
 	$(MAKE) -C $* clean
+
+
+SUBRELEASE = $(addsuffix .release,$(SUBDIRS))
+
+.PHONY: release $(SUBRELEASE)
+release: $(SUBRELEASE)
+
+$(SUBRELEASE): %.release:
+	$(MAKE) -C $* release
+
+
+SUBDEBUG = $(addsuffix .debug,$(SUBDIRS))
+
+.PHONY: debug $(SUBDEBUG)
+debug: $(SUBDEBUG)
+
+$(SUBDEBUG): %.debug:
+	$(MAKE) -C $* debug

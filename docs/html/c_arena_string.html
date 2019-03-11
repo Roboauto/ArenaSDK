@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>String &mdash; Arena 0.1.17.0 documentation</title>
+  <title>String &mdash; Arena 0.1.4.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.17.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
         <link rel="up" title="Nodes" href="c_arena_nodes.html"/>
         <link rel="next" title="Save C" href="c_save.html"/>
         <link rel="prev" title="Selector" href="c_arena_selector.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.17
+                0.1.4
               </div>
             
           
@@ -200,24 +200,124 @@
 </div>
 <div class="section" id="acstringsetvalue">
 <h2>acStringSetValue<a class="headerlink" href="#acstringsetvalue" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acStringSetValue” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_string_8h_1ac97958b2bc09fc0c9f3cc690a4e4ffbe"></span><code class="descname">AC_ERROR AC_API acStringSetValue(acNode hNode, const char * pValue)</code></dt>
+<dd><p><strong> acStringSetValue </strong> sets a new value. New value must be shorter than the maximum value length (acStringGetMaxLength).<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">hNode</span></code>: <ul>
+<li>Type: acNode</li>
+<li>[In] parameter</li>
+<li>A node</li>
+<li>Accepts string nodes</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">pValue</span></code>: <ul>
+<li>Type: const char*</li>
+<li>[In] parameter</li>
+<li>Value to set</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p><dl class="docutils">
+<dt><strong>See</strong></dt>
+<dd><ul class="simple">
+<li>acStringGetMaxLength </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="acstringgetvalue">
 <h2>acStringGetValue<a class="headerlink" href="#acstringgetvalue" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acStringGetValue” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_string_8h_1a577a71e7c4109a944f1ffff400fbb2ac"></span><code class="descname">AC_ERROR AC_API acStringGetValue(acNode hNode, char * pValue, size_t * pBufLen)</code></dt>
+<dd><p><strong> acStringGetValue </strong> retrieves the current value of the node. <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">hNode</span></code>: <ul>
+<li>Type: acNode</li>
+<li>[In] parameter</li>
+<li>A node</li>
+<li>Accepts string nodes</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">pValue</span></code>: <ul>
+<li>Type: char*</li>
+<li>[Out] parameter</li>
+<li>Accepts null</li>
+<li>Current value</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">pBufLen</span></code>: <ul>
+<li>Type: size_t*</li>
+<li>[In/out] parameter</li>
+<li>(In) Length of the buffer</li>
+<li>(Out) Length of the value</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="acstringgetmaxlength">
 <h2>acStringGetMaxLength<a class="headerlink" href="#acstringgetmaxlength" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acStringGetMaxLength” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_string_8h_1aea08746ed055a4f9560f88d9ddc07c93"></span><code class="descname">AC_ERROR AC_API acStringGetMaxLength(acNode hNode, int64_t * pMaxLen)</code></dt>
+<dd><p><strong> acStringGetMaxLength </strong> retrieves the maximum length of the value string. <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">hNode</span></code>: <ul>
+<li>Type: acNode</li>
+<li>[In] parameter</li>
+<li>A node</li>
+<li>Accepts string nodes</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">pMaxLen</span></code>: <ul>
+<li>Type: int64_t*</li>
+<li>[Out] parameter</li>
+<li>Maximum length</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -264,7 +364,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.17.0',
+            VERSION:'0.1.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -274,7 +374,6 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

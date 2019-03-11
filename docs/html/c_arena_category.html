@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Category &mdash; Arena 0.1.17.0 documentation</title>
+  <title>Category &mdash; Arena 0.1.4.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.17.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
         <link rel="up" title="Nodes" href="c_arena_nodes.html"/>
         <link rel="next" title="Command" href="c_arena_command.html"/>
         <link rel="prev" title="Boolean" href="c_arena_boolean.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.17
+                0.1.4
               </div>
             
           
@@ -200,24 +200,126 @@
 </div>
 <div class="section" id="accategorygetnumfeatures">
 <h2>acCategoryGetNumFeatures<a class="headerlink" href="#accategorygetnumfeatures" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acCategoryGetNumFeatures” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_category_8h_1abf403e4c6ee08cd5c6d717eedf2fdd5d"></span><code class="descname">AC_ERROR AC_API acCategoryGetNumFeatures(acNode hNode, size_t * pNumFeatures)</code></dt>
+<dd><p><strong> acCategoryGetNumFeatures </strong> retrieves the number of features of a category node. <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">hNode</span></code>: <ul>
+<li>Type: acNode</li>
+<li>[In] parameter</li>
+<li>A node</li>
+<li>Accepts category nodes</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">pNumFeatures</span></code>: <ul>
+<li>Type: size_t*</li>
+<li>[Out] parameter</li>
+<li>Number of features</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="accategorygetfeature">
 <h2>acCategoryGetFeature<a class="headerlink" href="#accategorygetfeature" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acCategoryGetFeature” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_category_8h_1adcdee53b24ae7dd056763968289a716a"></span><code class="descname">AC_ERROR AC_API acCategoryGetFeature(acNode hNode, size_t index, acNode * hFeatureNode)</code></dt>
+<dd><p><strong> acCategoryGetFeatureAndAccessMode </strong> retrieves a feature node by its index. <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">hNode</span></code>: <ul>
+<li>Type: acNode</li>
+<li>[In] parameter</li>
+<li>A node</li>
+<li>Accepts category nodes</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">index</span></code>: <ul>
+<li>Type: size_t</li>
+<li>[In] parameter</li>
+<li>Index of the feature</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">hFeatureNode</span></code>: <ul>
+<li>Type: acNode*</li>
+<li>[Out] parameter</li>
+<li>Feature node (node of any type)</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 <div class="section" id="accategorygetfeatureandaccessmode">
 <h2>acCategoryGetFeatureAndAccessMode<a class="headerlink" href="#accategorygetfeatureandaccessmode" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">doxygenfunction: Cannot find function “acCategoryGetFeatureAndAccessMode” in doxygen xml output for project “ArenaSDK” from directory: ../../xml</p>
-</div>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_category_8h_1a0851a4f363de3cb849fb7c765e5de3ed"></span><code class="descname">AC_ERROR AC_API acCategoryGetFeatureAndAccessMode(acNode hNode, size_t index, acNode * hFeatureNode, AC_ACCESS_MODE * pAccessMode)</code></dt>
+<dd><p><strong> acCategoryGetFeatureAndAccessMode </strong> retrieves a feature node and its access mode by its index. <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">hNode</span></code>: <ul>
+<li>Type: acNode</li>
+<li>[In] parameter</li>
+<li>A node</li>
+<li>Accepts category nodes</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">index</span></code>: <ul>
+<li>Type: size_t</li>
+<li>[In] parameter</li>
+<li>Index of the feature node</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">hFeatureNode</span></code>: <ul>
+<li>Type: acNode*</li>
+<li>[Out] parameter</li>
+<li>Feature node (node of any type)</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">pAccessMode</span></code>: <ul>
+<li>Type: AC_ACCESS_MODE*</li>
+<li>[Out] parameter</li>
+<li>Feature node’s access mode</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -264,7 +366,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.17.0',
+            VERSION:'0.1.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -274,7 +376,6 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -43,13 +43,14 @@
 // (1) activates chunk mode
 // (2) enables exposure and gain chunks
 // (3) starts the stream and gets images
-// (4) retrieves exposure and gain chunk data
+// (4) retrieves exposure and gain chunk data from image
 // (5) requeues buffers and stops the stream
 void ConfigureAndRetrieveChunkData(Arena::IDevice* pDevice)
 {
 	// get node values that will be changed in order to return their values
 	// at the end of the example
 	bool chunkModeActiveInitial = Arena::GetNodeValue<bool>(pDevice->GetNodeMap(), "ChunkModeActive");
+	bool chunkEnableInitial = Arena::GetNodeValue<bool>(pDevice->GetNodeMap(), "ChunkEnable");
 
 	// Activate chunk mode
 	//    Activate chunk mode before enabling chunks; otherwise, ChunkSelector and
@@ -141,7 +142,7 @@ void ConfigureAndRetrieveChunkData(Arena::IDevice* pDevice)
 		GenApi::CFloatPtr pChunkGain = pChunkData->GetChunk("ChunkGain");
 		double chunkGain = pChunkGain->GetValue();
 
-		std::cout << " (exposure " << chunkExposureTime << ", gain " << chunkGain << ")\n";
+		std::cout << " (exposure = " << chunkExposureTime << ", gain = " << chunkGain << ")\n";
 	}
 
 	// requeue buffers
@@ -156,9 +157,10 @@ void ConfigureAndRetrieveChunkData(Arena::IDevice* pDevice)
 	std::cout << TAB1 << "Stop stream\n";
 
 	pDevice->StopStream();
-	
-	// Restore initial chunk mode state
-    Arena::SetNodeValue<bool>(pDevice->GetNodeMap(), "ChunkModeActive", chunkModeActiveInitial);
+
+	// return nodes to their initial values
+	Arena::SetNodeValue<bool>(pDevice->GetNodeMap(), "ChunkModeActive", chunkModeActiveInitial);
+	Arena::SetNodeValue<bool>(pDevice->GetNodeMap(), "ChunkEnable", chunkEnableInitial);
 	
 }
 
@@ -169,6 +171,9 @@ void ConfigureAndRetrieveChunkData(Arena::IDevice* pDevice)
 
 int main()
 {
+	// flag to track when an exception has been thrown
+	bool exceptionThrown = false;
+
 	std::cout << "Cpp_ChunkData\n";
 
 	try
@@ -179,7 +184,8 @@ int main()
 		std::vector<Arena::DeviceInfo> deviceInfos = pSystem->GetDevices();
 		if (deviceInfos.size() == 0)
 		{
-			std::cout << "\nNo camera(s) connected\n";
+			std::cout << "\nNo camera connected\nPress enter to complete\n";
+			std::getchar();
 			return 0;
 		}
 		Arena::IDevice* pDevice = pSystem->CreateDevice(deviceInfos[0]);
@@ -196,20 +202,24 @@ int main()
 	catch (GenICam::GenericException& ge)
 	{
 		std::cout << "\nGenICam exception thrown: " << ge.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (std::exception& ex)
 	{
 		std::cout << "\nStandard exception thrown: " << ex.what() << "\n";
-		return -1;
+		exceptionThrown = true;
 	}
 	catch (...)
 	{
 		std::cout << "\nUnexpected exception thrown\n";
-		return -1;
+		exceptionThrown = true;
 	}
 
-	std::cout << "Press any key to complete\n";
+	std::cout << "Press enter to complete\n";
 	std::getchar();
-	return 0;
+
+	if (exceptionThrown)
+		return -1;
+	else
+		return 0;
 }
