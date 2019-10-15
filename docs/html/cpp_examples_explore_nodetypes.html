@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Explore, Node Types &mdash; Arena 0.1.4.0 documentation</title>
+  <title>Explore, Node Types &mdash; Arena 0.1.18.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.18.0 documentation" href="index.html"/>
         <link rel="up" title="C++ Code Samples" href="cpp_examples.html"/>
         <link rel="next" title="Exposure, Introduction" href="cpp_examples_exposure.html"/>
         <link rel="prev" title="Explore, Nodes" href="cpp_examples_explore_nodes.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.18
               </div>
             
           
@@ -113,6 +113,7 @@
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_callbacks_onnodechange.html">Callbacks, On Node Change</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_callbacks_polling.html">Callbacks, Polling</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_callbacks_onevent.html">Callbacks, On Event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_callbacks_imagecallbacks.html">Callbacks, Image Callbacks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_callbacks_multithreadedimagecallbacks.html">Callbacks, Multithreaded Image Callbacks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_chunkdata.html">Chunk Data, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_chunkdata_crcvalidation.html">Chunk Data, CRC Validation</a></li>
@@ -126,11 +127,17 @@
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_forceip.html">Force IP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_lut.html">Lookup Table, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_pixelcorrection.html">Pixel Correction, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_polarization_dolpaolp.html">Polarization, DoLP AoLP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_polarization_colordolpaolp.html">Polarization, Color DoLP AoLP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_record.html">Record, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_save.html">Save, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_save_filenamepattern.html">Save, File Name Pattern</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_save_ply.html">Save, Ply</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_scheduledactioncommands.html">Scheduled Action Commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_sequencer_hdr.html">Sequencer, HDR</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_streamables.html">Streamables</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_trigger.html">Trigger, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_trigger_overlappingtrigger.html">Trigger, Overlapping Trigger</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_usersets.html">User Sets</a></li>
 </ul>
 </li>
@@ -209,18 +216,18 @@
   <div class="section" id="explore-node-types">
 <h1>Explore, Node Types<a class="headerlink" href="#explore-node-types" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-c++"><div class="highlight"><pre><span class="cm">/***************************************************************************************</span>
-<span class="cm">***                                                                                 ***</span>
-<span class="cm">***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***</span>
-<span class="cm">***                                                                                 ***</span>
-<span class="cm">***  THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***</span>
-<span class="cm">***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***</span>
-<span class="cm">***  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    ***</span>
-<span class="cm">***  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         ***</span>
-<span class="cm">***  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  ***</span>
-<span class="cm">***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***</span>
-<span class="cm">***  SOFTWARE.                                                                      ***</span>
-<span class="cm">***                                                                                 ***</span>
-<span class="cm">***************************************************************************************/</span>
+<span class="cm"> ***                                                                                 ***</span>
+<span class="cm"> ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***</span>
+<span class="cm"> ***                                                                                 ***</span>
+<span class="cm"> ***  THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***</span>
+<span class="cm"> ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***</span>
+<span class="cm"> ***  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    ***</span>
+<span class="cm"> ***  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         ***</span>
+<span class="cm"> ***  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  ***</span>
+<span class="cm"> ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***</span>
+<span class="cm"> ***  SOFTWARE.                                                                      ***</span>
+<span class="cm"> ***                                                                                 ***</span>
+<span class="cm"> ***************************************************************************************/</span>
 
 <span class="cp">#include</span> <span class="cpf">&quot;stdafx.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;ArenaApi.h&quot;</span><span class="cp"></span>
@@ -231,9 +238,14 @@
 <span class="cp">#define TAB3 &quot;      &quot;</span>
 
 <span class="c1">// Explore: Node Types</span>
-<span class="c1">//    This example explores the different properties of</span>
-<span class="c1">//    various node types including integer, float, boolean,</span>
-<span class="c1">//    string, and enumeration nodes.</span>
+<span class="c1">//    This example explores the different properties of various node&#39;s types</span>
+<span class="c1">//    including boolean, string, enumeration, integer, and float nodes. The user</span>
+<span class="c1">//    inputs the node name that they wish to access (leaving out spacing between</span>
+<span class="c1">//    words) in order to retrieve the node properties, or inputs &#39;x&#39; to exit.</span>
+<span class="c1">//    This example includes commented out code that sets values for each node</span>
+<span class="c1">//    type, retrieves entry by node name for enumeration types, and imposes</span>
+<span class="c1">//    maximum and minimum values for integer and float types. See</span>
+<span class="c1">//    Cpp_Explore_Nodes for a complete list of nodes and their respective types.</span>
 
 <span class="c1">// =-=-=-=-=-=-=-=-=-</span>
 <span class="c1">// =-=- EXAMPLE -=-=-</span>
@@ -505,14 +517,13 @@
 <span class="p">{</span>
         <span class="n">GenICam</span><span class="o">::</span><span class="n">gcstring</span> <span class="n">nodeName</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
         <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">TAB1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Input node name to explore (&#39;x&#39; to exit)</span><span class="se">\n</span><span class="s">&quot;</span>
-                          <span class="o">&lt;&lt;</span> <span class="n">TAB2</span><span class="p">;</span>
+                        <span class="o">&lt;&lt;</span> <span class="n">TAB2</span><span class="p">;</span>
 
         <span class="c1">// stay in loop until exit</span>
         <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span>
         <span class="p">{</span>
                 <span class="kt">char</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">cin</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
 
-                <span class="c1">// complete accepting input</span>
                 <span class="c1">// char(10), enter to accept</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">ch</span> <span class="o">==</span> <span class="kt">char</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
                 <span class="p">{</span>
@@ -558,7 +569,7 @@
                         <span class="c1">// reset input</span>
                         <span class="n">nodeName</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
                         <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">TAB1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Input node name to explore (&#39;x&#39; to exit)</span><span class="se">\n</span><span class="s">&quot;</span>
-                                          <span class="o">&lt;&lt;</span> <span class="n">TAB2</span><span class="p">;</span>
+                                        <span class="o">&lt;&lt;</span> <span class="n">TAB2</span><span class="p">;</span>
                 <span class="p">}</span>
 
                 <span class="c1">// continue accepting input</span>
@@ -676,7 +687,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.4.0',
+            VERSION:'0.1.18.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -21,7 +21,7 @@ namespace Arena
 	 * @fn ISystem* OpenSystem()
 	 *
 	 * @return 
-	 *  - Type: ISystem* 
+	 *  - Type: ISystem*
 	 *  - The system object
 	 *
 	 * <B> OpenSystem </B> initializes the Arena SDK and retrieves the system
@@ -37,13 +37,13 @@ namespace Arena
 	 * \endcode
 	 *
 	 * @warning 
-	 *  - Only one system may be opened at a time 
-	 *  - System must be closed 
+	 *  - Only one system may be opened at a time
+	 *  - System must be closed
 	 *  - May throw GenICam::GenericException or other derived exception
 	 *
 	 * @see 
-	 *  - Arena::ISystem 
-	 *  - Arena::OpenSystem 
+	 *  - Arena::ISystem
+	 *  - Arena::OpenSystem
 	 *  - Arena::CloseSystem
 	 */
 	ARENA_API ISystem* OpenSystem();
@@ -52,7 +52,7 @@ namespace Arena
 	 * @fn void CloseSystem(ISystem* pSystem)
 	 *
 	 * @param pSystem
-	 *  - Type: ISystem* 
+	 *  - Type: ISystem*
 	 *  - The system object
 	 *
 	 * @return 
@@ -62,7 +62,7 @@ namespace Arena
 	 * deinitializes the Arena SDK, deallocating all memory.
 	 *
 	 * @warning 
-	 *  - The system must be closed 
+	 *  - The system must be closed
 	 *  - May throw GenICam::GenericException or other derived exception
 	 *
 	 * @see 
@@ -82,8 +82,8 @@ namespace Arena
 	 *	- Type: uint64_t
 	 *	- Maximum number of buffers
 	 *
-	 * <B> CalculateMaximumNumberOfBuffers </B> calculates the number of 
-	 * buffers it would take to fill 80% of the available memory. 
+	 * <B> CalculateMaximumNumberOfBuffers </B> calculates the number of buffers
+	 * it would take to fill 80% of the available memory.
 	 */
 	ARENA_API size_t CalculateMaximumNumberOfBuffers(size_t payloadSize);
 }

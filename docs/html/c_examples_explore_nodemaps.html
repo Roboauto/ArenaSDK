@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Explore, Node Maps &mdash; Arena 0.1.4.0 documentation</title>
+  <title>Explore, Node Maps &mdash; Arena 0.1.18.0 documentation</title>
   
 
   
@@ -35,10 +35,10 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.18.0 documentation" href="index.html"/>
         <link rel="up" title="C Code Samples" href="c_examples.html"/>
         <link rel="next" title="Exposure, Introduction" href="c_examples_exposure.html"/>
-        <link rel="prev" title="Enumeration, Introduction" href="c_examples_enumeration.html"/> 
+        <link rel="prev" title="Enumeration, Handling Disconnections" href="c_examples_enumeration_handlingdisconnections.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.18
               </div>
             
           
@@ -110,19 +110,33 @@
 <li class="toctree-l4"><a class="reference internal" href="c_examples_simpleacquisition.html">Simple Acquisition, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_acquisition.html">Acquisition, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_acquisition_rapidacquisition.html">Acquisition, Rapid Acquisition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_imagecallbacks.html">Callback, Image Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_multithreadedimagecallbacks.html">Callback, Multithreaded Image Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_onevent.html">Callback, On Event</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_callback_onnodechange.html">Callback, On Node Change</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_polling.html">Callback, Polling</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_chunkdata.html">Chunk Data, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_chunkdata_crcvalidation.html">Chunk Data, CRC Validation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_enumeration.html">Enumeration, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_enumeration_handlingdisconnections.html">Enumeration, Handling Disconnections</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Explore, Node Maps</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_exposure.html">Exposure, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodes.html">Explore, Nodes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodetypes.html">Explore, Node Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_forceip.html">Force IP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_lut.html">LUT, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_pixelcorrection.html">Pixel Correction, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_polarization_colordolpaolp.html">Polarization, Color DoLP AoLP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_polarization_dolpaolp.html">Polarization, DoLP AoLP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_record.html">Record, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_save.html">Save, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_save_filenamepattern.html">Save, File Name Pattern</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_save_ply.html">Save, Ply</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_scheduledactioncommands.html">Scheduled Action Commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_sequencer_hdr.html">Sequencer, HDR</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_streamables.html">Streamables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_trigger.html">Trigger, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_trigger_overlappingtrigger.html">Trigger, Overlapping Trigger</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_usersets.html">User Sets, Introduction</a></li>
 </ul>
 </li>
@@ -200,18 +214,18 @@
   <div class="section" id="explore-node-maps">
 <h1>Explore, Node Maps<a class="headerlink" href="#explore-node-maps" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-c++"><div class="highlight"><pre><span class="cm">/***************************************************************************************</span>
-<span class="cm">***                                                                                 ***</span>
-<span class="cm">***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***</span>
-<span class="cm">***                                                                                 ***</span>
-<span class="cm">***  THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***</span>
-<span class="cm">***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***</span>
-<span class="cm">***  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    ***</span>
-<span class="cm">***  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         ***</span>
-<span class="cm">***  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  ***</span>
-<span class="cm">***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***</span>
-<span class="cm">***  SOFTWARE.                                                                      ***</span>
-<span class="cm">***                                                                                 ***</span>
-<span class="cm">***************************************************************************************/</span>
+<span class="cm"> ***                                                                                 ***</span>
+<span class="cm"> ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***</span>
+<span class="cm"> ***                                                                                 ***</span>
+<span class="cm"> ***  THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***</span>
+<span class="cm"> ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***</span>
+<span class="cm"> ***  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    ***</span>
+<span class="cm"> ***  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         ***</span>
+<span class="cm"> ***  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  ***</span>
+<span class="cm"> ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***</span>
+<span class="cm"> ***  SOFTWARE.                                                                      ***</span>
+<span class="cm"> ***                                                                                 ***</span>
+<span class="cm"> ***************************************************************************************/</span>
 
 <span class="cp">#include</span> <span class="cpf">&quot;stdafx.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;ArenaCApi.h&quot;</span><span class="cp"></span>
@@ -222,9 +236,9 @@
 <span class="cp">#define TAB2 &quot;    &quot;</span>
 
 <span class="c1">// Explore: Node Maps</span>
-<span class="c1">//    This example explores the 5 available node maps of Arena, 4 retrieved</span>
-<span class="c1">//    from any devices and 1 from the system. It demonstrates traversing nodes</span>
-<span class="c1">//    retrieved as a complete vector.</span>
+<span class="c1">//    This example explores the 5 available node maps of Arena, 4 retrieved from</span>
+<span class="c1">//    any devices and 1 from the system. It demonstrates traversing the retrieved</span>
+<span class="c1">//    nodes.</span>
 
 <span class="c1">// =-=-=-=-=-=-=-=-=-</span>
 <span class="c1">// =-=- SETTINGS =-=-</span>
@@ -238,11 +252,11 @@
 <span class="cp">#define EXPLORE_TL_SYSTEM_NODEMAP true</span>
 
 <span class="c1">// Device Timeout</span>
-<span class="c1">//    Timeout for detecting camera devices (in milliseconds). If no device is discovered</span>
-<span class="c1">//    at the end of the timeout, the example will return an error. The timeout is the</span>
-<span class="c1">//    maximum time to wait to detect a device; the example will resume once the</span>
-<span class="c1">//        internal list of devices has been updated, not waiting the full extent of the</span>
-<span class="c1">//    timeout.</span>
+<span class="c1">//    Timeout for detecting camera devices (in milliseconds). If no device is</span>
+<span class="c1">//    discovered at the end of the timeout, the example will return an error. The</span>
+<span class="c1">//    timeout is the maximum time to wait to detect a device; the example will</span>
+<span class="c1">//    resume once the internal list of devices has been updated, not waiting the</span>
+<span class="c1">//    full extent of the timeout.</span>
 <span class="cp">#define DEVICE_TIMEOUT 100</span>
 
 <span class="c1">// maximum buffer length</span>
@@ -258,12 +272,15 @@
 <span class="n">AC_ERROR</span> <span class="nf">ExploreNodeMap</span><span class="p">(</span><span class="n">acNodeMap</span> <span class="n">hNodeMap</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="n">AC_ERROR</span> <span class="n">err</span> <span class="o">=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">;</span>
-        <span class="kt">uint64_t</span> <span class="n">numNodes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
         <span class="c1">// Get number of nodes</span>
         <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%sNumber of nodes: &quot;</span><span class="p">,</span> <span class="n">TAB2</span><span class="p">);</span>
+        <span class="kt">uint64_t</span> <span class="n">numNodes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-        <span class="kt">uint64_t</span> <span class="n">getNumNodes</span> <span class="o">=</span> <span class="n">acNodeMapGetNumNodes</span><span class="p">(</span><span class="n">hNodeMap</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">numNodes</span><span class="p">);</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">acNodeMapGetNumNodes</span><span class="p">(</span><span class="n">hNodeMap</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">numNodes</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
+
         <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%&quot;</span> <span class="n">PRIu64</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">numNodes</span><span class="p">);</span>
 
         <span class="c1">// print category nodes</span>
@@ -271,27 +288,26 @@
 
         <span class="kt">bool</span> <span class="n">firstPass</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
 
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="n">numNodes</span><span class="p">;</span> <span class="n">index</span><span class="o">++</span><span class="p">)</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">uint64_t</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="n">numNodes</span><span class="p">;</span> <span class="n">index</span><span class="o">++</span><span class="p">)</span>
         <span class="p">{</span>
+                <span class="kt">size_t</span> <span class="n">index_size_t</span> <span class="o">=</span> <span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="n">index</span><span class="p">;</span>
                 <span class="n">AC_INTERFACE_TYPE</span> <span class="n">interfaceType</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
                 <span class="n">acNode</span> <span class="n">hNode</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
                 <span class="kt">char</span> <span class="n">pDisplayNameBuf</span><span class="p">[</span><span class="n">MAX_BUF</span><span class="p">];</span>
                 <span class="kt">size_t</span> <span class="n">bufLen</span> <span class="o">=</span> <span class="n">MAX_BUF</span><span class="p">;</span>
 
-                <span class="n">err</span> <span class="o">=</span> <span class="n">acNodeMapGetNodeByIndex</span><span class="p">(</span><span class="n">hNodeMap</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hNode</span><span class="p">);</span>
-
+                <span class="n">err</span> <span class="o">=</span> <span class="n">acNodeMapGetNodeByIndex</span><span class="p">(</span><span class="n">hNodeMap</span><span class="p">,</span> <span class="n">index_size_t</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hNode</span><span class="p">);</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">)</span>
                         <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
 
                 <span class="n">err</span> <span class="o">=</span> <span class="n">acNodeGetPrincipalInterfaceType</span><span class="p">(</span><span class="n">hNode</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">interfaceType</span><span class="p">);</span>
-
                 <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">)</span>
                         <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
 
+                <span class="c1">// get node display name</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">interfaceType</span> <span class="o">==</span> <span class="n">AC_INTERFACE_TYPE_CATEGORY</span><span class="p">)</span>
                 <span class="p">{</span>
                         <span class="n">err</span> <span class="o">=</span> <span class="n">acNodeGetDisplayName</span><span class="p">(</span><span class="n">hNode</span><span class="p">,</span> <span class="n">pDisplayNameBuf</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">bufLen</span><span class="p">);</span>
-
                         <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">)</span>
                                 <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
 
@@ -382,12 +398,19 @@
 <span class="c1">// =- &amp; CLEAN UP =-=-</span>
 <span class="c1">// =-=-=-=-=-=-=-=-=-</span>
 
-<span class="cp">#define CHECK_RETURN                                      \</span>
-<span class="cp">        if (err != AC_ERR_SUCCESS)                            \</span>
-<span class="cp">        {                                                     \</span>
-<span class="cp">                printf(&quot;Error: %d\n\nExample completed.\n&quot;, err); \</span>
-<span class="cp">                getchar();                                        \</span>
-<span class="cp">                return -1;                                        \</span>
+<span class="c1">// error buffer length</span>
+<span class="cp">#define ERR_BUF 512</span>
+
+<span class="cp">#define CHECK_RETURN                                  \</span>
+<span class="cp">        if (err != AC_ERR_SUCCESS)                        \</span>
+<span class="cp">        {                                                 \</span>
+<span class="cp">                char pMessageBuf[ERR_BUF];                    \</span>
+<span class="cp">                size_t pBufLen = ERR_BUF;                     \</span>
+<span class="cp">                acGetLastErrorMessage(pMessageBuf, &amp;pBufLen); \</span>
+<span class="cp">                printf(&quot;\nError: %s&quot;, pMessageBuf);           \</span>
+<span class="cp">                printf(&quot;\n\nPress enter to complete\n&quot;);      \</span>
+<span class="cp">                getchar();                                    \</span>
+<span class="cp">                return -1;                                    \</span>
 <span class="cp">        }</span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
@@ -407,7 +430,8 @@
         <span class="n">CHECK_RETURN</span><span class="p">;</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">numDevices</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
         <span class="p">{</span>
-                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Error: no devices connected, example requires at least one device.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">No camera connected</span><span class="se">\n</span><span class="s">Press enter to complete</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="n">getchar</span><span class="p">();</span>
                 <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
         <span class="p">}</span>
         <span class="n">acDevice</span> <span class="n">hDevice</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
@@ -426,7 +450,7 @@
         <span class="n">err</span> <span class="o">=</span> <span class="n">acCloseSystem</span><span class="p">(</span><span class="n">hSystem</span><span class="p">);</span>
         <span class="n">CHECK_RETURN</span><span class="p">;</span>
 
-        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Press any key to complete</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Press enter to complete</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
         <span class="n">getchar</span><span class="p">();</span>
         <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
@@ -447,7 +471,7 @@
         <a href="c_examples_exposure.html" class="btn btn-neutral float-right" title="Exposure, Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="c_examples_enumeration.html" class="btn btn-neutral" title="Enumeration, Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="c_examples_enumeration_handlingdisconnections.html" class="btn btn-neutral" title="Enumeration, Handling Disconnections" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -477,7 +501,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.4.0',
+            VERSION:'0.1.18.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

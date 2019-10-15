@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -45,8 +45,11 @@
 //    'Receive Buffers' must be set to its maximum.
 #define MAX_PACKET_SIZE false
 
+// system timeout
+#define SYSTEM_TIMEOUT 100
+
 // image timeout
-#define TIMEOUT 2000
+#define IMAGE_TIMEOUT 2000
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- EXAMPLE -=-=-
@@ -65,14 +68,15 @@ int64_t SetIntValue(GenApi::INodeMap* pNodeMap, const char* nodeName, int64_t va
 	// Ensure increment
 	//    If a node has an increment (all integer nodes & some float nodes), only
 	//    multiples of the increment can be set. Ensure this by dividing and then
-	//    multiplying by the increment. If a value is between two increments, this
-	//    will push it to the lower value. Most minimum values are divisible by
-	//    the increment. If not, this must also be considered in the calculation.
+	//    multiplying by the increment. If a value is between two increments,
+	//    this will push it to the lower value. Most minimum values are divisible
+	//    by the increment. If not, this must also be considered in the
+	//    calculation.
 	value = (((value - pInteger->GetMin()) / pInteger->GetInc()) * pInteger->GetInc()) + pInteger->GetMin();
 
 	// Check min/max values
-	//    Values must not be less than the minimum or exceed the maximum value of a
-	//    node. If a value does so, simply push it within range.
+	//    Values must not be less than the minimum or exceed the maximum value of
+	//    a node. If a value does so, simply push it within range.
 	if (value < pInteger->GetMin())
 	{
 		value = pInteger->GetMin();
@@ -98,8 +102,8 @@ int64_t SetIntValue(GenApi::INodeMap* pNodeMap, const char* nodeName, int64_t va
 // (5) waits until after acquisition to requeue buffers
 void AcquireImagesRapidly(Arena::IDevice* pDevice)
 {
-	// get node values that will be changed in order to return their values
-	// at the end of the example
+	// get node values that will be changed in order to return their values at
+	// the end of the example
 	int64_t widthInitial = Arena::GetNodeValue<int64_t>(pDevice->GetNodeMap(), "Width");
 	int64_t heightInitial = Arena::GetNodeValue<int64_t>(pDevice->GetNodeMap(), "Height");
 	GenICam::gcstring pixelFormatInitial = Arena::GetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "PixelFormat");
@@ -202,16 +206,16 @@ void AcquireImagesRapidly(Arena::IDevice* pDevice)
 	{
 		// Get image
 		//    By starting the stream with enough buffers for all images without
-		//    requeuing, performance is improved by separating . While effective,
-		//    this method is even more restricted by the amount of available memory.
-		std::cout << TAB2 << "Get image " << i << ((i % 250 == 0 && i != 0) || i == NUM_IMAGES ? "\n" : "\r");
+		//    requeuing, performance is improved. While effective, this method is
+		//    even more restricted by the amount of available memory.
+		std::cout << ((i % 250 == 0 && i != 0) || i == NUM_IMAGES ? "\n" : "\r") << TAB2 << "Get image " << i << std::flush;
 
-		Arena::IImage* pImage = pDevice->GetImage(TIMEOUT);
+		Arena::IImage* pImage = pDevice->GetImage(IMAGE_TIMEOUT);
 		images.push_back(pImage);
 	}
 
-	// requeue buffers
-	std::cout << TAB1 << "Reqeue buffers\n";
+	// requeue buffer for each image
+	std::cout << TAB1 << "\nRequeue buffers\n";
 
 	for (size_t i = 0; i < images.size(); i++)
 	{
@@ -254,7 +258,7 @@ int main()
 	{
 		// prepare example
 		Arena::ISystem* pSystem = Arena::OpenSystem();
-		pSystem->UpdateDevices(100);
+		pSystem->UpdateDevices(SYSTEM_TIMEOUT);
 		std::vector<Arena::DeviceInfo> deviceInfos = pSystem->GetDevices();
 		if (deviceInfos.size() == 0)
 		{

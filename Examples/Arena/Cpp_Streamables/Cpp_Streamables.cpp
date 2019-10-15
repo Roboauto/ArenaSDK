@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 
 #include "stdafx.h"
 #include "ArenaApi.h"
@@ -19,9 +19,9 @@
 
 // Streamables
 //    This example introduces streamables, which uses files to pass settings
-//    around between devices. This example writes all streamable features from
-//    a source device to a file, and then writes them from the file to all
-//    other connected devices. 
+//    around between devices. This example writes all streamable features from a
+//    source device to a file, and then writes them from the file to all other
+//    connected devices.
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
@@ -43,8 +43,8 @@ void WriteAndReadStreamables(Arena::IDevice* pSrcDevice, std::vector<Arena::IDev
 {
 	// Write features to file
 	//    Write streamable features from a device to a file. Each node map
-	//    requires a separate feature stream object. When writing to a file, if no
-	//    features are explicitly selected, all will be written by default. 
+	//    requires a separate feature stream object. When writing to a file, if
+	//    no features are explicitly selected, all will be written by default.
 	std::cout << TAB1 << "Save features from device " << Arena::GetNodeValue<GenICam::gcstring>(pSrcDevice->GetTLDeviceNodeMap(), "DeviceSerialNumber") << " to " << FILE_NAME << "\n";
 
 	Arena::FeatureStream featureStreamSrc(pSrcDevice->GetNodeMap());
@@ -54,7 +54,7 @@ void WriteAndReadStreamables(Arena::IDevice* pSrcDevice, std::vector<Arena::IDev
 	//    Read streamable features from from a file to the rest of the devices.
 	//    Again, each node map requires a separate feature stream object. When
 	//    reading from a file, all features saved to the file will be loaded to
-	//    the device. If a device does not have a feature, it is skipped. 
+	//    the device. If a device does not have a feature, it is skipped.
 	for (size_t i = 0; i < dstDevices.size(); i++)
 	{
 		std::cout << TAB1 << "Load features from " << FILE_NAME << " to device " << Arena::GetNodeValue<GenICam::gcstring>(dstDevices[i]->GetTLDeviceNodeMap(), "DeviceSerialNumber") << "\n";
@@ -123,6 +123,8 @@ int main()
 			std::cout << "\nExample complete\n";
 
 			// clean up example
+			pSystem->DestroyDevice(pSrcDevice);
+
 			for (size_t i = 0; i < dstDevices.size(); i++)
 			{
 				pSystem->DestroyDevice(dstDevices.at(i));

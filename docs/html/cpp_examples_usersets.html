@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>User Sets &mdash; Arena 0.1.4.0 documentation</title>
+  <title>User Sets &mdash; Arena 0.1.18.0 documentation</title>
   
 
   
@@ -35,10 +35,10 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.18.0 documentation" href="index.html"/>
         <link rel="up" title="C++ Code Samples" href="cpp_examples.html"/>
         <link rel="next" title="Arena C" href="c.html"/>
-        <link rel="prev" title="Trigger, Introduction" href="cpp_examples_trigger.html"/> 
+        <link rel="prev" title="Trigger, Overlapping Trigger" href="cpp_examples_trigger_overlappingtrigger.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.18
               </div>
             
           
@@ -113,6 +113,7 @@
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_callbacks_onnodechange.html">Callbacks, On Node Change</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_callbacks_polling.html">Callbacks, Polling</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_callbacks_onevent.html">Callbacks, On Event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_callbacks_imagecallbacks.html">Callbacks, Image Callbacks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_callbacks_multithreadedimagecallbacks.html">Callbacks, Multithreaded Image Callbacks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_chunkdata.html">Chunk Data, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_chunkdata_crcvalidation.html">Chunk Data, CRC Validation</a></li>
@@ -126,11 +127,17 @@
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_forceip.html">Force IP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_lut.html">Lookup Table, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_pixelcorrection.html">Pixel Correction, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_polarization_dolpaolp.html">Polarization, DoLP AoLP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_polarization_colordolpaolp.html">Polarization, Color DoLP AoLP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_record.html">Record, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_save.html">Save, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_save_filenamepattern.html">Save, File Name Pattern</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_save_ply.html">Save, Ply</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_scheduledactioncommands.html">Scheduled Action Commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_sequencer_hdr.html">Sequencer, HDR</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_streamables.html">Streamables</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_trigger.html">Trigger, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_trigger_overlappingtrigger.html">Trigger, Overlapping Trigger</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">User Sets</a></li>
 </ul>
 </li>
@@ -210,7 +217,7 @@
 <h1>User Sets<a class="headerlink" href="#user-sets" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-c++"><div class="highlight"><pre><span class="cm">/***************************************************************************************</span>
 <span class="cm"> ***                                                                                 ***</span>
-<span class="cm"> ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***</span>
+<span class="cm"> ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***</span>
 <span class="cm"> ***                                                                                 ***</span>
 <span class="cm"> ***  THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***</span>
 <span class="cm"> ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***</span>
@@ -230,11 +237,10 @@
 
 <span class="c1">// User sets</span>
 <span class="c1">//    This example introduces user sets, a feature which allows for the saving</span>
-<span class="c1">//    and loading of multiple configurations. The example starts by changing</span>
-<span class="c1">//    two features, width and height. The device configuration is then saved to</span>
-<span class="c1">//    user set 1. The default user set is then loaded, followed by user set 1</span>
-<span class="c1">//    again to demonstrate the the device configuration changing back and</span>
-<span class="c1">//    forth.</span>
+<span class="c1">//    and loading of multiple configurations. The example starts by changing two</span>
+<span class="c1">//    features, width and height. The device configuration is then saved to user</span>
+<span class="c1">//    set 1. The default user set is then loaded, followed by user set 1 again to</span>
+<span class="c1">//    demonstrate the the device configuration changing back and forth.</span>
 
 <span class="c1">// =-=-=-=-=-=-=-=-=-</span>
 <span class="c1">// =-=- SETTINGS =-=-</span>
@@ -259,8 +265,8 @@
 <span class="kt">void</span> <span class="nf">SaveAndLoadUserSets</span><span class="p">(</span><span class="n">Arena</span><span class="o">::</span><span class="n">IDevice</span><span class="o">*</span> <span class="n">pDevice</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="c1">// Get width and height nodes</span>
-        <span class="c1">//    This example focuses on width and height nodes to demonstrate the saving</span>
-        <span class="c1">//    and loading of user sets.</span>
+        <span class="c1">//    This example focuses on width and height nodes to demonstrate the</span>
+        <span class="c1">//    saving and loading of user sets.</span>
         <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">TAB1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Get width and height nodes</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
         <span class="n">GenApi</span><span class="o">::</span><span class="n">CIntegerPtr</span> <span class="n">pWidth</span> <span class="o">=</span> <span class="n">pDevice</span><span class="o">-&gt;</span><span class="n">GetNodeMap</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">GetNode</span><span class="p">(</span><span class="s">&quot;Width&quot;</span><span class="p">);</span>
@@ -283,9 +289,9 @@
         <span class="n">pHeight</span><span class="o">-&gt;</span><span class="n">SetValue</span><span class="p">(</span><span class="n">HEIGHT</span><span class="p">);</span>
 
         <span class="c1">// Save to user set 1</span>
-        <span class="c1">//    Saving the user set saves the new width and height values. Saving a user</span>
-        <span class="c1">//    set involves selecting the user set to save to on the selector node and</span>
-        <span class="c1">//    then executing the save on the command node.</span>
+        <span class="c1">//    Saving the user set saves the new width and height values. Saving a</span>
+        <span class="c1">//    user set involves selecting the user set to save to on the selector</span>
+        <span class="c1">//    node and then executing the save on the command node.</span>
         <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">TAB1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Save to user set 1</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
         <span class="c1">// select user set 1</span>
@@ -305,9 +311,9 @@
 
         <span class="c1">// Load default user set</span>
         <span class="c1">//    Loading a user set is quite similar to saving: select the user set to</span>
-        <span class="c1">//    load using the selector node and then execute the load using the command</span>
-        <span class="c1">//    node. Notice that loading the default user set changes the width and</span>
-        <span class="c1">//    height values.</span>
+        <span class="c1">//    load using the selector node and then execute the load using the</span>
+        <span class="c1">//    command node. Notice that loading the default user set changes the</span>
+        <span class="c1">//    width and height values.</span>
         <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">TAB1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Load default user set</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
         <span class="c1">// select default user set</span>
@@ -326,8 +332,8 @@
         <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">TAB2</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Height &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">pHeight</span><span class="o">-&gt;</span><span class="n">GetValue</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
         <span class="c1">// Load user set 1</span>
-        <span class="c1">//    Load user set 1 to return width and height to the values that were saved</span>
-        <span class="c1">//    earlier. The process is the same as above.</span>
+        <span class="c1">//    Load user set 1 to return width and height to the values that were</span>
+        <span class="c1">//    saved earlier. The process is the same as above.</span>
         <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">TAB1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Load user set 1</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
         <span class="c1">// select user set 1</span>
@@ -372,6 +378,10 @@
                         <span class="k">if</span> <span class="p">(</span><span class="n">deviceInfos</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
                         <span class="p">{</span>
                                 <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">No camera connected</span><span class="se">\n</span><span class="s">Press enter to complete</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+                                <span class="c1">// clear input</span>
+                                <span class="k">while</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cin</span><span class="p">.</span><span class="n">get</span><span class="p">()</span> <span class="o">!=</span> <span class="sc">&#39;\n&#39;</span><span class="p">)</span>
+                                        <span class="k">continue</span><span class="p">;</span>
                                 <span class="n">std</span><span class="o">::</span><span class="n">getchar</span><span class="p">();</span>
                                 <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
                         <span class="p">}</span>
@@ -433,7 +443,7 @@
         <a href="c.html" class="btn btn-neutral float-right" title="Arena C" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="cpp_examples_trigger.html" class="btn btn-neutral" title="Trigger, Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="cpp_examples_trigger_overlappingtrigger.html" class="btn btn-neutral" title="Trigger, Overlapping Trigger" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -463,7 +473,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.4.0',
+            VERSION:'0.1.18.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 
 #include "stdafx.h"
 #include "ArenaApi.h"
@@ -23,7 +23,7 @@
 //    Chunk data is data that has been tacked on to the end of image data in
 //    order to provide useful information on the image. Configuring chunk data
 //    involves activating chunk mode and enabling desired chunks. Retrieving
-//    chunk data from an image is similar to retrieving nodes from a node map. 
+//    chunk data from an image is similar to retrieving nodes from a node map.
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
@@ -47,14 +47,14 @@
 // (5) requeues buffers and stops the stream
 void ConfigureAndRetrieveChunkData(Arena::IDevice* pDevice)
 {
-	// get node values that will be changed in order to return their values
-	// at the end of the example
+	// get node values that will be changed in order to return their values at
+	// the end of the example
 	bool chunkModeActiveInitial = Arena::GetNodeValue<bool>(pDevice->GetNodeMap(), "ChunkModeActive");
 	bool chunkEnableInitial = Arena::GetNodeValue<bool>(pDevice->GetNodeMap(), "ChunkEnable");
 
 	// Activate chunk mode
-	//    Activate chunk mode before enabling chunks; otherwise, ChunkSelector and
-	//    ChunkEnable nodes will be unavailable. 
+	//    Activate chunk mode before enabling chunks; otherwise, ChunkSelector
+	//    and ChunkEnable nodes will be unavailable.
 	std::cout << TAB1 << "Activate chunk mode\n";
 
 	Arena::SetNodeValue<bool>(
@@ -66,7 +66,7 @@ void ConfigureAndRetrieveChunkData(Arena::IDevice* pDevice)
 	//    Enable desired chunks before starting the stream. Some chunks provide
 	//    information already in an image while others not. This example looks at
 	//    exposure and gain, two pieces of information unavailable from an image
-	//    without chunk data. 
+	//    without chunk data.
 	std::cout << TAB1 << "Enable exposure and gain chunks\n";
 
 	// exposure time
@@ -93,7 +93,7 @@ void ConfigureAndRetrieveChunkData(Arena::IDevice* pDevice)
 
 	// Start stream and grab images
 	//    Start streaming images with chunk data. Image data will now be appended
-	//    with exposure and gain data because they were enabled. 
+	//    with exposure and gain data because they were enabled.
 	std::cout << TAB1 << "Start stream and grab images\n";
 
 	pDevice->StartStream();
@@ -113,29 +113,33 @@ void ConfigureAndRetrieveChunkData(Arena::IDevice* pDevice)
 	for (size_t i = 0; i < images.size(); i++)
 	{
 		// Cast to chunk data
-		//    Cast the image to a chunk data object before retrieving chunks. Chunk
-		//    data is present at the end of an image's raw data, but better accessed
-		//    through this cast. 
+		//    Cast the image to a chunk data object before retrieving chunks.
+		//    Chunk data is present at the end of an image's raw data, but better
+		//    accessed through this cast.
 		std::cout << TAB2 << "Image " << i;
 
 		Arena::IChunkData* pChunkData = images[i]->AsChunkData();
 
 		// Check for completeness
-		//    If an image is incomplete, it could be the case that the chunks hold
-		//    garbage data value. If incomplete, chunks can still be retrieved but
-		//    should be checked against null to verify the data exists. 
+		//    If an image is incomplete, it could be the case that the chunks
+		//    hold garbage data value. If incomplete, chunks can still be
+		//    retrieved but should be checked against null to verify the data
+		//    exists.
 		if (pChunkData->IsIncomplete())
 		{
-			std::cout << " (incomplete)\n";
-			continue;
+			std::cout << " (incomplete)";
+			std::cout << "\n\nError: Payload data incomplete. Please review network \nconfigurations,"
+					  << "increase packet size, increase inter-packet \ndelay and/or reduce image size, then retry example\n";
+			return;
 		}
 
 		// Get exposure and gain chunks
 		//    Chunk data is retrieved by getting chunks from a chunk data object.
-		//    Chunks work the same way as nodes: they have a node type, additional
-		//    information, and return null if they don't exist or cannot be found.
-		//    For example, the exposure time chunk can access a maximum, minimum,
-		//    display name, and unit, just like the exposure time node. 
+		//    Chunks work the same way as nodes: they have a node type,
+		//    additional information, and return null if they don't exist or
+		//    cannot be found. For example, the exposure time chunk can access a
+		//    maximum, minimum, display name, and unit, just like the exposure
+		//    time node.
 		GenApi::CFloatPtr pChunkExposureTime = pChunkData->GetChunk("ChunkExposureTime");
 		double chunkExposureTime = pChunkExposureTime->GetValue();
 
@@ -161,7 +165,6 @@ void ConfigureAndRetrieveChunkData(Arena::IDevice* pDevice)
 	// return nodes to their initial values
 	Arena::SetNodeValue<bool>(pDevice->GetNodeMap(), "ChunkModeActive", chunkModeActiveInitial);
 	Arena::SetNodeValue<bool>(pDevice->GetNodeMap(), "ChunkEnable", chunkEnableInitial);
-	
 }
 
 // =-=-=-=-=-=-=-=-=-

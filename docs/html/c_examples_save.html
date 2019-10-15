@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Save, Introduction &mdash; Arena 0.1.4.0 documentation</title>
+  <title>Save, Introduction &mdash; Arena 0.1.18.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.18.0 documentation" href="index.html"/>
         <link rel="up" title="C Code Samples" href="c_examples.html"/>
         <link rel="next" title="Save, File Name Pattern" href="c_examples_save_filenamepattern.html"/>
         <link rel="prev" title="Record, Introduction" href="c_examples_record.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.18
               </div>
             
           
@@ -110,19 +110,33 @@
 <li class="toctree-l4"><a class="reference internal" href="c_examples_simpleacquisition.html">Simple Acquisition, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_acquisition.html">Acquisition, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_acquisition_rapidacquisition.html">Acquisition, Rapid Acquisition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_imagecallbacks.html">Callback, Image Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_multithreadedimagecallbacks.html">Callback, Multithreaded Image Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_onevent.html">Callback, On Event</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_callback_onnodechange.html">Callback, On Node Change</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_polling.html">Callback, Polling</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_chunkdata.html">Chunk Data, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_chunkdata_crcvalidation.html">Chunk Data, CRC Validation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_enumeration.html">Enumeration, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_enumeration_handlingdisconnections.html">Enumeration, Handling Disconnections</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodemaps.html">Explore, Node Maps</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_exposure.html">Exposure, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodes.html">Explore, Nodes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodetypes.html">Explore, Node Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_forceip.html">Force IP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_lut.html">LUT, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_pixelcorrection.html">Pixel Correction, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_polarization_colordolpaolp.html">Polarization, Color DoLP AoLP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_polarization_dolpaolp.html">Polarization, DoLP AoLP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_record.html">Record, Introduction</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Save, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_save_filenamepattern.html">Save, File Name Pattern</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_save_ply.html">Save, Ply</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_scheduledactioncommands.html">Scheduled Action Commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_sequencer_hdr.html">Sequencer, HDR</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_streamables.html">Streamables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_trigger.html">Trigger, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_trigger_overlappingtrigger.html">Trigger, Overlapping Trigger</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_usersets.html">User Sets, Introduction</a></li>
 </ul>
 </li>
@@ -201,7 +215,7 @@
 <h1>Save, Introduction<a class="headerlink" href="#save-introduction" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-c++"><div class="highlight"><pre><span class="cm">/***************************************************************************************</span>
 <span class="cm"> ***                                                                                 ***</span>
-<span class="cm"> ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***</span>
+<span class="cm"> ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***</span>
 <span class="cm"> ***                                                                                 ***</span>
 <span class="cm"> ***  THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***</span>
 <span class="cm"> ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***</span>
@@ -220,31 +234,30 @@
 <span class="cp">#define TAB1 &quot;  &quot;</span>
 
 <span class="c1">// Save: Introduction</span>
-<span class="c1">//    This example introduces the basic save capabilities of the save library.</span>
-<span class="c1">//    It shows the construction of an image parameters object and an image</span>
-<span class="c1">//    writer, and saves a single image.</span>
+<span class="c1">//    This example introduces the basic save capabilities of the save library. It</span>
+<span class="c1">//    shows the construction of an image parameters object and an image writer,</span>
+<span class="c1">//    and saves a single image.</span>
 
 <span class="c1">// =-=-=-=-=-=-=-=-=-</span>
 <span class="c1">// =-=- SETTINGS =-=-</span>
 <span class="c1">// =-=-=-=-=-=-=-=-=-</span>
 
-<span class="c1">// Pixel format</span>
-<span class="c1">//    Windows and Linux operating systems have different preferred pixel</span>
-<span class="c1">//    formats for displaying images. BGR8 is a good choice for Windows, RGB8</span>
-<span class="c1">//    for Linux.</span>
-<span class="cp">#if defined _WIN32</span>
-<span class="cp">#define PIXEL_FORMAT 0x02180015 </span><span class="c1">// BGR8</span>
-<span class="cp">#elif defined linux</span>
-<span class="cp">#define PIXEL_FORMAT 0x02180014 </span><span class="c1">//RGB8</span>
-<span class="cp">#endif</span>
-
 <span class="c1">// File name</span>
-<span class="c1">//    The relative path and file name to save to. After running the example,</span>
-<span class="c1">//    the an image should exist at the location specified. The image writer</span>
-<span class="c1">//    chooses the file format by the image&#39;s extension. Aside from PNG (.png),</span>
-<span class="c1">//    images can be saved as JPEG (.jpg), TIFF (.tiff), BMP (.bmp), and raw</span>
-<span class="c1">//    (.raw) files.</span>
-<span class="cp">#define FILE_NAME &quot;Images/C_Save_Images/image.png&quot;</span>
+<span class="c1">//    The relative path and file name to save to. After running the example, an</span>
+<span class="c1">//    image should exist at the location specified. The image writer chooses the</span>
+<span class="c1">//    file format by the image&#39;s extension. Aside from PNG (.png), images can be</span>
+<span class="c1">//    saved as JPEG (.jpg), TIFF (.tiff), BMP (.bmp), and raw (.raw) files. For</span>
+<span class="c1">//    3D file formats the PLY (.ply) extension can be used.</span>
+<span class="cp">#define FILE_NAME &quot;Images/C_Save/image.png&quot;</span>
+
+<span class="c1">// pixel format</span>
+<span class="cp">#define PIXEL_FORMAT PFNC_BGR8 </span><span class="c1">// BGR8</span>
+
+<span class="c1">// timeout for detecting camera devices (in milliseconds).</span>
+<span class="cp">#define SYSTEM_TIMEOUT 100</span>
+
+<span class="c1">// maximum buffer length</span>
+<span class="cp">#define MAX_BUF 256</span>
 
 <span class="c1">// =-=-=-=-=-=-=-=-=-</span>
 <span class="c1">// =-=- EXAMPLE -=-=-</span>
@@ -256,7 +269,7 @@
 <span class="c1">// (3) prepares image writer</span>
 <span class="c1">// (4) saves image</span>
 <span class="c1">// (5) destroys converted image</span>
-<span class="n">AC_ERROR</span> <span class="nf">SaveImage</span><span class="p">(</span><span class="n">acBuffer</span> <span class="n">hBuffer</span><span class="p">)</span>
+<span class="n">AC_ERROR</span> <span class="nf">SaveImage</span><span class="p">(</span><span class="n">acBuffer</span> <span class="n">hBuffer</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">filename</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="c1">// AC_ERROR and SC_ERROR values are equivalent</span>
         <span class="n">AC_ERROR</span> <span class="n">acErr</span> <span class="o">=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">;</span>
@@ -265,8 +278,8 @@
         <span class="c1">// Convert image</span>
         <span class="c1">//    Convert the image to a displayable pixel format. It is worth keeping in</span>
         <span class="c1">//    mind the best pixel and file formats for your application. This example</span>
-        <span class="c1">//    converts the image so that its displayable by the operating system.</span>
-        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%sConvert image to %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">TAB1</span><span class="p">,</span> <span class="p">(</span><span class="n">PIXEL_FORMAT</span> <span class="o">==</span> <span class="mh">0x02180015</span> <span class="o">?</span> <span class="s">&quot;BGR8&quot;</span> <span class="o">:</span> <span class="s">&quot;RGB8&quot;</span><span class="p">));</span>
+        <span class="c1">//    converts the image so that it is displayable by the operating system.</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%sConvert image to %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">TAB1</span><span class="p">,</span> <span class="p">(</span><span class="n">PIXEL_FORMAT</span> <span class="o">==</span> <span class="n">PFNC_BGR8</span> <span class="o">?</span> <span class="s">&quot;BGR8&quot;</span> <span class="o">:</span> <span class="s">&quot;RGB8&quot;</span><span class="p">));</span>
         <span class="n">acBuffer</span> <span class="n">hConverted</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
 
         <span class="n">acErr</span> <span class="o">=</span> <span class="n">acImageFactoryConvert</span><span class="p">(</span><span class="n">hBuffer</span><span class="p">,</span> <span class="n">PIXEL_FORMAT</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hConverted</span><span class="p">);</span>
@@ -281,30 +294,30 @@
         <span class="c1">// get width</span>
         <span class="kt">size_t</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-        <span class="n">acImageGetWidth</span><span class="p">(</span><span class="n">hConverted</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">width</span><span class="p">);</span>
+        <span class="n">acErr</span> <span class="o">=</span> <span class="n">acImageGetWidth</span><span class="p">(</span><span class="n">hConverted</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">width</span><span class="p">);</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">acErr</span> <span class="o">!=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">acErr</span><span class="p">;</span>
 
         <span class="c1">// get height</span>
         <span class="kt">size_t</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-        <span class="n">acImageGetHeight</span><span class="p">(</span><span class="n">hConverted</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">height</span><span class="p">);</span>
+        <span class="n">acErr</span> <span class="o">=</span> <span class="n">acImageGetHeight</span><span class="p">(</span><span class="n">hConverted</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">height</span><span class="p">);</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">acErr</span> <span class="o">!=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">acErr</span><span class="p">;</span>
 
         <span class="c1">// get bits per pixel</span>
         <span class="kt">size_t</span> <span class="n">bpp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-        <span class="n">acImageGetBitsPerPixel</span><span class="p">(</span><span class="n">hConverted</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">bpp</span><span class="p">);</span>
+        <span class="n">acErr</span> <span class="o">=</span> <span class="n">acImageGetBitsPerPixel</span><span class="p">(</span><span class="n">hConverted</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">bpp</span><span class="p">);</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">acErr</span> <span class="o">!=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">acErr</span><span class="p">;</span>
 
         <span class="c1">// Prepare image writer</span>
         <span class="c1">//    The image writer requires the image&#39;s parameters, a specified file name</span>
-        <span class="c1">//    or pattern, and the image data to save. Providing these should result in</span>
-        <span class="c1">//    a successfully saved file on the disk. Because an image&#39;s parameters and</span>
-        <span class="c1">//    file name pattern may repeat, they can be passed into the image writer&#39;s</span>
-        <span class="c1">//    constructor.</span>
+        <span class="c1">//    or pattern, and the image data to save. Providing these should result</span>
+        <span class="c1">//    in a successfully saved file on the disk. Because an image&#39;s parameters</span>
+        <span class="c1">//    and file name pattern may repeat, they can be passed into the image</span>
+        <span class="c1">//    writer&#39;s constructor.</span>
         <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%sPrepare image writer</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">TAB1</span><span class="p">);</span>
         <span class="n">saveWriter</span> <span class="n">hWriter</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
 
@@ -312,7 +325,7 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">saveErr</span> <span class="o">!=</span> <span class="n">SC_ERR_SUCCESS</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">saveErr</span><span class="p">;</span>
 
-        <span class="n">saveErr</span> <span class="o">=</span> <span class="n">saveWriterSetFileNamePattern</span><span class="p">(</span><span class="n">hWriter</span><span class="p">,</span> <span class="n">FILE_NAME</span><span class="p">);</span>
+        <span class="n">saveErr</span> <span class="o">=</span> <span class="n">saveWriterSetFileNamePattern</span><span class="p">(</span><span class="n">hWriter</span><span class="p">,</span> <span class="n">filename</span><span class="p">);</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">saveErr</span> <span class="o">!=</span> <span class="n">SC_ERR_SUCCESS</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">saveErr</span><span class="p">;</span>
 
@@ -341,7 +354,10 @@
 
         <span class="c1">// destroy converted image</span>
         <span class="n">acErr</span> <span class="o">=</span> <span class="n">acImageFactoryDestroy</span><span class="p">(</span><span class="n">hConverted</span><span class="p">);</span>
-        <span class="k">return</span> <span class="n">acErr</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">acErr</span> <span class="o">!=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">acErr</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="n">SC_ERR_SUCCESS</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c1">// =-=-=-=-=-=-=-=-=-</span>
@@ -349,11 +365,19 @@
 <span class="c1">// =- &amp; CLEAN UP =-=-</span>
 <span class="c1">// =-=-=-=-=-=-=-=-=-</span>
 
-<span class="cp">#define CHECK_RETURN                                      \</span>
-<span class="cp">        if (err != AC_ERR_SUCCESS)                            \</span>
-<span class="cp">        {                                                     \</span>
-<span class="cp">                printf(&quot;Error: %d\n\nExample completed.\n&quot;, err); \</span>
-<span class="cp">                return -1;                                        \</span>
+<span class="c1">// error buffer length</span>
+<span class="cp">#define ERR_BUF 512</span>
+
+<span class="cp">#define CHECK_RETURN                                  \</span>
+<span class="cp">        if (err != AC_ERR_SUCCESS)                        \</span>
+<span class="cp">        {                                                 \</span>
+<span class="cp">                char pMessageBuf[ERR_BUF];                    \</span>
+<span class="cp">                size_t pBufLen = ERR_BUF;                     \</span>
+<span class="cp">                acGetLastErrorMessage(pMessageBuf, &amp;pBufLen); \</span>
+<span class="cp">                printf(&quot;\nError: %s&quot;, pMessageBuf);           \</span>
+<span class="cp">                printf(&quot;\n\nPress enter to complete\n&quot;);      \</span>
+<span class="cp">                getchar();                                    \</span>
+<span class="cp">                return -1;                                    \</span>
 <span class="cp">        }</span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
@@ -365,14 +389,15 @@
         <span class="n">acSystem</span> <span class="n">hSystem</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
         <span class="n">err</span> <span class="o">=</span> <span class="n">acOpenSystem</span><span class="p">(</span><span class="o">&amp;</span><span class="n">hSystem</span><span class="p">);</span>
         <span class="n">CHECK_RETURN</span><span class="p">;</span>
-        <span class="n">err</span> <span class="o">=</span> <span class="n">acSystemUpdateDevices</span><span class="p">(</span><span class="n">hSystem</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">acSystemUpdateDevices</span><span class="p">(</span><span class="n">hSystem</span><span class="p">,</span> <span class="n">SYSTEM_TIMEOUT</span><span class="p">);</span>
         <span class="n">CHECK_RETURN</span><span class="p">;</span>
         <span class="kt">size_t</span> <span class="n">numDevices</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
         <span class="n">err</span> <span class="o">=</span> <span class="n">acSystemGetNumDevices</span><span class="p">(</span><span class="n">hSystem</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">numDevices</span><span class="p">);</span>
         <span class="n">CHECK_RETURN</span><span class="p">;</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">numDevices</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
         <span class="p">{</span>
-                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Error: no devices connected, example requires at least one device</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">No camera connected</span><span class="se">\n</span><span class="s">Press enter to complete</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="n">getchar</span><span class="p">();</span>
                 <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
         <span class="p">}</span>
         <span class="n">acDevice</span> <span class="n">hDevice</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
@@ -384,9 +409,14 @@
         <span class="n">err</span> <span class="o">=</span> <span class="n">acDeviceGetBuffer</span><span class="p">(</span><span class="n">hDevice</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hBuffer</span><span class="p">);</span>
         <span class="n">CHECK_RETURN</span><span class="p">;</span>
 
+        <span class="c1">// get bits per pixel</span>
+        <span class="kt">uint64_t</span> <span class="n">pixelFormat</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">acImageGetPixelFormat</span><span class="p">(</span><span class="n">hBuffer</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pixelFormat</span><span class="p">);</span>
+        <span class="n">CHECK_RETURN</span><span class="p">;</span>
+
         <span class="c1">// run example</span>
         <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Commence example</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">);</span>
-        <span class="n">err</span> <span class="o">=</span> <span class="n">SaveImage</span><span class="p">(</span><span class="n">hBuffer</span><span class="p">);</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">SaveImage</span><span class="p">(</span><span class="n">hBuffer</span><span class="p">,</span> <span class="n">FILE_NAME</span><span class="p">);</span>
         <span class="n">CHECK_RETURN</span><span class="p">;</span>
         <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Example complete</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 
@@ -400,7 +430,7 @@
         <span class="n">err</span> <span class="o">=</span> <span class="n">acCloseSystem</span><span class="p">(</span><span class="n">hSystem</span><span class="p">);</span>
         <span class="n">CHECK_RETURN</span><span class="p">;</span>
 
-        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Press any key to complete</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Press enter to complete</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
         <span class="n">getchar</span><span class="p">();</span>
         <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
@@ -451,7 +481,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.4.0',
+            VERSION:'0.1.18.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

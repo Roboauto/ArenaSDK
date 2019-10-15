@@ -81,7 +81,7 @@ BEGIN
             VALUE "FileDescription", "C++ Acquisition Example"
             VALUE "FileVersion", "0.1.0.0"
             VALUE "InternalName", "Cpp_Acquisition.exe"
-            VALUE "LegalCopyright", "Copyright (C) 2017"
+            VALUE "LegalCopyright", "Copyright (C) 2019"
             VALUE "OriginalFilename", "Cpp_Acquisition.exe"
             VALUE "ProductName", "Arena SDK"
             VALUE "ProductVersion", "0.1.0.0"

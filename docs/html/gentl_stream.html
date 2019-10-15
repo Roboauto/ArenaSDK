@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>GenTL Stream Features &mdash; Arena 0.1.4.0 documentation</title>
+  <title>GenTL Stream Features &mdash; Arena 0.1.18.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.18.0 documentation" href="index.html"/>
         <link rel="up" title="GenTL Features" href="gentl.html"/>
         <link rel="next" title="Arena C++" href="cpp.html"/>
         <link rel="prev" title="GenTL Device Features" href="gentl_device.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.18
               </div>
             
           
@@ -264,6 +264,14 @@
 <td>Integer (RW)</td>
 <td>Maximum time that an image buffer will wait for all packets.</td>
 </tr>
+<tr class="row-even"><td>StreamInterPacketExpiry</td>
+<td>Integer (RW)</td>
+<td>Maximum time between packets before a resend will be requested.</td>
+</tr>
+<tr class="row-odd"><td>StreamMaxNumResendRequestsPerImage</td>
+<td>Integer (RW)</td>
+<td>Maximum number of resend requests per image.</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -311,7 +319,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.4.0',
+            VERSION:'0.1.18.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

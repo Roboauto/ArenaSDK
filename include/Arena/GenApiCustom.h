@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 #pragma once
 
 namespace Arena
@@ -22,8 +22,8 @@ namespace Arena
 	 * the same purpose. It translates from an interface type enum
 	 * (GenApi::EInterfaceType) to a string and back. For example, the following
 	 * enum value can be translated to and from the following string
-	 * representation: 
-	 *  - enum: GenApi::EInterfaceType::intfIValue 
+	 * representation:
+	 *  - enum: GenApi::EInterfaceType::intfIValue
 	 *  - string: "intfIValue"
 	 *
 	 * @warning 
@@ -37,17 +37,17 @@ namespace Arena
 		 * @fn static bool FromString(const GenICam::gcstring& ValueStr, GenApi::EInterfaceType* pValue)
 		 *
 		 * @param ValueStr
-		 *  - Type: const GenICam::gcstring& 
+		 *  - Type: const GenICam::gcstring&
 		 *  - String representation to translate
 		 *
 		 * @param pValue
-		 *  - Type: GenApi::EInterfaceType* 
-		 *  - Out parameter 
+		 *  - Type: GenApi::EInterfaceType*
+		 *  - Out parameter
 		 *  - Pointer to translated enum value
 		 *
 		 * @return 
-		 *  - Type: bool 
-		 *  - True if successful 
+		 *  - Type: bool
+		 *  - True if successful
 		 *  - Otherwise, false
 		 *
 		 * <B> FromString </B> translates a string representation of an interface
@@ -59,13 +59,13 @@ namespace Arena
 		 * @fn static void ToString(GenICam::gcstring& ValueStr, GenApi::EInterfaceType Value)
 		 *
 		 * @param ValueStr
-		 *  - Type: GenICam::gcstring& 
-		 *  - Pass-by-reference out parameter 
-		 *  - Translated string representation 
+		 *  - Type: GenICam::gcstring&
+		 *  - Pass-by-reference out parameter
+		 *  - Translated string representation
 		 *  - "intfIUnknown" on failure
 		 *
 		 * @param Value
-		 *  - Type: GenApi::EInterfaceType 
+		 *  - Type: GenApi::EInterfaceType
 		 *  - Enum value to translate
 		 *
 		 * @return 
@@ -80,12 +80,12 @@ namespace Arena
 		 * @fn static GenICam::gcstring ToString(GenApi::EInterfaceType Value)
 		 *
 		 * @param Value
-		 *  - Type: GenApi::EInterfaceType 
+		 *  - Type: GenApi::EInterfaceType
 		 *  - Enum value to translate
 		 *
 		 * @return 
-		 *  - Type: GenICam::gcstring 
-		 *  - Translated string representation 
+		 *  - Type: GenICam::gcstring
+		 *  - Translated string representation
 		 *  - "intfIUnknown" on failure
 		 *
 		 * <B> ToString </B> translates from an interface type enum value to its
@@ -106,8 +106,8 @@ namespace Arena
 	 * <B> EIncModeClass </B> is a static class based on GenApi classes of the
 	 * same purpose. It translates from an increment mode enum (GenApi::EIncMode)
 	 * to a string and back. For example, the following enum value can be
-	 * translated to and from the following string representation: 
-	 *  - enum: GenApi::fixedIncrement 
+	 * translated to and from the following string representation:
+	 *  - enum: GenApi::fixedIncrement
 	 *  - string: "fixedIncrement"
 	 *
 	 * @warning 
@@ -121,17 +121,17 @@ namespace Arena
 		 * @fn static bool FromString(const GenICam::gcstring& ValueStr, GenApi::EIncMode* pValue)
 		 *
 		 * @param ValueStr
-		 *  - Type: const GenICam::gcstring& 
+		 *  - Type: const GenICam::gcstring&
 		 *  - String representation to translate
 		 *
 		 * @param pValue
-		 *  - Type: GenApi::EIncMode* 
-		 *  - Out parameter 
+		 *  - Type: GenApi::EIncMode*
+		 *  - Out parameter
 		 *  - Pointer to translated enum value
 		 *
 		 * @return 
-		 *  - Type: bool 
-		 *  - True if successful 
+		 *  - Type: bool
+		 *  - True if successful
 		 *  - Otherwise, false
 		 *
 		 * <B> FromString </B> translates a string representation of an increment
@@ -143,13 +143,13 @@ namespace Arena
 		 * @fn static void ToString(GenICam::gcstring& ValueStr, GenApi::EIncMode Value)
 		 *
 		 * @param ValueStr
-		 *  - Type: GenICam::gcstring& 
-		 *  - Pass-by-reference out parameter 
-		 *  - Translated string representation 
+		 *  - Type: GenICam::gcstring&
+		 *  - Pass-by-reference out parameter
+		 *  - Translated string representation
 		 *  - "intfIUnknown" on failure
 		 *
 		 * @param Value
-		 *  - Type: GenApi::EIncMode 
+		 *  - Type: GenApi::EIncMode
 		 *  - Enum value to translate
 		 *
 		 * @return 
@@ -164,12 +164,12 @@ namespace Arena
 		 * @fn static GenICam::gcstring ToString(GenApi::EIncMode Value)
 		 *
 		 * @param Value
-		 *  - Type: GenApi::EInterfaceType 
+		 *  - Type: GenApi::EInterfaceType
 		 *  - Enum value to translate
 		 *
 		 * @return 
-		 *  - Type: GenICam::gcstring 
-		 *  - Translated string representation 
+		 *  - Type: GenICam::gcstring
+		 *  - Translated string representation
 		 *  - "intfIUnknown" on failure
 		 *
 		 * <B> ToString </B> translates from an increment mode enum value to its
@@ -188,18 +188,18 @@ namespace Arena
 	 * @fn template<typename T> T GetNodeValue(GenApi::INodeMap* pNodeMap, const GenICam::gcstring& Name)
 	 *
 	 * @param pNodeMap
-	 *  - Type: GenApi::INodeMap* 
+	 *  - Type: GenApi::INodeMap*
 	 *  - A node map
 	 *
 	 * @param Name
-	 *  - Type: const GenICam::gcstring& 
+	 *  - Type: const GenICam::gcstring&
 	 *  - Node name
 	 *
 	 * @return 
-	 *  - Type: template<typename T> T 
-	 *  - Value of the node 
-	 *  - Template type representation 
-	 *  - Accepts int64_t, double, bool, GenICam::gcstring 
+	 *  - Type: template<typename T> T
+	 *  - Value of the node
+	 *  - Template type representation
+	 *  - Accepts int64_t, double, bool, GenICam::gcstring
 	 *    - Integer nodes use int64_t
 	 *    - Float nodes use double
 	 *    - Boolean nodes use bool
@@ -208,10 +208,11 @@ namespace Arena
 	 * <B> GetNodeValue </B> retrieves a node and gets its value.
 	 *
 	 * @warning 
-	 *  - appropriate for integer, float, boolean, string, and enumeration nodes 
-	 *  - accepts int64_t for integer nodes 
-	 *  - accepts double for float nodes 
-	 *  - accepts bool for boolean nodes 
+	 *  - appropriate for integer, float, boolean, string, and enumeration
+	 *    nodes
+	 *  - accepts int64_t for integer nodes
+	 *  - accepts double for float nodes
+	 *  - accepts bool for boolean nodes
 	 *  - accepts GenICam::gcstring for string, enumeration nodes
 	 */
 	template<typename T>
@@ -227,18 +228,18 @@ namespace Arena
 	 * @fn template<typename T> void SetNodeValue(GenApi::INodeMap* pNodeMap, const GenICam::gcstring& Name, const T& Value)
 	 *
 	 * @param pNodeMap
-	 *  - Type: GenApi::INodeMap* 
+	 *  - Type: GenApi::INodeMap*
 	 *  - A node map
 	 *
 	 * @param Name
-	 *  - Type: const GenICam::gcstring& 
+	 *  - Type: const GenICam::gcstring&
 	 *  - Node name
 	 *
 	 * @param Value
-	 *  - Type: const template<typename T> T& 
-	 *  - Value to set 
-	 *  - Template type representation 
-	 *  - Accepts int64_t, double, bool, GenICam::gcstring: 
+	 *  - Type: const template<typename T> T&
+	 *  - Value to set
+	 *  - Template type representation
+	 *  - Accepts int64_t, double, bool, GenICam::gcstring:
 	 *    - Integer nodes use int64_t
 	 *    - Float nodes use double
 	 *    - Boolean nodes use bool
@@ -250,10 +251,11 @@ namespace Arena
 	 * <B> SetNodeValue </B> retrieves a node from a node map and sets its value.
 	 *
 	 * @warning 
-	 *  - appropriate for integer, float, boolean, string, and enumeration nodes 
-	 *  - accepts int64_t for integer nodes 
-	 *  - accepts double for float nodes 
-	 *  - accepts bool for boolean nodes 
+	 *  - appropriate for integer, float, boolean, string, and enumeration
+	 *    nodes
+	 *  - accepts int64_t for integer nodes
+	 *  - accepts double for float nodes
+	 *  - accepts bool for boolean nodes
 	 *  - accepts GenICam::gcstring for string, enumeration nodes
 	 */
 	template<typename T>
@@ -269,11 +271,11 @@ namespace Arena
 	 * @fn void ExecuteNode(GenApi::INodeMap* pNodeMap, const GenICam::gcstring& iCommandNodeName)
 	 *
 	 * @param pNodeMap
-	 *  - Type: GenApi::INodeMap* 
+	 *  - Type: GenApi::INodeMap*
 	 *  - A node map
 	 *
 	 * @param iCommandNodeName
-	 *  - Type: const GenICam::gcstring& 
+	 *  - Type: const GenICam::gcstring&
 	 *  - Node name
 	 *
 	 * <B> ExecuteNode </B> retrieves a node from a node map and executes it.

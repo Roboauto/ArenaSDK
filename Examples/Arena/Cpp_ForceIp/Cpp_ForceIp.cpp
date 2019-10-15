@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 
 #include "stdafx.h"
 #include "ArenaApi.h"
@@ -22,8 +22,8 @@
 // Force IP
 //    This example demonstrates how to force network settings. It does this by
 //    adding 1 to the final octet of the IP address. It leaves the subnet mask
-//    and default gateway as is although the same method is used to change
-//    these as well. 
+//    and default gateway as is although the same method is used to change these
+//    as well.
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
@@ -52,8 +52,8 @@ void ForceNetworkSettings(Arena::ISystem* pSystem)
 	// Get device information
 	//    Forcing the IP address requires a device's MAC address to specify the
 	//    device. This example grabs the IP address, subnet mask, and default
-	//    gateway as well to display changes and return the device to its original
-	//    IP address. 
+	//    gateway as well to display changes and return the device to its
+	//    original IP address.
 	std::cout << TAB1 << "Get device information\n";
 
 	const uint64_t macAddress = deviceInfos[0].MacAddress();
@@ -69,7 +69,7 @@ void ForceNetworkSettings(Arena::ISystem* pSystem)
 	// Add 1 to IP address
 	//    The new IP address takes the current IP address and adds 1 to the final
 	//    octet. If the final octet is 254, the final octet is set to 1 (to avoid
-	//    0 and 255). 
+	//    0 and 255).
 	uint32_t ipAddressToSet;
 
 	if ((ipAddress & 0x000000FF) == 0x000000FE)
@@ -87,7 +87,7 @@ void ForceNetworkSettings(Arena::ISystem* pSystem)
 	//    Forcing the IP uses the MAC address to specify a device and forces the
 	//    IP address, subnet mask, and default gateway. In this case, the IP
 	//    address is being changed while the subnet mask and default gateway
-	//    remain the same. 
+	//    remain the same.
 	std::cout << TAB1 << "Force network settings\n";
 
 	pSystem->ForceIp(macAddress, ipAddressToSet, subnetMask, defaultGateway);
@@ -95,7 +95,7 @@ void ForceNetworkSettings(Arena::ISystem* pSystem)
 	// Discover devices again
 	//    Once a device has been forced, it needs to be rediscovered with its new
 	//    network settings. This is especially important if moving on to
-	//    configuration and acquisition. 
+	//    configuration and acquisition.
 	std::cout << TAB1 << "Discover devices again\n";
 
 	pSystem->UpdateDevices(TIMEOUT);
@@ -104,7 +104,7 @@ void ForceNetworkSettings(Arena::ISystem* pSystem)
 	// Get device information again
 	//    Notice that the MAC address, subnet mask, and default gateway all
 	//    retrain their initial values while the the last octet of the IP address
-	//    has been incremented by 1. 
+	//    has been incremented by 1.
 	std::cout << TAB1 << "Get device information again\n";
 
 	auto it = std::find_if(

@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 
 #include "stdafx.h"
 #include "ArenaApi.h"
@@ -21,19 +21,27 @@
 #define TAB4 "        "
 
 // Callbacks: On Event
-//    This example demonstrates configuring a callback with events. Events are
-//    a subset of nodes that invoke callbacks through the underlying events
-//    engine. 
+//    This example demonstrates configuring a callback with events. Events are a
+//    subset of nodes that invoke callbacks through the underlying events engine.
+//    The events engine is first initialized to listen for events, then the
+//    callback is registered using the timestamp test event node. The event is
+//    generated, along with any data generated from the event. The example then
+//    waits for the event to process in order to invoke the callback. Registered
+//    callbacks must also be deregistered before deinitializing the events engine
+//    in order to avoid memory leaks.
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
 // =-=-=-=-=-=-=-=-=-
 
 // Event timeout
-#define TIMEOUT 2000
+#define EVENT_TIMEOUT 2000
 
 // Number of events to generate
 #define NUM_EVENTS 5
+
+// timeout for detecting camera devices (in milliseconds).
+#define SYSTEM_TIMEOUT 100
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- EXAMPLE -=-=-
@@ -63,7 +71,7 @@ void ConfigureCallbackOnEventTestTimestamp(Arena::IDevice* pDevice)
 	// Get event node
 	//    Events require callbacks and the events engine to operate. This example
 	//    uses the timestamp test event node to show the setup and teardown of
-	//    events. 
+	//    events.
 	std::cout << TAB1 << "Get event node\n";
 
 	GenApi::CNodePtr pEventTestTimestamp = pDevice->GetNodeMap()->GetNode("EventTestTimestamp");
@@ -76,16 +84,16 @@ void ConfigureCallbackOnEventTestTimestamp(Arena::IDevice* pDevice)
 	// Initialize events
 	//    Initialize the events engine before registering the callback. Events
 	//    nodes aren't available until the events engine has been initialized, so
-	//    callback registration should come after events engine initialization. 
+	//    callback registration should come after events engine initialization.
 	std::cout << TAB1 << "Initialize events\n";
 
 	pDevice->InitializeEvents();
 
 	// Register callback
-	//    Register the callback before generating events. If an event is generated
-	//    but no callbacks are registered, the events engine processes the event
-	//    as normal, but nothing happens because no function has been registered
-	//    to it. 
+	//    Register the callback before generating events. If an event is
+	//    generated but no callbacks are registered, the events engine processes
+	//    the event as normal, but nothing happens because no function has been
+	//    registered to it.
 	std::cout << TAB1 << "Register callback\n";
 
 	GenApi::CallbackHandleType hCallback = GenApi::Register(pEventTestTimestamp, PrintNodeValue);
@@ -96,9 +104,9 @@ void ConfigureCallbackOnEventTestTimestamp(Arena::IDevice* pDevice)
 	for (int i = 0; i < NUM_EVENTS; i++)
 	{
 		// Generate event
-		//    Generate the event before waiting on it. Generating the event causes
-		//    the event to occur, but does not process it or invoke the registered
-		//    callback. 
+		//    Generate the event before waiting on it. Generating the event
+		//    causes the event to occur, but does not process it or invoke the
+		//    registered callback.
 		std::cout << TAB2 << "Generate event\n";
 
 		Arena::ExecuteNode(
@@ -106,17 +114,17 @@ void ConfigureCallbackOnEventTestTimestamp(Arena::IDevice* pDevice)
 			"TestEventGenerate");
 
 		// Wait on event
-		//    Wait on event to process it, invoking the registered callback. The data
-		//    is created from the event generation, not from waiting on it. 
+		//    Wait on event to process it, invoking the registered callback. The
+		//    data is created from the event generation, not from waiting on it.
 		std::cout << TAB2 << "Wait on event\n";
 
-		pDevice->WaitOnEvent(TIMEOUT);
+		pDevice->WaitOnEvent(EVENT_TIMEOUT);
 	}
 
 	// Deregister callback
 	//    Failing to deregister a callback results in a memory leak. Once a
 	//    callback has been registered, it will no longer be invoked when a node
-	//    is invalidated. 
+	//    is invalidated.
 	std::cout << TAB1 << "Deregister callback\n";
 
 	GenApi::Deregister(hCallback);
@@ -124,7 +132,7 @@ void ConfigureCallbackOnEventTestTimestamp(Arena::IDevice* pDevice)
 	// Deinitialize events
 	//    Deinitialize the events engine in order to deallocate memory and stop
 	//    processing events. Failing to deinitialize events results in a memory
-	//    leak. 
+	//    leak.
 	std::cout << TAB1 << "Deinitialize events\n";
 
 	pDevice->DeinitializeEvents();
@@ -146,7 +154,7 @@ int main()
 	{
 		// prepare example
 		Arena::ISystem* pSystem = Arena::OpenSystem();
-		pSystem->UpdateDevices(100);
+		pSystem->UpdateDevices(SYSTEM_TIMEOUT);
 		std::vector<Arena::DeviceInfo> deviceInfos = pSystem->GetDevices();
 		if (deviceInfos.size() == 0)
 		{

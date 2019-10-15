@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -42,22 +42,25 @@ namespace Save
 		 * @fn ImageWriter(ImageParams imageParams, const char* pFileNamePattern = "savedimages/image<count>.jpg")
 		 *
 		 * @param imageParams
-		 *  - Type: Save::ImageParams 
+		 *  - Type: Save::ImageParams
 		 *  - The parameters of the image(s) to save
 		 *
 		 * @param pFileNamePattern
-		 *  - Type: const char* 
+		 *  - Type: const char*
 		 *  - File name pattern to use for file names
 		 *
 		 * A constructor.
 		 */
 		ImageWriter(ImageParams imageParams, const char* pFileNamePattern = "savedimages/image<count>.jpg");
+#ifdef _WIN32
+		ImageWriter(ImageParams imageParams, const wchar_t* pFileNamePattern);
+#endif
 
 		/**
 		 * @fn ImageWriter(const ImageWriter& imageWriter)
 		 *
 		 * @param imageWriter
-		 *  - Type: const Save::ImageWriter& 
+		 *  - Type: const Save::ImageWriter&
 		 *  - An image writer to copy
 		 *
 		 * A copy constructor.
@@ -68,11 +71,11 @@ namespace Save
 		 * @fn const ImageWriter& operator=(ImageWriter imageWriter)
 		 *
 		 * @param imageWriter
-		 *  - Type: Save::ImageWriter 
+		 *  - Type: Save::ImageWriter
 		 *  - An image writer to copy
 		 *
 		 * @return 
-		 *  - Type: const Save::ImageWriter 
+		 *  - Type: const Save::ImageWriter
 		 *  - A copy of an image writer
 		 *
 		 * A copy assignment operator.
@@ -87,18 +90,18 @@ namespace Save
 		virtual ~ImageWriter();
 
 		/**
-		 * @fn virtual void SetJpeg(const char* pSetExtension = ".jpg", size_t quality = 75, bool progressive = false, EJpegSubsampling subsampling = Sub420, bool optimize = false)
+		 * @fn virtual void SetJpeg(const char* pSetExtension = ".jpg", size_t quality = 75, bool progressive = false, EJpegSubsampling subsampling = Subsampling420, bool optimize = false)
 		 *
 		 * @param pSetExtension
-		 *  - Type: const char* 
-		 *  - Default: ".jpg" 
+		 *  - Type: const char*
+		 *  - Default: ".jpg"
 		 *  - Extension to use for the files
 		 *
 		 * @param quality
 		 *	- Type: size_t
 		 *	- Default: 75
 		 *	- Range: 1-100
-		 *	- Image quality
+		 *	- Image quality (1 lowest, 100 highest)
 		 *
 		 * @param progressive
 		 *	- Type: bool
@@ -108,7 +111,7 @@ namespace Save
 		 *
 		 * @param subsampling
 		 *	- Type: EJpegSubsampling
-		 *	- Default: Sub420
+		 *	- Default: Subsampling420
 		 *	- The chroma subsampling to apply
 		 *
 		 * @param optimize
@@ -120,46 +123,114 @@ namespace Save
 		 * @return 
 		 *  - none
 		 *
-		 * <B> SetJpeg </B> sets the output file format of the image writer to JPEG.
+		 * <B> SetJpeg </B> sets the output file format of the image writer to
+		 * JPEG.
+		 *
+		 * An image may be set to progressive, which encodes and decodes the
+		 * image gradually so the entire image becomes sharper as the bytes
+		 * arrive. Progressive images tend to have a smaller file size but take
+		 * more CPU time and memory to encode and decode them. Otherwise, <B>
+		 * SetJpeg </B> loads baseline by default. This encodes and decodes the
+		 * image as the data is made available, top to bottom and left to right.
+		 * Baseline tends to have a larger file size but takes less time and
+		 * memory.
+		 *
+		 * Subsampling compresses the chroma (color information) of an image
+		 * while retaining luminance (brightness). This reduces the bandwidth
+		 * used to load an image. For example, setting <B> SetJpeg </B>
+		 * subsampling to 4:2:0 (default Subsampling420) reduces the bandwidth by
+		 * half with little visual difference compared to 4:4:4 (NoSubsampling).
+		 *
+		 * \code{.cpp}
+		 *  // setting jpeg image options
+		 *  {
+		 * 		static const std::string sk_pimg = "imageoptions";
+		 *
+		 *		void SetImageOptions(PluginController& ctrl, std::string extension, Save::ImageWriter* pImgWrt)
+		 *		{
+		 *			if (extension == ".jpg")
+		 *			{
+		 *				Save::EJpegSubsampling subsampling = Save::EJpegSubsampling::NoSubsampling;
+		 *
+		 *				pImgWrt->SetJpeg(extension.c_str(), std::stoi(ctrl.GetValue(sk_pimg, "img_jpeg_quality")), 
+		 *				ctrl.GetValue(sk_pimg, "img_jpeg_progressive") == "1", subsampling, ctrl.GetValue(sk_pimg, "img_jpeg_optimize") == "1");
+		 *			}
+		 *		}
+		 *  }
+		 * \endcode
 		 */
 		virtual void SetJpeg(const char* pSetExtension = ".jpg", size_t quality = 75, bool progressive = false, EJpegSubsampling subsampling = Subsampling420, bool optimize = false);
-
+#ifdef _WIN32
+		virtual void SetJpeg(const wchar_t* pSetExtension, size_t quality = 75, bool progressive = false, EJpegSubsampling subsampling = Subsampling420, bool optimize = false);
+#endif
 		/**
 		 * @fn virtual void SetBmp(const char* pSetExtension = ".bmp")
 		 *
 		 * @param pSetExtension
-		 *  - Type: const char* 
-		 *  - Default: ".bmp" 
+		 *  - Type: const char*
+		 *  - Default: ".bmp"
 		 *  - Extension to use for saved files
 		 *
 		 * @return 
 		 *  - none
 		 *
-		 * <B> SetBmp </B> sets the output file format of the image writer to BMP.
+		 * <B> SetBmp </B> sets the output file format of the image writer to
+		 * BMP.
 		 */
 		virtual void SetBmp(const char* pSetExtension = ".bmp");
+#ifdef _WIN32
+		virtual void SetBmp(const wchar_t* pSetExtension);
+#endif
 
 		/**
 		 * @fn virtual void SetRaw(const char* pSetExtension = ".raw")
 		 *
 		 * @param pSetExtension
-		 *  - Type: const char* 
-		 *  - Default: ".raw" 
-		 *  - Extension to use for the files
+		 *  - Type: const char*
+		 *  - Default: ".raw"
+		 *  - Extension to use for the saved files
 		 *
 		 * @return 
 		 *  - none
 		 *
-		 * <B> SetRaw </B> sets the output file format of the image writer to raw.
+		 * <B> SetRaw </B> sets the output file format of the image writer to
+		 * raw.
 		 */
 		virtual void SetRaw(const char* pSetExtension = ".raw");
+#ifdef _WIN32
+		virtual void SetRaw(const wchar_t* pSetExtension);
+#endif
+
+		/**
+		 * @fn virtual void SetPly(const char* pSetExtension = ".ply", bool filterPoints = true)
+		 *
+		 * @param pSetExtension
+		 *  - Type: const char*
+		 *  - Default: ".ply"
+		 *  - Extension to use for the saved files
+		 *
+		 * @param filterPoints
+		 *  - Type: bool
+		 *  - Default: true
+		 *  - Filter NaN points (A = B = C = -32,678)
+		 *
+		 * @return
+		 *  - none
+		 *
+		 * <B> SetPly </B> sets the output file format of the image writer to
+		 * ply.
+		 */
+		virtual void SetPly(const char* pSetExtension = ".ply", bool filterPoints = true);
+#ifdef _WIN32
+		virtual void SetPly(const wchar_t* pSetExtension, bool filterPoints = true);
+#endif
 
 		/**
 		 * @fn virtual void SetTiff(const char* pSetExtension = ".tiff")
 		 *
 		 * @param pSetExtension
-		 *  - Type: const char* 
-		 *  - Default: ".tiff" 
+		 *  - Type: const char*
+		 *  - Default: ".tiff"
 		 *  - Extension to use for the files
 		 *
 		 * @param compression
@@ -176,16 +247,20 @@ namespace Save
 		 * @return 
 		 *  - none
 		 *
-		 * <B> SetTiff </B> sets the output file format of the image writer to TIFF.
+		 * <B> SetTiff </B> sets the output file format of the image writer to
+		 * TIFF.
 		 */
 		virtual void SetTiff(const char* pSetExtension = ".tiff", ETiffCompression compression = NoCompression, bool cmykTags = false);
+#ifdef _WIN32
+		virtual void SetTiff(const wchar_t* pSetExtension, ETiffCompression compression = NoCompression, bool cmykTags = false);
+#endif
 
 		/**
 		 * @fn virtual void SetPng(const char* pSetExtension = ".png", size_t compression = 0, bool interlaced = false) 
 		 *
 		 * @param pSetExtension
-		 *  - Type: const char* 
-		 *  - Default: ".png" 
+		 *  - Type: const char*
+		 *  - Default: ".png"
 		 *  - Extension to use for the files
 		 *
 		 * @param compression
@@ -203,15 +278,19 @@ namespace Save
 		 * @return 
 		 *  - none
 		 *
-		 * <B> SetPng </B> sets the output file format of the image writer to PNG.
+		 * <B> SetPng </B> sets the output file format of the image writer to
+		 * PNG.
 		 */
 		virtual void SetPng(const char* pSetExtension = ".png", size_t compression = 0, bool interlaced = false);
+#ifdef _WIN32
+		virtual void SetPng(const wchar_t* pSetExtension, size_t compression = 0, bool interlaced = false);
+#endif
 
 		/**
 		 * @fn virtual void SetExtension(const char* pExt)
 		 *
 		 * @param pExt
-		 *  - Type: const char* 
+		 *  - Type: const char*
 		 *  - Extension to set
 		 *
 		 * @return 
@@ -220,12 +299,15 @@ namespace Save
 		 * <B> SetExtension </B> sets a new extension on the file name.
 		 */
 		virtual void SetExtension(const char* pExt);
+#ifdef _WIN32
+		virtual void SetExtension(const wchar_t* pExt);
+#endif
 
 		/**
 		 * @fn virtual void SetParams(ImageParams params)
 		 *
 		 * @param params
-		 *  - Type: Save::ImageParams 
+		 *  - Type: Save::ImageParams
 		 *  - Image parameters of the image data to save
 		 *
 		 * @return 
@@ -239,46 +321,97 @@ namespace Save
 		 * @fn virtual void SetFileNamePattern(const char* pFileNamePattern)
 		 *
 		 * @param pFileNamePattern
-		 *  - Type: const char* 
+		 *  - Type: const char*
 		 *  - File name pattern to use for file names
 		 *
 		 * @return 
 		 *  - none
 		 *
-		 * <B> SetFileNamePattern </B> sets a new file name or pattern for upcoming
-		 * image(s) to save.
+		 * <B> SetFileNamePattern </B> sets a new file name or pattern for
+		 * upcoming image(s) to save.
+		 *
+		 * <B> SetFileNamePattern </B> uses special tags to specify the file name
+		 * to save. <datetime> uses the system clock to set the file name pattern
+		 * to include the timestamp of the created image. <datetime> accepts a
+		 * format string, and defaults to <datetime:yyMMdd_hhmmss_fff> (fff is
+		 * milliseconds) <count> can be specified in three ways: <count:local> is
+		 * the defaul value and counts according to a specific image writer or
+		 * video recorder object. <count:path> counts the same file name pattern
+		 * across all image writers and video recorders objects. This means that
+		 * multiple objects that share a file name pattern will share their
+		 * count. <count:global> shares a count across all image writers and
+		 * video recorders.
+		 *
+		 * \code{.cpp}
+		 * 	// setting file name pattern and saving image
+		 * 	void SaveFiles(Arena::IDevice* pDevice, std::string serial, Save::ImageWriter* pImgWrt)
+		 * 	{
+		 *		pImgWrt->UpdateTag("<serial>", serial.c_str());
+		 *
+		 *		for (size_t i = 0; i < numImages; i++)
+		 * 		{
+		 * 			m_pImgWrt->SetFileNamePattern("Images/<serial>_image<count>-<datetime:yyMMdd_hhmmss_fff>.bmp");
+		 *
+		 * 			Arena::IImage* pImage = pDevice->GetImage(TIMEOUT);
+		 * 			m_pImgWrt->Save(pImage->GetData());
+		 * 		}
+		 * 	}
+		 * \endcode
 		 */
 		virtual void SetFileNamePattern(const char* pFileNamePattern);
+#ifdef _WIN32
+		virtual void SetFileNamePattern(const wchar_t* pFileNamePattern);
+#endif
 
 		/**
 		 * @fn virtual void UpdateTag(const char* pTag, const char* pValue)
 		 *
 		 * @param pTag
-		 *  - Type: const char* 
+		 *  - Type: const char*
 		 *  - Tag to replace
 		 *
 		 * @param pValue
-		 *  - Type: const char* 
+		 *  - Type: const char*
 		 *  - Value to set
 		 *
 		 * @return 
 		 *  - none
 		 *
-		 * <B> UpdateTag </B> updates the value to replace a given tag when an image
-		 * is saved.
+		 * <B> UpdateTag </B> updates the value to replace a given tag when an
+		 * image is saved.
+		 *
+		 * \code{.cpp}
+		 * 	// updating serial, width, height, and bits per pixel tags and setting as filename pattern to save images
+		 * 	void UpdateTags(Arena::IDevice* pDevice, std::string serial, size_t w, size_t h, size_t bpp, Save::ImageWriter* pImgWrt, PluginController& ctrl)
+		 * 	{
+		 * 		pImgWrt->UpdateTag("<serial>", serial.c_str());
+		 *		pImgWrt->UpdateTag("<width>", std::to_string(w).c_str());
+		 *		pImgWrt->UpdateTag("<height>", std::to_string(h).c_str());
+		 *		pImgWrt->UpdateTag("<bitsperpixel>", std::to_string(bpp).c_str());
+		 *
+		 *		GenICam::gcstring pixelFormat = Arena::GetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "PixelFormat");
+		 *
+		 *		pImgWrt->UpdateTag("<pixelformat>", pixelFormat);
+		 *
+		 *		m_pImgWrt->SetFileNamePattern(Images/<serial>_image<count>-<width>x<height>-<bitsperpixel>bpp_format<pixelformat>-<datetime>.bmp);
+		 * 	}
+		 * \endcode
 		 */
 		virtual void UpdateTag(const char* pTag, const char* pValue);
+#ifdef _WIN32
+		virtual void UpdateTag(const wchar_t* pTag, const wchar_t* pValue);
+#endif
 
 		/**
 		 * @fn virtual void SetCount(unsigned long long count, ECountScope scope = Local)
 		 *
 		 * @param count
-		 *  - Type: unsigned long long 
+		 *  - Type: unsigned long long
 		 *  - Value to set
 		 *
 		 * @param scope
-		 *  - Type: ECountScope 
-		 *  - Default: Local 
+		 *  - Type: ECountScope
+		 *  - Default: Local
 		 *  - Counter to set
 		 *
 		 * @return 
@@ -305,7 +438,7 @@ namespace Save
 		 * @fn virtual void SetTimestamp(unsigned long long timestamp)
 		 *
 		 * @param timestamp
-		 *  - Type: unsigned long long 
+		 *  - Type: unsigned long long
 		 *  - Timestamp to set
 		 *
 		 * @return 
@@ -314,7 +447,7 @@ namespace Save
 		 * <B> SetTimestamp </B> updates the timestamp to use in any file name
 		 * patterns.
 		 *
-		 * /code{.cpp}
+		 * \code{.cpp}
 		 * 	// using the timestamp to differentiate images
 		 * 	{
 		 * 		Save::ImageWriter writer(params, "savedimages/image<timestamp>.jpg");
@@ -326,7 +459,7 @@ namespace Save
 		 * 			writer.Save(pImageData);
 		 * 		}
 		 * 	}
-		 * /endcode
+		 * \endcode
 		 *
 		 * @deprecated 
 		 *  - Deprecated in favor of the more generic tag and value components
@@ -337,7 +470,7 @@ namespace Save
 		 * @fn virtual ImageParams GetParams()
 		 *
 		 * @return 
-		 *  - Type: Save::ImageParams 
+		 *  - Type: Save::ImageParams
 		 *  - Image parameters
 		 *
 		 * <B> GetParams </B> retrieves the image parameters used to save images.
@@ -348,89 +481,101 @@ namespace Save
 		 * @fn virtual std::string GetFileNamePattern(bool withPath = false, bool withExt = true)
 		 *
 		 * @param withPath
-		 *  - Type: bool 
-		 *  - Default: false 
-		 *  - If true, directories included in returned file name pattern 
+		 *  - Type: bool
+		 *  - Default: false
+		 *  - If true, directories included in returned file name pattern
 		 *  - Otherwise, not
 		 *
 		 * @param withExt
-		 *  - Type: bool 
-		 *  - Default: true 
-		 *  - If true, extension included in returned file name pattern 
+		 *  - Type: bool
+		 *  - Default: true
+		 *  - If true, extension included in returned file name pattern
 		 *  - Otherwise, not
 		 *
 		 * @return 
-		 *  - Type: std::string 
+		 *  - Type: std::string
 		 *  - File name pattern
 		 *
 		 * <B> GetFileNamePattern </B> gets the file name pattern currently being
 		 * used to save images.
 		 */
 		virtual std::string GetFileNamePattern(bool withPath = false, bool withExt = true);
+#ifdef _WIN32
+		virtual std::wstring GetFileNamePatternU(bool withPath = false, bool withExt = true);
+#endif
 
 		/**
 		 * @fn virtual std::string GetPath()
 		 *
 		 * @return 
-		 *  - Type: std::string 
+		 *  - Type: std::string
 		 *  - Path
 		 *
-		 * <B> GetPath </B> retrieves the path portion of the file name pattern. Tags
-		 * '<count>' and '<timestamp>' are not replaced.
+		 * <B> GetPath </B> retrieves the path portion of the file name pattern.
+		 * Tags '<count>' and '<timestamp>' are not replaced.
 		 */
 		virtual std::string GetPath();
+#ifdef _WIN32
+		virtual std::wstring GetPathU();
+#endif
 
 		/**
 		 * @fn virtual std::string GetExtension()
 		 *
 		 * @return 
-		 *  - Type: std::string 
+		 *  - Type: std::string
 		 *  - Extension to save
 		 *
 		 * <B> GetExtension </B> retrieves the extension portion of the file name
 		 * pattern.
 		 */
 		virtual std::string GetExtension();
+#ifdef _WIN32
+		virtual std::wstring GetExtensionU();
+#endif
 
 		/**
 		 * @fn virtual std::string PeekFileName(bool withPath = false, bool withExt = true)
 		 *
 		 * @param withPath
-		 *  - Type: bool 
-		 *  - Default: false 
-		 *  - If true, directories included in returned file name pattern 
+		 *  - Type: bool
+		 *  - Default: false
+		 *  - If true, directories included in returned file name pattern
 		 *  - Otherwise, not
 		 *
 		 * @param withExt
-		 *  - Type: bool 
-		 *  - Default: true 
-		 *  - If true, extension included in returned file name pattern 
+		 *  - Type: bool
+		 *  - Default: true
+		 *  - If true, extension included in returned file name pattern
 		 *  - Otherwise, not
 		 *
 		 * @return 
-		 *  - Type: std::string 
+		 *  - Type: std::string
 		 *  - Next file name to save
 		 *
-		 * <B> PeekFileName </B> provides a look at the file name that the next image
-		 * will be saved as. Tags '<count>' and '<timestamp>' are replaced with their
-		 * respective values.
+		 * <B> PeekFileName </B> provides a look at the file name that the next
+		 * image will be saved as. Tags '<count>' and '<timestamp>' are replaced
+		 * with their respective values.
 		 */
 		virtual std::string PeekFileName(bool withPath = false, bool withExt = true);
+#ifdef _WIN32
+		virtual std::wstring PeekFileNameU(bool withPath = false, bool withExt = true);
+#endif
 
 		/**
 		 * @fn virtual unsigned long long PeekCount(ECountScope scope = Local)
 		 *
 		 * @param scope
-		 *  - Type: ECountScope 
-		 *  - Default: Local 
+		 *  - Type: ECountScope
+		 *  - Default: Local
 		 *  - Counter to peek
 		 *
 		 * @return 
-		 *  - Type: unsigned long long 
+		 *  - Type: unsigned long long
 		 *  - Current count value
 		 *
-		 * <B> PeekCount </B> retrieves a peek at the value of one of the available
-		 * counters.
+		 * <B> PeekCount </B> retrieves a peek at the value of one of the
+		 * available counters.
 		 */
 		virtual unsigned long long PeekCount(ECountScope scope = Local);
 
@@ -438,38 +583,56 @@ namespace Save
 		 * @fn virtual std::string GetLastFileName(bool withPath = false, bool withExt = true)
 		 *
 		 * @param withPath
-		 *  - Type: bool 
-		 *  - Default: false 
-		 *  - If true, directories included in returned file name pattern 
+		 *  - Type: bool
+		 *  - Default: false
+		 *  - If true, directories included in returned file name pattern
 		 *  - Otherwise, not
 		 *
 		 * @param withExt
-		 *  - Type: bool 
-		 *  - Default: true 
-		 *  - If true, extension included in returned file name pattern 
+		 *  - Type: bool
+		 *  - Default: true
+		 *  - If true, extension included in returned file name pattern
 		 *  - Otherwise, not
 		 *
 		 * @return 
-		 *  - Type: std::string 
+		 *  - Type: std::string
 		 *  - Last file name
 		 *
 		 * <B> GetLastFileName </B> provides a look at the last file name that an
-		 * image was saved under. Tags '<count>' and '<timestamp>' are replaced with
-		 * their respective values.
+		 * image was saved under. Tags '<count>' and '<timestamp>' are replaced
+		 * with their respective values.
+		 *
+		 * \code{.cpp}
+		 * 	// retrieving an image and saving it to the writer, then printing the file
+		 * 	// name of the most recently saved image.
+		 * 	{
+		 *		Save::ImageWriter writer(params, "savedimages/image-<count>_<timestamp>.jpg");
+		 *		Arena::IImage* pImage = pDevice->GetImage(100);
+		 *		writer << pImage->GetData();
+		 *
+		 *		std::cout << "Save image at " << writer.GetLastFileName(true) << "\n";
+		 *
+		 *		pDevice->RequeueBuffer(pImage);
+		 * 	}
+		 * \endcode
+		 *
 		 */
 		virtual std::string GetLastFileName(bool withPath = false, bool withExt = true);
+#ifdef _WIN32
+		virtual std::wstring GetLastFileNameU(bool withPath = false, bool withExt = true);
+#endif
 
 		/**
 		 * @fn virtual void Save(const uint8_t* pData, bool createDirectories = true)
 		 *
 		 * @param pData
-		 *  - Type: const uint8_t* 
+		 *  - Type: const uint8_t*
 		 *  - Pointer to the image data to save
 		 *
 		 * @param createDirectories
-		 *  - Type: bool createDirectories 
-		 *  - Default: true 
-		 *  - If true, attempts to create any missing directories in the path 
+		 *  - Type: bool createDirectories
+		 *  - Default: true
+		 *  - If true, attempts to create any missing directories in the path
 		 *  - Otherwise, does not create any directories
 		 *
 		 * @return 
@@ -479,24 +642,25 @@ namespace Save
 		 * parameters, and image data.
 		 */
 		virtual void Save(const uint8_t* pData, bool createDirectories = true);
+		virtual void Save(const uint8_t* pData, const uint8_t* pColor, bool createDirectories = true);
 
 		/**
 		 * @fn virtual ImageWriter& operator<<(const char* pInput)
 		 *
 		 * @param pInput
-		 *  - Type: const char* 
+		 *  - Type: const char*
 		 *  - Accepts both tags and values
 		 *
 		 * @return 
-		 *  - Type: Save::ImageWriter& 
+		 *  - Type: Save::ImageWriter&
 		 *  - The object returns itself in order to cascade
 		 *
-		 * The cascading I/O operator allows for the setting of tags and their values
-		 * on the fly.
+		 * The cascading I/O operator allows for the setting of tags and their
+		 * values on the fly.
 		 *
 		 * \code{.cpp}
-		 * 	// Using the cascading I/O operator (<<) to replace tags with values
-		 * 	// Using the cascading I/O operator (<<) to save an image
+		 * 	// using the cascading I/O operator (<<) to replace tags with values
+		 * 	// using the cascading I/O operator (<<) to save an image
 		 * 	{
 		 * 		Save::ImageWriter writer(params, "path/img-<model>-<serial>.raw");
 		 * 		
@@ -508,16 +672,19 @@ namespace Save
 		 * \endcode
 		 */
 		virtual ImageWriter& operator<<(const char* pInput);
+#ifdef _WIN32
+		virtual ImageWriter& operator<<(const wchar_t* pInput);
+#endif
 
 		/**
 		 * @fn virtual ImageWriter& operator<<(unsigned long long timestamp)
 		 *
 		 * @param timestamp
-		 *  - Type: unsigned long long 
+		 *  - Type: unsigned long long
 		 *  - Timestamp
 		 *
 		 * @return 
-		 *  - Type: Save::ImageWriter& 
+		 *  - Type: Save::ImageWriter&
 		 *  - The object returns itself in order to cascade
 		 *
 		 * The cascading I/O operator sets the timestamp
@@ -525,7 +692,7 @@ namespace Save
 		 * passed in.
 		 *
 		 * \code{.cpp}
-		 * 	// Using timestamp tag to cascading I/O operator to save a set of images
+		 * 	// using timestamp tag to cascading I/O operator to save a set of images
 		 * 	{
 		 * 		Save::ImageWriter writer(params, "savedimages/image<timestamp>.jpg");
 		 * 		for (size_t i = 0; i < numImages; i++)
@@ -546,15 +713,15 @@ namespace Save
 		 * @fn virtual ImageWriter& operator<<(const uint8_t* pData)
 		 *
 		 * @param pData
-		 *  - Type: const uint8_t* 
+		 *  - Type: const uint8_t*
 		 *  - Pointer to the image data to save
 		 *
 		 * @return 
-		 *  - Type: Save::ImageWriter& 
+		 *  - Type: Save::ImageWriter&
 		 *  - The object returns itself in order to cascade
 		 *
-		 * The cascading I/O operator saves an image (Save::ImageWriter::Save) when
-		 * image data is passed in.
+		 * The cascading I/O operator saves an image (Save::ImageWriter::Save)
+		 * when image data is passed in.
 		 *
 		 * @warning 
 		 *  - Creates any missing directories
@@ -565,11 +732,11 @@ namespace Save
 		 * @fn virtual ImageWriter& operator<<(ImageParams params)
 		 *
 		 * @param params
-		 *  - Type: Save::ImageParams 
+		 *  - Type: Save::ImageParams
 		 *  - Parameters of the image
 		 *
 		 * @return 
-		 *  - Type: Save::ImageWriter& 
+		 *  - Type: Save::ImageWriter&
 		 *  - The object returns itself in order to cascade
 		 *
 		 * The cascading I/O operator updates the image parameters
@@ -581,4 +748,4 @@ namespace Save
 	private:
 		void* m_pInternal;
 	};
-}
+} // namespace Save

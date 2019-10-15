@@ -601,48 +601,64 @@ void PrintUsage()
 
 int main(int argc, char** argv)
 {
-	CliParser parser(argc, argv);
-
-	auto pSystem = Arena::OpenSystem();
-
-	pSystem->UpdateDevices(1000);
-
 	int ret = -1;
+	
+	try
+	{
+		CliParser parser(argc, argv);
 
-	if (parser.ArgumentExists("/list"))
-	{
-		ret = PrintCameraList(pSystem);
+		auto pSystem = Arena::OpenSystem();
+
+		pSystem->UpdateDevices(1000);
+
+		if (parser.ArgumentExists("/list"))
+		{
+			ret = PrintCameraList(pSystem);
+		}
+		else if (parser.ArgumentExists("/force"))
+		{
+			ret = HandleForceIP(pSystem, parser);
+		}
+		else if (parser.ArgumentExists("/persist"))
+		{
+			ret = HandlePersistentIP(pSystem, parser);
+		}
+		else if (parser.ArgumentExists("/config"))
+		{
+			ret = HandleIPConfigurationOptions(pSystem, parser);
+		}
+		else if (parser.ArgumentExists("/dhcp"))
+		{
+			ret = HandleDHCP(pSystem, parser);
+		}
+		else
+		{
+			std::cout << "Unknown command!" << std::endl;
+			PrintUsage();
+			ret = 0;
+		}
+
+		if (ret != 0)
+		{
+			PrintUsage();
+		}
+
+		//cleanup the Arena System
+		Arena::CloseSystem(pSystem);
 	}
-	else if (parser.ArgumentExists("/force"))
+	catch (GenICam::GenericException& e)
 	{
-		ret = HandleForceIP(pSystem, parser);
+		std::cout << "Arena Error: " << e.what() << std::endl;
+		ret = -1;
 	}
-	else if (parser.ArgumentExists("/persist"))
+	catch (std::exception& e)
 	{
-		ret = HandlePersistentIP(pSystem, parser);
-	}
-	else if (parser.ArgumentExists("/config"))
-	{
-		ret = HandleIPConfigurationOptions(pSystem, parser);
-	}
-	else if (parser.ArgumentExists("/dhcp"))
-	{
-		ret = HandleDHCP(pSystem, parser);
-	}
-	else
-	{
-		std::cout << "Unknown command!" << std::endl;
-		PrintUsage();
-		ret = 0;
+		std::cout << "Std Error: " << e.what() << std::endl;
+		ret = -1;
 	}
 
-	if (ret != 0)
-	{
-		PrintUsage();
-	}
-
-	//cleanup the Arena System
-	Arena::CloseSystem(pSystem);
+	std::cout << "Press enter to complete\n";
+	std::getchar();
 
 	return ret;
 }

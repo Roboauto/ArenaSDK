@@ -74,7 +74,7 @@ FFMPEGLIBS = -lavcodec \
              -lswresample \
              -lswscale
 
-LIBS= -larena -lsave -lgentl $(GENICAMLIBS) $(FFMPEGLIBS) $(OPENCVLIBS)
+LIBS= -larena -lsave -lgentl $(GENICAMLIBS) $(FFMPEGLIBS) $(OPENCVLIBS) -lpthread
 RM = rm -f
 
 SRCS = $(wildcard *.cpp)

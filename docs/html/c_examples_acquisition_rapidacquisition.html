@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Acquisition, Rapid Acquisition &mdash; Arena 0.1.4.0 documentation</title>
+  <title>Acquisition, Rapid Acquisition &mdash; Arena 0.1.18.0 documentation</title>
   
 
   
@@ -35,9 +35,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.18.0 documentation" href="index.html"/>
         <link rel="up" title="C Code Samples" href="c_examples.html"/>
-        <link rel="next" title="Callback, On Node Change" href="c_examples_callback_onnodechange.html"/>
+        <link rel="next" title="Callback, Image Callbacks" href="c_examples_callback_imagecallbacks.html"/>
         <link rel="prev" title="Acquisition, Introduction" href="c_examples_acquisition.html"/> 
 
   
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.18
               </div>
             
           
@@ -110,19 +110,33 @@
 <li class="toctree-l4"><a class="reference internal" href="c_examples_simpleacquisition.html">Simple Acquisition, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_acquisition.html">Acquisition, Introduction</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Acquisition, Rapid Acquisition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_imagecallbacks.html">Callback, Image Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_multithreadedimagecallbacks.html">Callback, Multithreaded Image Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_onevent.html">Callback, On Event</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_callback_onnodechange.html">Callback, On Node Change</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_polling.html">Callback, Polling</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_chunkdata.html">Chunk Data, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_chunkdata_crcvalidation.html">Chunk Data, CRC Validation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_enumeration.html">Enumeration, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_enumeration_handlingdisconnections.html">Enumeration, Handling Disconnections</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodemaps.html">Explore, Node Maps</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_exposure.html">Exposure, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodes.html">Explore, Nodes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodetypes.html">Explore, Node Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_forceip.html">Force IP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_lut.html">LUT, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_pixelcorrection.html">Pixel Correction, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_polarization_colordolpaolp.html">Polarization, Color DoLP AoLP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_polarization_dolpaolp.html">Polarization, DoLP AoLP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_record.html">Record, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_save.html">Save, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_save_filenamepattern.html">Save, File Name Pattern</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_save_ply.html">Save, Ply</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_scheduledactioncommands.html">Scheduled Action Commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_sequencer_hdr.html">Sequencer, HDR</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_streamables.html">Streamables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_trigger.html">Trigger, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_trigger_overlappingtrigger.html">Trigger, Overlapping Trigger</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_usersets.html">User Sets, Introduction</a></li>
 </ul>
 </li>
@@ -200,24 +214,24 @@
   <div class="section" id="acquisition-rapid-acquisition">
 <h1>Acquisition, Rapid Acquisition<a class="headerlink" href="#acquisition-rapid-acquisition" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-c++"><div class="highlight"><pre><span class="cm">/***************************************************************************************</span>
-<span class="cm">***                                                                                 ***</span>
-<span class="cm">***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***</span>
-<span class="cm">***                                                                                 ***</span>
-<span class="cm">***  THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***</span>
-<span class="cm">***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***</span>
-<span class="cm">***  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    ***</span>
-<span class="cm">***  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         ***</span>
-<span class="cm">***  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  ***</span>
-<span class="cm">***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***</span>
-<span class="cm">***  SOFTWARE.                                                                      ***</span>
-<span class="cm">***                                                                                 ***</span>
-<span class="cm">***************************************************************************************/</span>
+<span class="cm"> ***                                                                                 ***</span>
+<span class="cm"> ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***</span>
+<span class="cm"> ***                                                                                 ***</span>
+<span class="cm"> ***  THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***</span>
+<span class="cm"> ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***</span>
+<span class="cm"> ***  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    ***</span>
+<span class="cm"> ***  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         ***</span>
+<span class="cm"> ***  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  ***</span>
+<span class="cm"> ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***</span>
+<span class="cm"> ***  SOFTWARE.                                                                      ***</span>
+<span class="cm"> ***                                                                                 ***</span>
+<span class="cm"> ***************************************************************************************/</span>
 
 <span class="cp">#include</span> <span class="cpf">&quot;stdafx.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;ArenaCApi.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;SaveCApi.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;inttypes.h&gt; // defines macros for printf functions</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;stdbool.h&gt;  // defines boolean type and values</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string.h&gt;       // defines strcmp functions</span><span class="cp"></span>
 
 <span class="cp">#define TAB1 &quot;  &quot;</span>
 <span class="cp">#define TAB2 &quot;    &quot;</span>
@@ -239,6 +253,9 @@
 <span class="c1">// Pixel format</span>
 <span class="cp">#define PIXEL_FORMAT &quot;Mono8&quot;</span>
 
+<span class="c1">// Number of images to grab</span>
+<span class="cp">#define NUM_IMAGES 500</span>
+
 <span class="c1">// Maximum packet size</span>
 <span class="c1">//    In order to grab images at the maximum packet size, the ethernet adapter</span>
 <span class="c1">//    must be configured appropriately: &#39;Jumbo packet&#39; must be set to its</span>
@@ -251,9 +268,6 @@
 
 <span class="c1">// System timeout</span>
 <span class="cp">#define SYSTEM_TIMEOUT 100</span>
-
-<span class="c1">// Number of images to grab</span>
-<span class="cp">#define NUM_IMAGES 5000</span>
 
 <span class="c1">// Maximum buffer length</span>
 <span class="cp">#define MAX_BUF 256</span>
@@ -302,14 +316,15 @@
         <span class="c1">// Ensure increment</span>
         <span class="c1">//    If a node has an increment (all integer nodes &amp; some float nodes), only</span>
         <span class="c1">//    multiples of the increment can be set. Ensure this by dividing and then</span>
-        <span class="c1">//    multiplying by the increment. If a value is between two increments, this</span>
-        <span class="c1">//    will push it to the lower value. Most minimum values are divisible by</span>
-        <span class="c1">//    the increment. If not, this must also be considered in the calculation.</span>
+        <span class="c1">//    multiplying by the increment. If a value is between two increments,</span>
+        <span class="c1">//    this will push it to the lower value. Most minimum values are divisible</span>
+        <span class="c1">//    by the increment. If not, this must also be considered in the</span>
+        <span class="c1">//    calculation.</span>
         <span class="n">value</span> <span class="o">=</span> <span class="p">(((</span><span class="n">value</span> <span class="o">-</span> <span class="n">minimum</span><span class="p">)</span> <span class="o">/</span> <span class="n">increment</span><span class="p">)</span> <span class="o">*</span> <span class="n">increment</span><span class="p">)</span> <span class="o">+</span> <span class="n">minimum</span><span class="p">;</span>
 
         <span class="c1">// Check min/max values</span>
-        <span class="c1">//    Values must not deceed the minimum or exceed the maximum value of a</span>
-        <span class="c1">//    node. If a value does so, simply push it within range.</span>
+        <span class="c1">//    Values must not be less than the minimum or exceed the maximum value of</span>
+        <span class="c1">//    a node. If a value does so, simply push it within range.</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="n">minimum</span><span class="p">)</span>
         <span class="p">{</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="n">minimum</span><span class="p">;</span>
@@ -356,8 +371,8 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
 
-        <span class="c1">// get node values that will be changed in order to return their values</span>
-        <span class="c1">// at the end of the example</span>
+        <span class="c1">// get node values that will be changed in order to return their values at</span>
+        <span class="c1">// the end of the example</span>
         <span class="kt">double</span> <span class="n">exposureTimeInitial</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
         <span class="kt">char</span> <span class="n">pExposureAutoInitial</span><span class="p">[</span><span class="n">MAX_BUF</span><span class="p">];</span>
         <span class="kt">size_t</span> <span class="n">exposureAutoLen</span> <span class="o">=</span> <span class="n">MAX_BUF</span><span class="p">;</span>
@@ -368,15 +383,16 @@
         <span class="n">acNode</span> <span class="n">hDeviceStreamChannelPacketSizeNode</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
         <span class="kt">int64_t</span> <span class="n">deviceStreamChannelPacketSizeInitial</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-        <span class="n">err</span> <span class="o">=</span> <span class="n">acFloatGetValue</span><span class="p">(</span><span class="n">hExposureTimeNode</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">exposureTimeInitial</span><span class="p">)</span> <span class="o">|</span>
-                  <span class="n">acNodeMapGetEnumerationValue</span><span class="p">(</span><span class="n">hNodeMap</span><span class="p">,</span> <span class="s">&quot;ExposureAuto&quot;</span><span class="p">,</span> <span class="n">pExposureAutoInitial</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">exposureAutoLen</span><span class="p">)</span> <span class="o">|</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">acNodeMapGetEnumerationValue</span><span class="p">(</span><span class="n">hNodeMap</span><span class="p">,</span> <span class="s">&quot;ExposureAuto&quot;</span><span class="p">,</span> <span class="n">pExposureAutoInitial</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">exposureAutoLen</span><span class="p">)</span> <span class="o">|</span>
+                  <span class="n">acFloatGetValue</span><span class="p">(</span><span class="n">hExposureTimeNode</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">exposureTimeInitial</span><span class="p">)</span> <span class="o">|</span>
                   <span class="n">acNodeMapGetEnumerationValue</span><span class="p">(</span><span class="n">hNodeMap</span><span class="p">,</span> <span class="s">&quot;PixelFormat&quot;</span><span class="p">,</span> <span class="n">pPixelFormatInitial</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pixelFormatLen</span><span class="p">)</span> <span class="o">|</span>
                   <span class="n">acNodeMapGetIntegerValue</span><span class="p">(</span><span class="n">hNodeMap</span><span class="p">,</span> <span class="s">&quot;Width&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">widthInitial</span><span class="p">)</span> <span class="o">|</span>
                   <span class="n">acNodeMapGetIntegerValue</span><span class="p">(</span><span class="n">hNodeMap</span><span class="p">,</span> <span class="s">&quot;Height&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">heightInitial</span><span class="p">);</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">)</span>
                 <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Error: failed to retrieve one or more initial node values.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 
-        <span class="c1">// retrieve DeviceStreamChannelPacketSize value if max packet size defined as true</span>
+        <span class="c1">// retrieve DeviceStreamChannelPacketSize value if max packet size defined as</span>
+        <span class="c1">// true</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">MAX_PACKET_SIZE</span><span class="p">)</span>
         <span class="p">{</span>
                 <span class="c1">// get node</span>
@@ -398,7 +414,7 @@
         <span class="kt">int64_t</span> <span class="n">imageWidth</span> <span class="o">=</span> <span class="n">SetIntValue</span><span class="p">(</span><span class="n">hNodeMap</span><span class="p">,</span> <span class="s">&quot;Width&quot;</span><span class="p">,</span> <span class="n">WIDTH</span><span class="p">);</span>
         <span class="kt">int64_t</span> <span class="n">imageHeight</span> <span class="o">=</span> <span class="n">SetIntValue</span><span class="p">(</span><span class="n">hNodeMap</span><span class="p">,</span> <span class="s">&quot;Height&quot;</span><span class="p">,</span> <span class="n">HEIGHT</span><span class="p">);</span>
 
-        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;(%&quot;</span> <span class="n">PRId64</span> <span class="s">&quot;x%&quot;</span> <span class="n">PRId64</span> <span class="s">&quot;)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">imageWidth</span><span class="p">,</span> <span class="n">imageHeight</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot; (%&quot;</span> <span class="n">PRId64</span> <span class="s">&quot;x%&quot;</span> <span class="n">PRId64</span> <span class="s">&quot;)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">imageWidth</span><span class="p">,</span> <span class="n">imageHeight</span><span class="p">);</span>
 
         <span class="c1">// Set small pixel format</span>
         <span class="c1">//    Similar to reducing the ROI, reducing the number of bits per pixel also</span>
@@ -480,9 +496,9 @@
         <span class="c1">//    Start the stream before grabbing any images. Starting the stream</span>
         <span class="c1">//    allocates buffers, which can be passed in as an argument (default: 10),</span>
         <span class="c1">//    and begins filling them with data. Starting the stream blocks write</span>
-        <span class="c1">//    access to many features such as width, height, and pixel format, as well</span>
-        <span class="c1">//    as acquisition and buffer handling modes, among others. The stream needs</span>
-        <span class="c1">//    to be stopped later.</span>
+        <span class="c1">//    access to many features such as width, height, and pixel format, as</span>
+        <span class="c1">//    well as acquisition and buffer handling modes, among others. The stream</span>
+        <span class="c1">//    needs to be stopped later.</span>
         <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%sStart stream with %i buffers</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">TAB1</span><span class="p">,</span> <span class="n">NUM_IMAGES</span><span class="p">);</span>
 
         <span class="n">err</span> <span class="o">=</span> <span class="n">acDeviceStartStream</span><span class="p">(</span><span class="n">hDevice</span><span class="p">);</span>
@@ -490,9 +506,11 @@
                 <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
 
         <span class="c1">// get images</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_IMAGES</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">NUM_IMAGES</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
         <span class="p">{</span>
-                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%sGet image %d</span><span class="se">\r</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">TAB2</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\r</span><span class="s">%sGet image %d&quot;</span><span class="p">,</span> <span class="n">TAB2</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+                <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+
                 <span class="n">acBuffer</span> <span class="n">hBuffer</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
 
                 <span class="c1">// get buffer for each image</span>
@@ -514,8 +532,13 @@
                 <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
 
         <span class="c1">// return all nodes to their initial values</span>
-        <span class="n">err</span> <span class="o">=</span> <span class="n">acFloatSetValue</span><span class="p">(</span><span class="n">hExposureTimeNode</span><span class="p">,</span> <span class="n">exposureTimeInitial</span><span class="p">)</span> <span class="o">|</span>
-                  <span class="n">acNodeMapSetEnumerationValue</span><span class="p">(</span><span class="n">hNodeMap</span><span class="p">,</span> <span class="s">&quot;ExposureAuto&quot;</span><span class="p">,</span> <span class="n">pExposureAutoInitial</span><span class="p">)</span> <span class="o">|</span>
+        <span class="k">if</span> <span class="p">(</span><span class="mi">0</span> <span class="o">==</span> <span class="n">strcmp</span><span class="p">(</span><span class="n">pExposureAutoInitial</span><span class="p">,</span> <span class="s">&quot;Off&quot;</span><span class="p">))</span>
+        <span class="p">{</span>
+                <span class="n">err</span> <span class="o">=</span> <span class="n">acFloatSetValue</span><span class="p">(</span><span class="n">hExposureTimeNode</span><span class="p">,</span> <span class="n">exposureTimeInitial</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">acNodeMapSetEnumerationValue</span><span class="p">(</span><span class="n">hNodeMap</span><span class="p">,</span> <span class="s">&quot;ExposureAuto&quot;</span><span class="p">,</span> <span class="n">pExposureAutoInitial</span><span class="p">)</span> <span class="o">|</span>
                   <span class="n">acNodeMapSetEnumerationValue</span><span class="p">(</span><span class="n">hNodeMap</span><span class="p">,</span> <span class="s">&quot;PixelFormat&quot;</span><span class="p">,</span> <span class="n">pPixelFormatInitial</span><span class="p">)</span> <span class="o">|</span>
                   <span class="n">acNodeMapSetIntegerValue</span><span class="p">(</span><span class="n">hNodeMap</span><span class="p">,</span> <span class="s">&quot;Width&quot;</span><span class="p">,</span> <span class="n">widthInitial</span><span class="p">)</span> <span class="o">|</span>
                   <span class="n">acNodeMapSetIntegerValue</span><span class="p">(</span><span class="n">hNodeMap</span><span class="p">,</span> <span class="s">&quot;Height&quot;</span><span class="p">,</span> <span class="n">heightInitial</span><span class="p">);</span>
@@ -537,12 +560,19 @@
 <span class="c1">// =- &amp; CLEAN UP =-=-</span>
 <span class="c1">// =-=-=-=-=-=-=-=-=-</span>
 
-<span class="cp">#define CHECK_RETURN                       \</span>
-<span class="cp">        if (err != AC_ERR_SUCCESS)             \</span>
-<span class="cp">        {                                      \</span>
-<span class="cp">                printf(&quot;Press enter to complete&quot;); \</span>
-<span class="cp">                getchar();                         \</span>
-<span class="cp">                return -1;                         \</span>
+<span class="c1">// error buffer length</span>
+<span class="cp">#define ERR_BUF 512</span>
+
+<span class="cp">#define CHECK_RETURN                                  \</span>
+<span class="cp">        if (err != AC_ERR_SUCCESS)                        \</span>
+<span class="cp">        {                                                 \</span>
+<span class="cp">                char pMessageBuf[ERR_BUF];                    \</span>
+<span class="cp">                size_t pBufLen = ERR_BUF;                     \</span>
+<span class="cp">                acGetLastErrorMessage(pMessageBuf, &amp;pBufLen); \</span>
+<span class="cp">                printf(&quot;\nError: %s&quot;, pMessageBuf);           \</span>
+<span class="cp">                printf(&quot;\n\nPress enter to complete\n&quot;);      \</span>
+<span class="cp">                getchar();                                    \</span>
+<span class="cp">                return -1;                                    \</span>
 <span class="cp">        }</span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
@@ -561,8 +591,7 @@
         <span class="n">CHECK_RETURN</span><span class="p">;</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">numDevices</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
         <span class="p">{</span>
-                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Error: no devices connected, example requires at least one device.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Press enter to complete</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">No camera connected</span><span class="se">\n</span><span class="s">Press enter to complete</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
                 <span class="n">getchar</span><span class="p">();</span>
                 <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
         <span class="p">}</span>
@@ -600,7 +629,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="c_examples_callback_onnodechange.html" class="btn btn-neutral float-right" title="Callback, On Node Change" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="c_examples_callback_imagecallbacks.html" class="btn btn-neutral float-right" title="Callback, Image Callbacks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="c_examples_acquisition.html" class="btn btn-neutral" title="Acquisition, Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -633,7 +662,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.4.0',
+            VERSION:'0.1.18.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 #pragma once
 
 namespace Save
@@ -27,7 +27,8 @@ namespace Save
 		/**
 		 * @fn ImageParams()
 		 *
-		 * An empty constructor. Initializes width, height, and bits per pixel to 0.
+		 * An empty constructor. Initializes width, height, and bits per pixel to
+		 * 0.
 		 */
 		ImageParams();
 
@@ -35,22 +36,22 @@ namespace Save
 		 * @fn ImageParams(size_t width, size_t height, size_t bitsPerPixel, bool topToBottom = true)
 		 *
 		 * @param width
-		 *  - Type: size_t 
+		 *  - Type: size_t
 		 *  - Image width
 		 *
 		 * @param height
-		 *  - Type: size_t 
+		 *  - Type: size_t
 		 *  - Image height
 		 *
 		 * @param bitsPerPixel
-		 *  - Type: size_t 
+		 *  - Type: size_t
 		 *  - Number of bits per pixel
 		 *
 		 * @param topToBottom
-		 *  - Type: bool 
-		 *  - Default: true 
-		 *  - If true, image data is read/written top to bottom 
-		 *  - Otherwise, bottom to top 
+		 *  - Type: bool
+		 *  - Default: true
+		 *  - If true, image data is read/written top to bottom
+		 *  - Otherwise, bottom to top
 		 *  - Only applicable when saving JPEG and BMP
 		 *
 		 * A constructor.
@@ -61,7 +62,7 @@ namespace Save
 		 * @fn ImageParams(const ImageParams& params)
 		 *
 		 * @param params
-		 *  - Type: const Save::ImageParams& 
+		 *  - Type: const Save::ImageParams&
 		 *  - Image parameters to copy
 		 *
 		 * A copy constructor.
@@ -72,11 +73,11 @@ namespace Save
 		 * @fn const ImageParams& operator=(ImageParams params)
 		 *
 		 * @param params
-		 *  - Type: Save::ImageParams 
+		 *  - Type: Save::ImageParams
 		 *  - Image parameters to copy
 		 *
 		 * @return 
-		 *  - Type: const Save::ImageParams& 
+		 *  - Type: const Save::ImageParams&
 		 *  - Copied image parameters
 		 *
 		 * A copy assignment operator.
@@ -94,7 +95,7 @@ namespace Save
 		 * @fn virtual void SetWidth(size_t width)
 		 *
 		 * @param width
-		 *  - Type: size_t 
+		 *  - Type: size_t
 		 *  - Image width
 		 *
 		 * @return 
@@ -108,8 +109,8 @@ namespace Save
 		 * @fn virtual void SetHeight(size_t height)
 		 *
 		 * @param height
-		 *  - Type: size_t 
-		 *  - Image width
+		 *  - Type: size_t
+		 *  - Image height
 		 *
 		 * @return 
 		 *  - none
@@ -122,8 +123,8 @@ namespace Save
 		 * @fn virtual void SetBitsPerPixel(size_t bpp)
 		 *
 		 * @param bpp
-		 *  - Type: size_t 
-		 *  - Image width
+		 *  - Type: size_t
+		 *  - Number of bits per pixel
 		 *
 		 * @return 
 		 *  - none
@@ -136,16 +137,16 @@ namespace Save
 		 * @fn virtual void SetTopToBottom(bool topToBottom)
 		 *
 		 * @param topToBottom
-		 *  - Type: bool 
-		 *  - If true, image data is read/written top to bottom 
-		 *  - Otherwise, bottom to top 
+		 *  - Type: bool
+		 *  - If true, image data is read/written top to bottom
+		 *  - Otherwise, bottom to top
 		 *  - Only applicable when saving JPEG and BMP
 		 *
 		 * @return 
 		 *  - none
 		 *
-		 * <B> SetTopToBottom </B> sets whether the image is read/written from top to
-		 * bottom or bottom to top.
+		 * <B> SetTopToBottom </B> sets whether the image is read/written from
+		 * top to bottom or bottom to top.
 		 */
 		virtual void SetTopToBottom(bool topToBottom);
 
@@ -153,7 +154,7 @@ namespace Save
 		 * @fn virtual size_t GetWidth() const
 		 *
 		 * @return 
-		 *  - Type: size_t 
+		 *  - Type: size_t
 		 *  - Image width
 		 *
 		 * <B> GetWidth </B> gets the width parameter.
@@ -164,7 +165,7 @@ namespace Save
 		 * @fn virtual size_t GetHeight() const
 		 *
 		 * @return 
-		 *  - Type: size_t 
+		 *  - Type: size_t
 		 *  - Image height
 		 *
 		 * <B> GetHeight </B> gets the height parameter.
@@ -175,7 +176,7 @@ namespace Save
 		 * @fn virtual size_t GetBitsPerPixel() const
 		 *
 		 * @return 
-		 *  - Type: size_t 
+		 *  - Type: size_t
 		 *  - Number of bits per pixel
 		 *
 		 * <B> GetBitsPerPixel </B> gets the bits per pixel parameter.
@@ -186,13 +187,13 @@ namespace Save
 		 * @fn virtual bool GetTopToBottom() const
 		 *
 		 * @return 
-		 *  - Type: bool 
-		 *  - If true, image data is read/written top to bottom 
-		 *  - Otherwise, bottom to top 
+		 *  - Type: bool
+		 *  - If true, image data is read/written top to bottom
+		 *  - Otherwise, bottom to top
 		 *  - Only applicable when saving JPEG and BMP
 		 *
-		 * <B> GetTopToBottom </B> gets whether the image is read/written from top to
-		 * bottom or bottom to top.
+		 * <B> GetTopToBottom </B> gets whether the image is read/written from
+		 * top to bottom or bottom to top.
 		 */
 		virtual bool GetTopToBottom() const;
 
@@ -200,12 +201,13 @@ namespace Save
 		 * @fn virtual size_t GetSize() const
 		 *
 		 * @return 
-		 *  - Type: size_t 
+		 *  - Type: size_t
 		 *  - Image size
 		 *
-		 * <B> GetSize </B> calculates the size of the image. The size is calculated
-		 * by multiplying the width, height, and bytes per pixel (bits per pixel
-		 * divided by 8) and adding an extra byte if a remainder of bits remains.
+		 * <B> GetSize </B> calculates the size of the image. The size is
+		 * calculated by multiplying the width, height, and bytes per pixel (bits
+		 * per pixel divided by 8) and adding an extra byte if a remainder of
+		 * bits remains.
 		 */
 		virtual size_t GetSize() const;
 
@@ -213,12 +215,12 @@ namespace Save
 		 * @fn virtual size_t GetStride() const
 		 *
 		 * @return 
-		 *  - Type: size_t 
+		 *  - Type: size_t
 		 *  - Image stride/pitch
 		 *
 		 * <B> GetStride </B> calculates the stride of an image. The stride is
-		 * calculated by multiplying the width by the number of bytes per pixel (bits
-		 * per pixel divided by 8).
+		 * calculated by multiplying the width by the number of bytes per pixel
+		 * (bits per pixel divided by 8).
 		 */
 		virtual size_t GetStride() const;
 

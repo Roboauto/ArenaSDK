@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>IDevice &mdash; Arena 0.1.4.0 documentation</title>
+  <title>IDevice &mdash; Arena 0.1.18.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.18.0 documentation" href="index.html"/>
         <link rel="up" title="Arena C++" href="cpp_arena.html"/>
         <link rel="next" title="DeviceInfo" href="cpp_arena_deviceinfo.html"/>
         <link rel="prev" title="FeatureStream" href="cpp_arena_featurestream.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.18
               </div>
             
           
@@ -291,14 +291,14 @@
 </p>
 <p>Basically, calling <strong> StartStream </strong> prepares and starts the underlying streaming engine. The streaming engine primarily consists of a number of buffers, an input and an output queue, and a worker thread to run off of the main thread. All buffers are first placed in the input queue. When a buffer reaches its turn, it is filled with data. Once complete, it is moved to the output queue. At this point a buffer might be retrieved by the user (<a class="reference internal" href="#class_arena_1_1_i_device_1aa9ab4b4d5bb5a35e0d33190b622248e9"><span class="std std-ref">Arena::IDevice::GetBuffer</span></a>, <a class="reference internal" href="#class_arena_1_1_i_device_1a3e576b282f47cfaf003298f279f3f3a1"><span class="std std-ref">Arena::IDevice::GetImage</span></a>) and then returned to the input queue (<a class="reference internal" href="#class_arena_1_1_i_device_1a978bd841ed2818fc717e706aac8218f6"><span class="std std-ref">Arena::IDevice::RequeueBuffer</span></a>).</p>
 <p>More specifically, <strong> StartStream </strong>:<ul class="simple">
-<li>allocates and announces a number of buffers according to the numBuffers paramter</li>
+<li>allocates and announces a number of buffers according to the numBuffers parameter</li>
 <li>pushes all buffers to the input queue</li>
 <li>opens a stream channel socket</li>
 <li>configures the IP and port on the device</li>
 <li>fires a dummy packet to help with firewalls</li>
 <li>requests a test packet to ensure configured packet size is appropriate</li>
 <li>starts the worker thread and begins listening for packets related to the acquisition engine</li>
-<li>has fhe device lock out certain features (e.g. ‘Width’, ‘Height’) that cannot be changed during the stream</li>
+<li>has the device lock out certain features (e.g. ‘Width’, ‘Height’) that cannot be changed during the stream</li>
 <li>executes the ‘AcquisitionStart’ feature in order to have the device start sending packets</li>
 </ul>
 </p>
@@ -450,7 +450,7 @@
 </dd>
 </dl>
 </p>
-<p><strong> GetImage </strong> is essentially the same call as <strong> GetBuffer </strong> (<a class="reference internal" href="#class_arena_1_1_i_device_1aa9ab4b4d5bb5a35e0d33190b622248e9"><span class="std std-ref">Arena::IDevice::GetBuffer</span></a>), just with an additional step. Internally, <strong> GetImage </strong> calls <strong> GetBuffer </strong>, which returns a a buffer. It then attempts to cast the buffer to an image before returning it. If the data in the buffer is that of an image, the cast succeeds and the image is returned successfully. If not, the cast fails and NULL is returned.</p>
+<p><strong> GetImage </strong> is essentially the same call as <strong> GetBuffer </strong> (<a class="reference internal" href="#class_arena_1_1_i_device_1aa9ab4b4d5bb5a35e0d33190b622248e9"><span class="std std-ref">Arena::IDevice::GetBuffer</span></a>), just with an additional step. Internally, <strong> GetImage </strong> calls <strong> GetBuffer </strong>, which returns a buffer. It then attempts to cast the buffer to an image before returning it. If the data in the buffer is that of an image, the cast succeeds and the image is returned successfully. If not, the cast fails and NULL is returned.</p>
 <p>When called, <strong> GetBuffer </strong> checks the output queue for image/chunk data, grabbing the first buffer in the queue. If nothing is in the output queue, the call will wait until something arrives. If nothing arrives before expiration of the timeout, a GenICam::TimeoutException is thrown.</p>
 <p><strong> GetBuffer </strong> is a blocking call. If it is called with a timeout of 20 seconds and nothing arrives in the output queue, then its thread will be blocked for the full 20 seconds. However, as the timeout is a maximum, as soon as something arrives in the output queue, it will be returned, not waiting for the full timeout. A timeout value of 0 ensures the call will not block, throwing instead of waiting if nothing is in the output queue.</p>
 <p><strong> GetImage </strong> does not verify image quality. If an incomplete image is returned, the call will not throw and the image will be returned as is. It is recommended to verify each image’s completion (<a class="reference internal" href="cpp_arena_iimage.html#class_arena_1_1_i_image_1a3746a731e7812019002340d99b821226"><span class="std std-ref">Arena::IImage::IsIncomplete</span></a>).</p>
@@ -519,7 +519,7 @@
 </dd>
 </dl>
 </p>
-<p>The data returned from <strong> GetBuffer </strong> may represents different payload types: an image without chunk, an image with chunk, or just chunk data. Note that a buffer of chunk data payload type may contain image data, but cannot be cast to an image because the image data is treated as a chunk. The payload type can be queried (<a class="reference internal" href="cpp_arena_ibuffer.html#class_arena_1_1_i_buffer_1acb478c804043bd99c389e9f0c364495d"><span class="std std-ref">Arena::IBuffer::GetPayloadType</span></a>), which returns an enum (Arena::EBufferPayloadType):<ul class="simple">
+<p>The data returned from <strong> GetBuffer </strong> represents different payload types: an image without chunk, an image with chunk, or just chunk data. Note that a buffer of chunk data payload type may contain image data, but cannot be cast to an image because the image data is treated as a chunk. The payload type can be queried (<a class="reference internal" href="cpp_arena_ibuffer.html#class_arena_1_1_i_buffer_1acb478c804043bd99c389e9f0c364495d"><span class="std std-ref">Arena::IBuffer::GetPayloadType</span></a>), which returns an enum (Arena::EBufferPayloadType):<ul class="simple">
 <li>Arena::EBufferPayloadType::BufferPayloadTypeImage</li>
 <li>Arena::EBufferPayloadType::BufferPayloadTypeImageExtendedChunk</li>
 <li>Arena::EBufferPayloadType::BufferPayloadTypeChunkData</li>
@@ -1062,6 +1062,115 @@
 </dd></dl>
 
 </div>
+<div class="section" id="registerimagecallback">
+<h2>RegisterImageCallback<a class="headerlink" href="#registerimagecallback" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv2N5Arena7IDevice21RegisterImageCallbackEP14IImageCallback">
+<span id="Arena::IDevice::RegisterImageCallback__IImageCallbackP"></span><span class="target" id="class_arena_1_1_i_device_1a444c7b66e53fdea908b59fd1c099ccc7"></span><em class="property">virtual</em> void <code class="descclassname">Arena::IDevice::</code><code class="descname">RegisterImageCallback</code><span class="sig-paren">(</span>IImageCallback *<em>callback</em><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv2N5Arena7IDevice21RegisterImageCallbackEP14IImageCallback" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="deregisterimagecallback">
+<h2>DeregisterImageCallback<a class="headerlink" href="#deregisterimagecallback" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv2N5Arena7IDevice23DeregisterImageCallbackEP14IImageCallback">
+<span id="Arena::IDevice::DeregisterImageCallback__IImageCallbackP"></span><span class="target" id="class_arena_1_1_i_device_1a24673ada8cc06f62d89759ed4bf73fa8"></span>bool <code class="descclassname">Arena::IDevice::</code><code class="descname">DeregisterImageCallback</code><span class="sig-paren">(</span>IImageCallback *<em>callback</em><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv2N5Arena7IDevice23DeregisterImageCallbackEP14IImageCallback" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><strong> DeregisterImageCallback </strong> unregisters a previously registered callback object. Callbacks can be unregistered whether or not the device is currently streaming. To deregister all callbacks at once use DeregisterAllImageCallbacks.<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: bool</li>
+<li>True if the specfied callback was in the list of registered callbacks. Otherwise false.</li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">callback</span></code>: <ul>
+<li>Type: IImageCallback*</li>
+<li>A pointer to an IImageCallback object which implements the OnImage() function</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p>RegisterImageCallback will throw :<ul class="simple">
+<li>InvalidArgumentException if the callback argument is NULL</li>
+</ul>
+</p>
+<p><div class="highlight-cpp"><div class="highlight"><pre><span class="c1">// Register callback object</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">camSerial</span> <span class="o">=</span> <span class="n">deviceInfos</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">SerialNumber</span><span class="p">();</span>
+  <span class="n">ImageCallback</span><span class="o">*</span> <span class="n">pCallbackHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ImageCallback</span><span class="p">(</span><span class="n">camSerial</span><span class="p">);</span>
+
+  <span class="n">pDevice</span><span class="o">-&gt;</span><span class="n">RegisterImageCallback</span><span class="p">(</span><span class="n">pCallbackHandler</span><span class="p">);</span>
+
+  <span class="n">pDevice</span><span class="o">-&gt;</span><span class="n">StartStream</span><span class="p">();</span>
+  <span class="n">Sleep</span><span class="p">(</span><span class="mi">5000</span><span class="p">);</span>
+  <span class="n">pDevice</span><span class="o">-&gt;</span><span class="n">StopStream</span><span class="p">();</span>
+
+  <span class="n">pDevice</span><span class="o">-&gt;</span><span class="n">DeregisterImageCallback</span><span class="p">(</span><span class="n">pCallbackHandler</span><span class="p">);</span>
+
+  <span class="k">delete</span> <span class="n">pCallbackHandler</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+<p><dl class="docutils">
+<dt><strong>See</strong></dt>
+<dd><ul class="simple">
+<li>Device:RegisterImageCallback</li>
+<li>Device:<a class="reference internal" href="#class_arena_1_1_i_device_1a0e093617e75dde7fa23671a581c0887b"><span class="std std-ref">DeregisterAllImageCallbacks</span></a> </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="deregisterallimagecallbacks">
+<h2>DeregisterAllImageCallbacks<a class="headerlink" href="#deregisterallimagecallbacks" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="_CPPv2N5Arena7IDevice27DeregisterAllImageCallbacksEv">
+<span id="Arena::IDevice::DeregisterAllImageCallbacks"></span><span class="target" id="class_arena_1_1_i_device_1a0e093617e75dde7fa23671a581c0887b"></span>bool <code class="descclassname">Arena::IDevice::</code><code class="descname">DeregisterAllImageCallbacks</code><span class="sig-paren">(</span><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv2N5Arena7IDevice27DeregisterAllImageCallbacksEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><strong> DeregisterAllImageCallbacks </strong> deregisters all previously registered callback objects. Callbacks can be unregistered whether or not the device is currently streaming. To deregister an individual callback, DeregisterImageCallback.<dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: bool</li>
+<li>True if there were any callbacks registered before removing them all. Otherwise false.</li>
+</ul>
+</dd>
+</dl>
+</p>
+<p><div class="highlight-cpp"><div class="highlight"><pre><span class="c1">// Register callback object</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">camSerial</span> <span class="o">=</span> <span class="n">deviceInfos</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">SerialNumber</span><span class="p">();</span>
+  <span class="n">ImageCallback</span><span class="o">*</span> <span class="n">pCallbackHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ImageCallback</span><span class="p">(</span><span class="n">camSerial</span><span class="p">);</span>
+
+  <span class="n">pDevice</span><span class="o">-&gt;</span><span class="n">RegisterImageCallback</span><span class="p">(</span><span class="n">pCallbackHandler</span><span class="p">);</span>
+
+  <span class="n">pDevice</span><span class="o">-&gt;</span><span class="n">StartStream</span><span class="p">();</span>
+  <span class="n">Sleep</span><span class="p">(</span><span class="mi">5000</span><span class="p">);</span>
+  <span class="n">pDevice</span><span class="o">-&gt;</span><span class="n">StopStream</span><span class="p">();</span>
+
+  <span class="n">pDevice</span><span class="o">-&gt;</span><span class="n">DeregisterAllImageCallbacks</span><span class="p">();</span>
+
+  <span class="k">delete</span> <span class="n">pCallbackHandler</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+<p><dl class="docutils">
+<dt><strong>See</strong></dt>
+<dd><ul class="simple">
+<li>Device:RegisterImageCallback</li>
+<li>Device:<a class="reference internal" href="#class_arena_1_1_i_device_1a24673ada8cc06f62d89759ed4bf73fa8"><span class="std std-ref">DeregisterImageCallback</span></a> </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
 <div class="section" id="id2">
 <h2>~IDevice<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -1116,7 +1225,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.4.0',
+            VERSION:'0.1.18.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

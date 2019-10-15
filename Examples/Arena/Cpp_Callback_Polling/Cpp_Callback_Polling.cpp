@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,13 +10,13 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 
 #include "stdafx.h"
 #include "ArenaApi.h"
 
-#include <chrono> // for std::chrono::milliseconds
-#include <thread> // for std::this_thread::sleep_for
+#include <chrono>  // for std::chrono::milliseconds
+#include <thread>  // for std::this_thread::sleep_for
 #include <iomanip> // for std::setw
 
 #define TAB1 "  "
@@ -25,7 +25,8 @@
 
 // Callbacks: Polling
 //    This example demonstrates configuring a callback with polling. Polling
-//    allows for callbacks to be invoked over time. 
+//    allows for callbacks to be invoked over time.
+
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
@@ -51,10 +52,10 @@ void PrintNodeValue(GenApi::INode* pNode)
 	// Do something on callback
 	//    This function is registered with the callback and invoked when the node
 	//    map has been polled if the elapsed time is over the threshold of the
-	//    node. 
+	//    node. In this case, the current device temperature is printed.
 	GenApi::CFloatPtr pDeviceTemperature = pNode;
 
-	std::cout << TAB3 << std::setw(2) << g_count++ << " Current device temperature: " << pDeviceTemperature->GetValue() << char(167) << pDeviceTemperature->GetUnit() << "\r";
+	std::cout << "\r" << TAB3 << std::setw(4) << g_count++ << " Current device temperature: " << pDeviceTemperature->GetValue() << char(167) << pDeviceTemperature->GetUnit() << std::flush;
 }
 
 // demonstrates polling
@@ -69,8 +70,8 @@ void ConfigureCallbackToPollDeviceTemperature(Arena::IDevice* pDevice)
 	// Get node map and device temperature node
 	//    Nodes are polled through their node maps. This example demonstrates
 	//    polling the device temperature node. It has a polling time of 1 second,
-	//    which means that its callback will not be invoked within 1 second of the
-	//    last time it has been polled. 
+	//    which means that its callback will not be invoked within 1 second of
+	//    the last time it has been polled.
 	std::cout << TAB1 << "Get node map and device temperature node\n";
 
 	GenApi::INodeMap* pNodeMap = pDevice->GetNodeMap();
@@ -84,7 +85,7 @@ void ConfigureCallbackToPollDeviceTemperature(Arena::IDevice* pDevice)
 	// Register callback
 	//    Callbacks are registered with a node and a function. This example
 	//    demonstrates callbacks being invoked through polling. This happens when
-	//    a node map is polled and the polling time is ready to poll again. 
+	//    a node map is polled and the polling time is ready to poll again.
 	std::cout << TAB1 << "Register callback\n";
 
 	GenApi::CallbackHandleType hCallback = GenApi::Register(pNode, PrintNodeValue);
@@ -99,12 +100,12 @@ void ConfigureCallbackToPollDeviceTemperature(Arena::IDevice* pDevice)
 	//    only be invoked if the elapsed time since the last callback is larger
 	//    than the polling time. In this example, two counts are shown: a polling
 	//    count and a callback count. This is to demonstrate that the callback is
-	//    not necessarily invoked every time the node map is polled. 
+	//    not necessarily invoked every time the node map is polled.
 	std::cout << TAB1 << "Start polling\n";
 
 	for (int i = 0; i < NUM_POLLS; i++)
 	{
-		std::cout << TAB2 << std::setw(2) << i << "\r";
+		std::cout << "\r" << TAB1 << std::setw(4) << i << std::flush;
 
 		// sleep for elapsed time
 		std::this_thread::sleep_for(std::chrono::milliseconds(ELAPSED_TIME));
@@ -122,7 +123,7 @@ void ConfigureCallbackToPollDeviceTemperature(Arena::IDevice* pDevice)
 	// Deregister callback
 	//    Failing to deregister a callback results in a memory leak. Once a
 	//    callback has been registered, it will no longer be invoked when a node
-	//    is invalidated. 
+	//    is invalidated.
 	std::cout << TAB1 << "Deregister callback\n";
 
 	GenApi::Deregister(hCallback);

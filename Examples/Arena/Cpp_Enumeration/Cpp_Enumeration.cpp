@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 
 #include "stdafx.h"
 #include "ArenaApi.h"
@@ -23,8 +23,8 @@
 
 // Enumeration: Introduction
 //    This example introduces device enumeration. This includes opening and
-//    closing the system, updating and retrieving the list of devices,
-//    searching for devices, and creating and destroying a device. 
+//    closing the system, updating and retrieving the list of devices, searching
+//    for devices, and creating and destroying a device.
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
@@ -33,8 +33,8 @@
 // Update timeout
 //    Timeout for updating the list of devices (in milliseconds). Because it is
 //    unclear how many devices are expected, this timeout waits the entire
-//    timeout, not returning early as devices are found. 
-#define TIMEOUT 100
+//    timeout, not returning early as devices are found.
+#define SYSTEM_TIMEOUT 100
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- EXAMPLE -=-=-
@@ -52,24 +52,25 @@
 void EnumerateDevices()
 {
 	// Open system
-	//    Open the system in order to update and retrieve the device list. Opening
-	//    the system is the entry point to all the rest of the Arena SDK. Only one
-	//    system can be opened at a time. 
+	//    Open the system in order to update and retrieve the device list.
+	//    Opening the system is the entry point to all the rest of the Arena SDK.
+	//    Only one system can be opened at a time.
 	std::cout << TAB1 << "Open system\n";
 
 	Arena::ISystem* pSystem = Arena::OpenSystem();
 
 	// Update and retrieve the device list
 	//    Update and retrieve the list of connected devices. Failing to update
-	//    results in an empty list being retrieved, even if devices are connected.
-	//    Getting the devices does not update or affect the list at all. 
+	//    results in an empty list being retrieved, even if devices are
+	//    connected. Getting the devices does not update or affect the list at
+	//    all.
 	std::cout << TAB1 << "Update and retrieve list of devices\n";
 
-	pSystem->UpdateDevices(TIMEOUT);
+	pSystem->UpdateDevices(SYSTEM_TIMEOUT);
 	std::vector<Arena::DeviceInfo> deviceInfos = pSystem->GetDevices();
 
-	// get information on connected devices
-	// save serial number to demonstrate search later in the example
+	// get information on connected devices save serial number to demonstrate
+	// search later in the example
 	std::cout << TAB1 << "Get device information\n";
 	GenICam::gcstring serialToFind = "00000";
 
@@ -84,9 +85,9 @@ void EnumerateDevices()
 		// Display device information
 		//    The list of devices is kept as a std::vector of device information
 		//    objects. Device information objects provide access to devices'
-		//    discovery information. This information is provided without having to
-		//    create the device and includes information related to identification
-		//    and network settings. 
+		//    discovery information. This information is provided without having
+		//    to create the device and includes information related to
+		//    identification and network settings.
 		std::cout << TAB2 << "Information for device " << i;
 
 		Arena::DeviceInfo deviceInfo = deviceInfos[i];
@@ -101,9 +102,9 @@ void EnumerateDevices()
 	}
 
 	// Search for device
-	//    Search for a specific device using the std library. Providing the device
-	//    list as a vector allows for the use of all std functionality with
-	//    regards to searching, sorting, and modifying the list. 
+	//    Search for a specific device using the std library. Providing the
+	//    device list as a vector allows for the use of all std functionality
+	//    with regards to searching, sorting, and modifying the list.
 	std::cout << TAB1 << "Search for device with serial " << serialToFind << "\n";
 
 	auto it = std::find_if(
@@ -119,24 +120,25 @@ void EnumerateDevices()
 
 		// Create device
 		//    Create device in order to configure it and grab images. Creating a
-		//    device requires a device information object to be passed in. Created
-		//    objects need to be destroyed. A device can only be created once per
-		//    process, and can only be opened with read-write access once. 
+		//    device requires a device information object to be passed in.
+		//    Created objects need to be destroyed. A device can only be created
+		//    once per process, and can only be opened with read-write access
+		//    once.
 		std::cout << TAB3 << "Create device\n";
 
 		Arena::IDevice* pDevice = pSystem->CreateDevice(*it);
 
 		// Destroy device
-		//    Destroy device before closing the system. Destroying devices cleans up
-		//    allocated memory. 
+		//    Destroy device before closing the system. Destroying devices cleans
+		//    up allocated memory.
 		std::cout << TAB3 << "Destroy device\n";
 
 		pSystem->DestroyDevice(pDevice);
 	}
 
 	// Close system
-	//    Close the system to end use of Arena SDK. Releasing the system cleans up
-	//    allocated memory. Failing to close the system causes memory to leak. 
+	//    Close the system to end use of Arena SDK. Releasing the system cleans
+	//    up allocated memory. Failing to close the system causes memory to leak.
 	std::cout << TAB1 << "Close system\n";
 
 	Arena::CloseSystem(pSystem);

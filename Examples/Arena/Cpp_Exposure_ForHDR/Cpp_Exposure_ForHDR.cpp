@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,14 +10,10 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 
 #include "stdafx.h"
 #include "ArenaApi.h"
-
-#ifdef __linux__
-#define INFINITE 0xFFFFFFFF
-#endif
 
 #define TAB1 "  "
 #define TAB2 "    "
@@ -28,21 +24,21 @@
 //    to grab images appropriate for high dynamic range (or HDR) imaging. HDR
 //    images can be created by combining a number of images acquired at various
 //    exposure times. This example demonstrates grabbing three images for this
-//    purpose, without the actual creation of an HDR image. 
+//    purpose, without the actual creation of an HDR image.
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
 // =-=-=-=-=-=-=-=-=-
 
-// Exposure times
-#define EXPOSURE_HIGH 2500.0
-#define EXPOSURE_MID 1000.0
-#define EXPOSURE_LOW 500.0
+// exposure times (in microseconds)
+double EXPOSURE_HIGH = 100000.0;
+double EXPOSURE_MID = 50000.0;
+double EXPOSURE_LOW = 25000.0;
 
 // Image timeout
-//    Timeout for grabbing images (in milliseconds). Have the timeout at least
-//    a bit larger than the highest exposure time to avoid timing out. 
-#define TIMEOUT INFINITE
+//    Timeout for grabbing images (in milliseconds). Have the timeout at least a
+//    bit larger than the highest exposure time to avoid timing out.
+#define TIMEOUT ARENA_INFINITE
 
 // number of images to grab
 #define NUM_HDR_IMAGES 5
@@ -54,7 +50,7 @@
 // HDR image struct
 //    This struct holds the information needed for a single HDR image. This
 //    includes one image taken with a high exposure time, one with a medium
-//    exposure time, and one with a fairly low exposure time. 
+//    exposure time, and one with a fairly low exposure time.
 struct HDRImage
 {
 public:
@@ -62,6 +58,23 @@ public:
 	Arena::IImage* m_pImageMid = NULL;
 	Arena::IImage* m_pImageLow = NULL;
 };
+
+// Trigger software once armed
+//    Continually check until trigger is armed. Once the trigger is armed, it
+//    is ready to be executed.
+void TriggerSoftwareOnceArmed(Arena::IDevice* pDevice)
+{
+	// wait until trigger armed is true
+	bool triggerArmed = false;
+	do
+	{
+		triggerArmed = Arena::GetNodeValue<bool>(pDevice->GetNodeMap(), "TriggerArmed");
+	} while (triggerArmed == false);
+
+	// retrieve and execute software trigger node
+	GenApi::CCommandPtr pTriggerSoftware = pDevice->GetNodeMap()->GetNode("TriggerSoftware");
+	pTriggerSoftware->Execute();
+}
 
 // demonstrates exposure configuration and acquisition for HDR imaging
 // (1) sets trigger mode
@@ -77,8 +90,8 @@ public:
 // (11) cleans up copied images
 void AcquireHDRImages(Arena::IDevice* pDevice)
 {
-	// get node values that will be changed in order to return their values
-	// at the end of the example
+	// get node values that will be changed in order to return their values at
+	// the end of the example
 	GenICam::gcstring triggerModeInitial = Arena::GetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "TriggerMode");
 	GenICam::gcstring triggerSourceInitial = Arena::GetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "TriggerSource");
 	GenICam::gcstring triggerSelectorInitial = Arena::GetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "TriggerSelector");
@@ -88,8 +101,8 @@ void AcquireHDRImages(Arena::IDevice* pDevice)
 	// Prepare trigger mode
 	//    Enable trigger mode before starting the stream. This example uses the
 	//    trigger to control the moment that images are taken. This ensures the
-	//    exposure time of each image in a way that a continuous stream might have
-	//    trouble with. 
+	//    exposure time of each image in a way that a continuous stream might
+	//    have trouble with.
 	std::cout << TAB1 << "Prepare trigger mode\n";
 
 	Arena::SetNodeValue<GenICam::gcstring>(
@@ -108,9 +121,9 @@ void AcquireHDRImages(Arena::IDevice* pDevice)
 		"FrameStart");
 
 	// Disable automatic exposure
-	//    Disable automatic exposure before starting the stream. The HDR images in
-	//    this example require three images of varied exposures, which need to be
-	//    set manually. 
+	//    Disable automatic exposure before starting the stream. The HDR images
+	//    in this example require three images of varied exposures, which need to
+	//    be set manually.
 	std::cout << TAB1 << "Disable automatic exposure\n";
 
 	Arena::SetNodeValue<GenICam::gcstring>(
@@ -119,9 +132,9 @@ void AcquireHDRImages(Arena::IDevice* pDevice)
 		"Off");
 
 	// Get exposure time and software trigger nodes
-	//    The exposure time and software trigger nodes are retrieved beforehand in
-	//    order to check for existance, readability, and writability only once
-	//    before the stream. 
+	//    The exposure time and software trigger nodes are retrieved beforehand
+	//    in order to check for existance, readability, and writability only once
+	//    before the stream.
 	std::cout << TAB1 << "Get exposure time and trigger software nodes\n";
 
 	GenApi::CFloatPtr pExposureTime = pDevice->GetNodeMap()->GetNode("ExposureTime");
@@ -137,6 +150,21 @@ void AcquireHDRImages(Arena::IDevice* pDevice)
 		throw GenICam::GenericException("ExposureTime or TriggerSoftware node not writable", __FILE__, __LINE__);
 	}
 
+	// get max and min exposure time to ensure set of exposure times are within this range
+	GenApi::CFloatPtr pFloat = pDevice->GetNodeMap()->GetNode("ExposureTime");
+	double exposureTimeMax = pFloat->GetMax();
+	double exposureTimeMin = pFloat->GetMin();
+
+	// if largest exposure times is not within the exposure time range, set largest exposure
+	// time to max value and set the remaining exposure times to half the value of the
+	// state before
+	if (EXPOSURE_HIGH > exposureTimeMax || EXPOSURE_LOW < exposureTimeMin)
+	{
+		EXPOSURE_HIGH = exposureTimeMax;
+		EXPOSURE_MID = EXPOSURE_HIGH / 2;
+		EXPOSURE_LOW = EXPOSURE_MID / 2;
+	}
+
 	// start stream
 	pDevice->StartStream();
 
@@ -149,44 +177,44 @@ void AcquireHDRImages(Arena::IDevice* pDevice)
 	{
 		// Get high, medium, and low exposure images
 		//    This example grabs three examples of varying exposures for later
-		//    processing. For each image, the exposure must be set, an image must be
-		//    triggered, and then that image must be retrieved. After the exposure
-		//    time is changed, the setting does not take place on the device until
-		//    after the next frame. Because of this, two images are retrieved, the
-		//    first of which is discarded. 
+		//    processing. For each image, the exposure must be set, an image must
+		//    be triggered, and then that image must be retrieved. After the
+		//    exposure time is changed, the setting does not take place on the
+		//    device until after the next frame. Because of this, two images are
+		//    retrieved, the first of which is discarded.
 		std::cout << TAB2 << "Get HDR image " << i << "\n";
 
 		// high exposure image
 		pExposureTime->SetValue(EXPOSURE_HIGH);
-		pTriggerSoftware->Execute();
+		TriggerSoftwareOnceArmed(pDevice);
 		Arena::IImage* pImagePreHigh = pDevice->GetImage(TIMEOUT);
-		pTriggerSoftware->Execute();
+		TriggerSoftwareOnceArmed(pDevice);
 		Arena::IImage* pImageHigh = pDevice->GetImage(TIMEOUT);
 
 		std::cout << TAB3 << "High image (timestamp " << pImageHigh->GetTimestampNs() << ", exposure " << EXPOSURE_HIGH << ")\n";
 
 		// medium exposure image
 		pExposureTime->SetValue(EXPOSURE_MID);
-		pTriggerSoftware->Execute();
+		TriggerSoftwareOnceArmed(pDevice);
 		Arena::IImage* pImagePreMid = pDevice->GetImage(TIMEOUT);
-		pTriggerSoftware->Execute();
+		TriggerSoftwareOnceArmed(pDevice);
 		Arena::IImage* pImageMid = pDevice->GetImage(TIMEOUT);
 
 		std::cout << TAB3 << "Mid image (timestamp " << pImageMid->GetTimestampNs() << ", exposure " << EXPOSURE_MID << ")\n";
 
 		// low exposure image
 		pExposureTime->SetValue(EXPOSURE_LOW);
-		pTriggerSoftware->Execute();
+		TriggerSoftwareOnceArmed(pDevice);
 		Arena::IImage* pImagePreLow = pDevice->GetImage(TIMEOUT);
-		pTriggerSoftware->Execute();
+		TriggerSoftwareOnceArmed(pDevice);
 		Arena::IImage* pImageLow = pDevice->GetImage(TIMEOUT);
 
 		std::cout << TAB3 << "Low image (timestamp " << pImageLow->GetTimestampNs() << ", exposure " << EXPOSURE_LOW << ")\n";
 
 		// Copy images for processing later
-		//    Use the image factory to copy the images for later processing. Images
-		//    are copied in order to requeue buffers to allow for more images to be
-		//    retrieved from the device. 
+		//    Use the image factory to copy the images for later processing.
+		//    Images are copied in order to requeue buffers to allow for more
+		//    images to be retrieved from the device.
 		std::cout << TAB2 << "Copy images for HDR processing later\n";
 
 		HDRImage hdrImage;
@@ -209,7 +237,7 @@ void AcquireHDRImages(Arena::IDevice* pDevice)
 
 	// Run HDR processing
 	//    Once the images have been retrieved and copied, they can be processed
-	//    into an HDR image. HDR algorithms 
+	//    into an HDR image. HDR algorithms
 	std::cout << TAB1 << "Run HDR processing\n";
 
 	// ...

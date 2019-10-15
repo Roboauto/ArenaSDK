@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 #pragma once
 
 #ifdef __cplusplus
@@ -21,25 +21,25 @@ extern "C" {
  * @fn AC_ERROR AC_API acChunkDataGetChunk(acBuffer hBuffer, const char* pName, acNode* phChunk)
  *
  * @param hBuffer
- *  - Type: acBuffer 
- *  - [In] parameter 
+ *  - Type: acBuffer
+ *  - [In] parameter
  *  - A chunk data
  *
  * @param pName
- *  - Type: const char* 
- *  - [In] parameter 
- *  - Name of the chunk 
+ *  - Type: const char*
+ *  - [In] parameter
+ *  - Name of the chunk
  *  - Prefixed with 'Chunk'
  *
  * @param phChunk
- *  - Type: acNode* 
- *  - [Out] parameter 
- *  - Requested node 
+ *  - Type: acNode*
+ *  - [Out] parameter
+ *  - Requested node
  *  - Null on failure
  *
  * @return 
- *  - Type: AC_ERROR 
- *  - Error code for the function 
+ *  - Type: AC_ERROR
+ *  - Error code for the function
  *  - Returns AC_ERR_SUCCESS (0) on success
  *
  * <B> acChunkDataGetChunk </B> gets a specified chunk, which can be used to
@@ -52,30 +52,30 @@ AC_ERROR AC_API acChunkDataGetChunk(acBuffer hBuffer, const char* pName, acNode*
  * @fn AC_ERROR AC_API acChunkDataGetChunkAndAccessMode(acBuffer hBuffer, const char* pName, acNode* phChunkNode, AC_ACCESS_MODE* pAccessMode)
  *
  * @param hBuffer
- *  - Type: acBuffer 
- *  - [In] parameter 
+ *  - Type: acBuffer
+ *  - [In] parameter
  *  - A chunk data
  *
  * @param pName
- *  - Type: const char* 
- *  - [In] parameter 
- *  - Name of the chunk 
+ *  - Type: const char*
+ *  - [In] parameter
+ *  - Name of the chunk
  *  - Prefixed with 'Chunk'
  *
  * @param phChunkNode
- *  - Type: acNode* 
- *  - [Out] parameter 
- *  - Requested node 
+ *  - Type: acNode*
+ *  - [Out] parameter
+ *  - Requested node
  *  - Null on failure
  *
  * @param pAccessMode
- *  - Type: AC_ACCESS_MODE* 
- *  - [Out] parameter 
+ *  - Type: AC_ACCESS_MODE*
+ *  - [Out] parameter
  *  - Access mode of the requested node
  *
  * @return 
- *  - Type: AC_ERROR 
- *  - Error code for the function 
+ *  - Type: AC_ERROR
+ *  - Error code for the function
  *  - Returns AC_ERR_SUCCESS (0) on success
  *
  * <B> acChunkDataGetChunkAndAccessMode </B> gets a specified chunk and its

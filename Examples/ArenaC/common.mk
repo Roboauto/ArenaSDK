@@ -77,6 +77,7 @@ LIBS = -larenac \
        -lsavec \
        -lsave \
        -lgentl \
+	   -lpthread \
        $(GENICAMLIBS) \
        $(FFMPEGLIBS) \
        $(OPENCVLIBS)

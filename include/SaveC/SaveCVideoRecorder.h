@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -21,20 +21,20 @@ extern "C" {
  * @fn SC_ERROR SC_API saveRecorderCreateEmpty(saveRecorder* hRecorder)
  *
  * @param hRecorder
- *  - Type: saveRecorder* 
- *  - [Out] parameter 
+ *  - Type: saveRecorder*
+ *  - [Out] parameter
  *  - Created video recorder
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
- * <B> saveRecorderCreateEmpty </B> creates an empty/default video recorder.
- * The parameters of the video recorder are not yet set (width = height = 0,
- * FPS = 0/0). The default file name pattern is 'savedvideos/video<count>.avi'.
- * The default codec is raw, the default container is AVI, and the default
- * pixel format is BGR8.
+ * <B> saveRecorderCreateEmpty </B> creates an empty/default video recorder. The
+ * parameters of the video recorder are not yet set (width = height = 0, FPS =
+ * 0/0). The default file name pattern is 'savedvideos/video<count>.avi'. The
+ * default codec is raw, the default container is AVI, and the default pixel
+ * format is BGR8.
  */
 SC_ERROR SC_API saveRecorderCreateEmpty(saveRecorder* hRecorder);
 
@@ -42,34 +42,34 @@ SC_ERROR SC_API saveRecorderCreateEmpty(saveRecorder* hRecorder);
  * @fn SC_ERROR SC_API saveRecorderCreate(size_t width, size_t height, double fps, saveRecorder* hRecorder)
  *
  * @param width
- *  - Type: size_t 
- *  - [In] parameter 
+ *  - Type: size_t
+ *  - [In] parameter
  *  - Width of a single frame in the video
  *
  * @param height
- *  - Type: size_t 
- *  - [In] parameter 
+ *  - Type: size_t
+ *  - [In] parameter
  *  - Height of a single frame in the video
  *
  * @param fps
- *  - Type: double 
- *  - [In] parameter 
+ *  - Type: double
+ *  - [In] parameter
  *  - Frames per second
  *
  * @param hRecorder
- *  - Type: saveRecorder* 
- *  - [Out] parameter 
+ *  - Type: saveRecorder*
+ *  - [Out] parameter
  *  - Created video recorder
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderCreate </B> creates a video recorder and sets initial video
  * parameters. The default file name pattern is 'savedvideos/video<count>.avi'.
- * The default codec is raw, the default container is AVI, and the default
- * pixel format is BGR8.
+ * The default codec is raw, the default container is AVI, and the default pixel
+ * format is BGR8.
  */
 SC_ERROR SC_API saveRecorderCreate(size_t width, size_t height, double fps, saveRecorder* hRecorder);
 
@@ -77,13 +77,13 @@ SC_ERROR SC_API saveRecorderCreate(size_t width, size_t height, double fps, save
  * @fn SC_ERROR SC_API saveRecorderDestroy(saveRecorder hRecorder)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderDestroy </B> cleans up a video recorder (saveRecorder),
@@ -98,25 +98,25 @@ SC_ERROR SC_API saveRecorderDestroy(saveRecorder hRecorder);
  * @fn SC_ERROR SC_API saveRecorderSetRaw(saveRecorder hRecorder, uint64_t pixelFormat)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @param pixelFormat
- *  - Type: uint64_t 
- *  - [In] parameter 
+ *  - Type: uint64_t
+ *  - [In] parameter
  *  - Pixel format of the image data
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderSetRaw </B> changes the image writer to save images using a
  * specified pixel format without a container.
  *
  * @warning 
- *  - changes file extension 
+ *  - changes file extension
  *  - cannot be called while recording
  */
 SC_ERROR SC_API saveRecorderSetRaw(saveRecorder hRecorder, uint64_t pixelFormat);
@@ -125,21 +125,21 @@ SC_ERROR SC_API saveRecorderSetRaw(saveRecorder hRecorder, uint64_t pixelFormat)
  * @fn SC_ERROR SC_API saveRecorderSetRawAviBGR8(saveRecorder hRecorder)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
- * <B> saveRecorderSetRawAviBGR8 </B> sets the codec, container, and pixel
- * format to raw, AVI, and BGR8, respectively.
+ * <B> saveRecorderSetRawAviBGR8 </B> sets the codec, container, and pixel format
+ * to raw, AVI, and BGR8, respectively.
  *
  * @warning 
- *  - pushing non-BGR8 data will result in unexpected behavior 
- *  - changes file extension 
+ *  - pushing non-BGR8 data will result in unexpected behavior
+ *  - changes file extension
  *  - cannot be called while recording
  */
 SC_ERROR SC_API saveRecorderSetRawAviBGR8(saveRecorder hRecorder);
@@ -148,21 +148,21 @@ SC_ERROR SC_API saveRecorderSetRawAviBGR8(saveRecorder hRecorder);
  * @fn SC_ERROR SC_API saveRecorderSetRawMovRGB8(saveRecorder hRecorder)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
- * <B> saveRecorderSetRawMovRGB8 </B> sets the codec, container, and pixel
- * format to raw, MOV, and RGB8, respectively.
+ * <B> saveRecorderSetRawMovRGB8 </B> sets the codec, container, and pixel format
+ * to raw, MOV, and RGB8, respectively.
  *
  * @warning 
- *  - pushing non-RGB8 data will result in unexpected behavior 
- *  - changes file extension 
+ *  - pushing non-RGB8 data will result in unexpected behavior
+ *  - changes file extension
  *  - cannot be called while recording
  */
 SC_ERROR SC_API saveRecorderSetRawMovRGB8(saveRecorder hRecorder);
@@ -171,21 +171,21 @@ SC_ERROR SC_API saveRecorderSetRawMovRGB8(saveRecorder hRecorder);
  * @fn SC_ERROR SC_API saveRecorderSetH264MovRGB8(saveRecorder hRecorder)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderSetH264MovRGB8 </B> sets the codec, container, and pixel
  * format to H264, MOV, and RGB8, respectively.
  *
  * @warning 
- *  - pushing non-RGB8 data will result in unexpected behavior 
- *  - changes file extension 
+ *  - pushing non-RGB8 data will result in unexpected behavior
+ *  - changes file extension
  *  - cannot be called while recording
  */
 SC_ERROR SC_API saveRecorderSetH264MovRGB8(saveRecorder hRecorder);
@@ -194,21 +194,21 @@ SC_ERROR SC_API saveRecorderSetH264MovRGB8(saveRecorder hRecorder);
  * @fn SC_ERROR SC_API saveRecorderSetH264MovBGR8(saveRecorder hRecorder)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderSetH264MovBGR8 </B> sets the codec, container, and pixel
  * format to H264, MOV, and BGR8, respectively.
  *
  * @warning 
- *  - pushing non-BGR8 data will result in unexpected behavior 
- *  - changes file extension 
+ *  - pushing non-BGR8 data will result in unexpected behavior
+ *  - changes file extension
  *  - cannot be called while recording
  */
 SC_ERROR SC_API saveRecorderSetH264MovBGR8(saveRecorder hRecorder);
@@ -217,21 +217,21 @@ SC_ERROR SC_API saveRecorderSetH264MovBGR8(saveRecorder hRecorder);
  * @fn SC_ERROR SC_API saveRecorderSetH264Mp4RGB8(saveRecorder hRecorder)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderSetH264Mp4RGB8 </B> sets the codec, container, and pixel
  * format to H264, MPEG-4, and RGB8, respectively.
  *
  * @warning 
- *  - pushing non-RGB8 data will result in unexpected behavior 
- *  - changes file extension 
+ *  - pushing non-RGB8 data will result in unexpected behavior
+ *  - changes file extension
  *  - cannot be called while recording
  */
 SC_ERROR SC_API saveRecorderSetH264Mp4RGB8(saveRecorder hRecorder);
@@ -240,21 +240,21 @@ SC_ERROR SC_API saveRecorderSetH264Mp4RGB8(saveRecorder hRecorder);
  * @fn SC_ERROR SC_API saveRecorderSetH264Mp4BGR8(saveRecorder hRecorder)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderSetH264Mp4BGR8 </B> sets the codec, container, and pixel
  * format to H264, MPEG-4, and BGR8, respectively.
  *
  * @warning 
- *  - pushing non-BGR8 data will result in unexpected behavior 
- *  - changes file extension 
+ *  - pushing non-BGR8 data will result in unexpected behavior
+ *  - changes file extension
  *  - cannot be called while recording
  */
 SC_ERROR SC_API saveRecorderSetH264Mp4BGR8(saveRecorder hRecorder);
@@ -263,28 +263,28 @@ SC_ERROR SC_API saveRecorderSetH264Mp4BGR8(saveRecorder hRecorder);
  * @fn SC_ERROR SC_API saveRecorderSetParams(saveRecorder hRecorder, size_t width, size_t height, double fps)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @param width
- *  - Type: size_t 
- *  - [In] parameter 
+ *  - Type: size_t
+ *  - [In] parameter
  *  - Width of a single frame in the video
  *
  * @param height
- *  - Type: size_t 
- *  - [In] parameter 
+ *  - Type: size_t
+ *  - [In] parameter
  *  - Height of a single frame in the video
  *
  * @param fps
- *  - Type: double 
- *  - [In] parameter 
+ *  - Type: double
+ *  - [In] parameter
  *  - Frames per second
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderSetParams </B> sets the parameters for the video(s) to
@@ -299,32 +299,32 @@ SC_ERROR SC_API saveRecorderSetParams(saveRecorder hRecorder, size_t width, size
  * @fn SC_ERROR SC_API saveRecorderSetFileNamePattern(saveRecorder hRecorder, const char* pFileNamePattern)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @param pFileNamePattern
- *  - Type: const char* 
- *  - [In] parameter 
+ *  - Type: const char*
+ *  - [In] parameter
  *  - File name pattern to set
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
- * <B> saveRecorderSetFileNamePattern </B> sets a file name pattern. Changing
- * the extension via this call will change the output container.
+ * <B> saveRecorderSetFileNamePattern </B> sets a file name pattern. Changing the
+ * extension via this call will change the output container.
  *
  * The video recorder defaults to different settings depending on the extension
- * of the file name pattern: 
- *  - '.avi' defaults to raw codec, BGR8 pixel format 
- *  - '.mov' defaults to raw codec, RGB8 pixel format 
+ * of the file name pattern:
+ *  - '.avi' defaults to raw codec, BGR8 pixel format
+ *  - '.mov' defaults to raw codec, RGB8 pixel format
  *  - '.mp4' defaults to H264 codec, BGR8 pixel
  *
  * @warning 
- *  - changes to the file extension will change the container accordingly 
- *  - set file name pattern before setting other settings 
+ *  - changes to the file extension will change the container accordingly
+ *  - set file name pattern before setting other settings
  *  - cannot be called while recording
  */
 SC_ERROR SC_API saveRecorderSetFileNamePattern(saveRecorder hRecorder, const char* pFileNamePattern);
@@ -333,18 +333,18 @@ SC_ERROR SC_API saveRecorderSetFileNamePattern(saveRecorder hRecorder, const cha
  * @fn SC_ERROR SC_API saveRecorderUpdateTag(saveRecorder hRecorder, const char* pTag, const char* pValue)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @param pTag
- *  - Type: const char* 
- *  - [In] parameter 
+ *  - Type: const char*
+ *  - [In] parameter
  *  - Tag to replace
  *
  * @param pValue
- *  - Type: const char* 
- *  - [In] parameter 
+ *  - Type: const char*
+ *  - [In] parameter
  *  - Value to set
  *
  * @return 
@@ -359,18 +359,18 @@ SC_ERROR SC_API saveRecorderUpdateTag(saveRecorder hRecorder, const char* pTag, 
  * @fn SC_ERROR SC_API saveRecorderSetCount(saveRecorder hRecorder, uint64_t count)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @param count
- *  - Type: uint64_t 
- *  - [In] parameter 
+ *  - Type: uint64_t
+ *  - [In] parameter
  *  - Value of the internal counter
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderSetCount </B> manually sets the count. The count increments
@@ -385,18 +385,18 @@ SC_ERROR SC_API saveRecorderSetCount(saveRecorder hRecorder, uint64_t count);
  * @fn SC_ERROR SC_API saveRecorderSetTimestamp(saveRecorder hRecorder, uint64_t timestamp)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @param timestamp
- *  - Type: uint64_t 
- *  - [In] parameter 
+ *  - Type: uint64_t
+ *  - [In] parameter
  *  - Timestamp to set
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderSetTimestamp </B> manually sets the timestamp. The timestamp
@@ -414,31 +414,31 @@ SC_ERROR SC_API saveRecorderSetTimestamp(saveRecorder hRecorder, uint64_t timest
  * @fn SC_ERROR SC_API saveRecorderGetParams(saveRecorder hRecorder, size_t* pWidth, size_t* pHeight, double* pFps)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @param pWidth
- *  - Type: size_t* 
- *  - [Out] parameter 
- *  - Accepts null 
+ *  - Type: size_t*
+ *  - [Out] parameter
+ *  - Accepts null
  *  - The width
  *
  * @param pHeight
- *  - Type: size_t* 
- *  - [Out] parameter 
- *  - Accepts null 
+ *  - Type: size_t*
+ *  - [Out] parameter
+ *  - Accepts null
  *  - The height
  *
  * @param pFps
- *  - Type: double* 
- *  - [Out] parameter 
- *  - Accepts null 
+ *  - Type: double*
+ *  - [Out] parameter
+ *  - Accepts null
  *  - Frames per second
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderGetParams </B> retrieves the parameters currently used to
@@ -453,30 +453,29 @@ SC_ERROR SC_API saveRecorderGetParams(saveRecorder hRecorder, size_t* pWidth, si
  * @fn SC_ERROR SC_API saveRecorderGetFileNamePattern(saveRecorder hRecorder, char* pFileNamePattern, size_t* pLen)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @param pFileNamePattern
- *  - Type: char* 
- *  - [Out] parameter 
- *  - Accepts null 
+ *  - Type: char*
+ *  - [Out] parameter
+ *  - Accepts null
  *  - File name pattern
  *
  * @param pLen
- *  - Type: size_t* 
- *  - [In/Out] parameter 
+ *  - Type: size_t*
+ *  - [In/Out] parameter
  *  - (In) Length of the buffer 
  *  - (Out) Length of the value
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderGetFileNamePattern </B> retrieves the file name pattern. The
- * received file name pattern does not replace tags (e.g. <count>,
- * <timestamp>).
+ * received file name pattern does not replace tags (e.g. <count>, <timestamp>).
  */
 SC_ERROR SC_API saveRecorderGetFileNamePattern(saveRecorder hRecorder, char* pFileNamePattern, size_t* pLen);
 
@@ -484,29 +483,29 @@ SC_ERROR SC_API saveRecorderGetFileNamePattern(saveRecorder hRecorder, char* pFi
  * @fn SC_ERROR SC_API saveRecorderGetExtension(saveRecorder hRecorder, char* pExtension, size_t* pLen)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @param pExtension
- *  - Type: char* 
- *  - [Out] parameter 
- *  - Accepts null 
+ *  - Type: char*
+ *  - [Out] parameter
+ *  - Accepts null
  *  - Current extension
  *
  * @param pLen
- *  - Type: size_t* 
- *  - [In/Out] parameter 
+ *  - Type: size_t*
+ *  - [In/Out] parameter
  *  - (In) Length of the buffer 
  *  - (Out) Length of the value
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
- * <B> saveRecorderGetExtension </B> retrieves the extension currently being
- * used (e.g. '.avi', '.mp4').
+ * <B> saveRecorderGetExtension </B> retrieves the extension currently being used
+ * (e.g. '.avi', '.mp4').
  */
 SC_ERROR SC_API saveRecorderGetExtension(saveRecorder hRecorder, char* pExtension, size_t* pLen);
 
@@ -514,25 +513,25 @@ SC_ERROR SC_API saveRecorderGetExtension(saveRecorder hRecorder, char* pExtensio
  * @fn SC_ERROR SC_API saveRecorderPeekFileName(saveRecorder hRecorder, char* pFileName, size_t* pLen)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @param pFileName
- *  - Type: char* 
- *  - [Out] parameter 
- *  - Accepts null 
+ *  - Type: char*
+ *  - [Out] parameter
+ *  - Accepts null
  *  - Next file name to use
  *
  * @param pLen
- *  - Type: size_t* 
- *  - [In/Out] parameter 
+ *  - Type: size_t*
+ *  - [In/Out] parameter
  *  - (In) Length of the buffer 
  *  - (Out) Length of the value
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderPeekFileName </B> peeks at the next file name to use,
@@ -544,18 +543,18 @@ SC_ERROR SC_API saveRecorderPeekFileName(saveRecorder hRecorder, char* pFileName
  * @fn SC_ERROR SC_API saveRecorderPeekCount(saveRecorder hRecorder, uint64_t* pCount)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @param pCount
- *  - Type: uint64_t* 
- *  - [Out] parameter 
+ *  - Type: uint64_t*
+ *  - [Out] parameter
  *  - Local count
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderPeekCount </B> peeks at the count/index of the next saved
@@ -567,18 +566,18 @@ SC_ERROR SC_API saveRecorderPeekCount(saveRecorder hRecorder, uint64_t* pCount);
  * @fn SC_ERROR SC_API saveRecorderPeekCountPath(saveRecorder hWriter, uint64_t* pCount)
  *
  * @param hWriter
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @param pCount
- *  - Type: uint64_t* 
- *  - [Out] parameter 
+ *  - Type: uint64_t*
+ *  - [Out] parameter
  *  - Path count
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderPeekCount </B> peeks at the count/index of the next saved
@@ -591,18 +590,18 @@ SC_ERROR SC_API saveRecorderPeekCountPath(saveRecorder hWriter, uint64_t* pCount
  * @fn SC_ERROR SC_API saveRecorderPeekCountGlobal(saveRecorder hWriter, uint64_t* pCount)
  *
  * @param hWriter
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @param pCount
- *  - Type: uint64_t* 
- *  - [Out] parameter 
+ *  - Type: uint64_t*
+ *  - [Out] parameter
  *  - Global count
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderPeekCount </B> peeks at the count/index of the next saved
@@ -615,29 +614,29 @@ SC_ERROR SC_API saveRecorderPeekCountGlobal(saveRecorder hWriter, uint64_t* pCou
  * @fn SC_ERROR SC_API saveRecorderGetLastFileName(saveRecorder hRecorder, char* pLastFileName, size_t* pLen)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @param pLastFileName
- *  - Type: char* 
- *  - [Out] parameter 
- *  - Accepts null 
+ *  - Type: char*
+ *  - [Out] parameter
+ *  - Accepts null
  *  - Last file name used
  *
  * @param pLen
- *  - Type: size_t* 
- *  - [In/Out] parameter 
+ *  - Type: size_t*
+ *  - [In/Out] parameter
  *  - (In) Length of the buffer 
  *  - (Out) Length of the value
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
- * <B> saveRecorderGetLastFileName </B> retrieves the last file name used to
- * save a video with this context. Returns '' if no file has been saved.
+ * <B> saveRecorderGetLastFileName </B> retrieves the last file name used to save
+ * a video with this context. Returns '' if no file has been saved.
  */
 SC_ERROR SC_API saveRecorderGetLastFileName(saveRecorder hRecorder, char* pLastFileName, size_t* pLen);
 
@@ -645,13 +644,13 @@ SC_ERROR SC_API saveRecorderGetLastFileName(saveRecorder hRecorder, char* pLastF
  * @fn SC_ERROR SC_API saveRecorderOpen(saveRecorder hRecorder)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderOpen </B> opens the output file, sets up internal buffers,
@@ -667,18 +666,18 @@ SC_ERROR SC_API saveRecorderOpen(saveRecorder hRecorder);
  * @fn SC_ERROR SC_API saveRecorderAppendImage(saveRecorder hRecorder, uint8_t* pImageData)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @param pImageData
- *  - Type: uint8_t* 
- *  - [Out] parameter 
+ *  - Type: uint8_t*
+ *  - [Out] parameter
  *  - Frame data to append
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderAppendImage </B> accepts the next frame's raw image data,
@@ -690,13 +689,13 @@ SC_ERROR SC_API saveRecorderAppendImage(saveRecorder hRecorder, uint8_t* pImageD
  * @fn SC_ERROR SC_API saveRecorderClose(saveRecorder hRecorder)
  *
  * @param hRecorder
- *  - Type: saveRecorder 
- *  - [In] parameter 
+ *  - Type: saveRecorder
+ *  - [In] parameter
  *  - A video recorder
  *
  * @return 
- *  - Type: SC_ERROR 
- *  - Error code for the function 
+ *  - Type: SC_ERROR
+ *  - Error code for the function
  *  - Returns SC_ERR_SUCCESS (0) on success
  *
  * <B> saveRecorderClose </B> cleans up memory and settings of the video,

@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -36,11 +36,11 @@ namespace Save
 		 * @fn VideoParams(size_t width, size_t height, double fps = 25.0)
 		 *
 		 * @param width
-		 *  - Type: size_t 
+		 *  - Type: size_t
 		 *  - Video width
 		 *
 		 * @param height
-		 *  - Type: size_t 
+		 *  - Type: size_t
 		 *  - Video height
 		 *
 		 * @param fps
@@ -56,7 +56,7 @@ namespace Save
 		 * @fn VideoParams(const VideoParams& params)
 		 *
 		 * @param params
-		 *  - Type: const VideoParams& 
+		 *  - Type: const VideoParams&
 		 *  - Video parameters to copy
 		 *
 		 * A copy constructor
@@ -67,11 +67,11 @@ namespace Save
 		 * @fn const VideoParams& operator=(VideoParams params)
 		 *
 		 * @param params
-		 *  - Type: VideoParams 
+		 *  - Type: VideoParams
 		 *  - Video parameters to copy
 		 *
 		 * @return 
-		 *  - Type: const VideoParams& 
+		 *  - Type: const VideoParams&
 		 *  - Copied video parameters
 		 *
 		 * A copy constructor.
@@ -89,8 +89,8 @@ namespace Save
 		 * @fn virtual void SetWidth(size_t width)
 		 *
 		 * @param width
-		 *  - Type: size_t 
-		 *  - Width 
+		 *  - Type: size_t
+		 *  - Width
 		 *
 		 * @return 
 		 *  - none
@@ -103,8 +103,8 @@ namespace Save
 		 * @fn virtual void SetHeight(size_t height)
 		 *
 		 * @param height
-		 *  - Type: size_t 
-		 *  - Height 
+		 *  - Type: size_t
+		 *  - Height
 		 *
 		 * @return 
 		 *  - none
@@ -131,7 +131,7 @@ namespace Save
 		 * @fn virtual size_t GetWidth() const
 		 *
 		 * @return 
-		 *  - Type: size_t 
+		 *  - Type: size_t
 		 *  - Video width
 		 *
 		 * <B> GetWidth </B> retrieves the video width.
@@ -142,7 +142,7 @@ namespace Save
 		 * @fn virtual size_t GetHeight() const
 		 *
 		 * @return 
-		 *  - Type: size_t 
+		 *  - Type: size_t
 		 *  - Video height
 		 *
 		 * <B> GetHeight </B> retrieves the video height.
@@ -153,7 +153,7 @@ namespace Save
 		 * @fn virtual double GetFPS() const
 		 *
 		 * @return 
-		 *  - Type: double 
+		 *  - Type: double
 		 *  - Frames per second
 		 *
 		 * <B> GetFPS </B> calculates frames per second as a floating-point.

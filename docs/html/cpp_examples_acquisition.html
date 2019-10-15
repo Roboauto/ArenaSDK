@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Acquisition, Introduction &mdash; Arena 0.1.4.0 documentation</title>
+  <title>Acquisition, Introduction &mdash; Arena 0.1.18.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.18.0 documentation" href="index.html"/>
         <link rel="up" title="C++ Code Samples" href="cpp_examples.html"/>
         <link rel="next" title="Acquisition, Rapid Acquisition" href="cpp_examples_acquisition_rapidacquisition.html"/>
         <link rel="prev" title="Simple Acquisition" href="cpp_examples_simpleacquisition.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.18
               </div>
             
           
@@ -113,6 +113,7 @@
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_callbacks_onnodechange.html">Callbacks, On Node Change</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_callbacks_polling.html">Callbacks, Polling</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_callbacks_onevent.html">Callbacks, On Event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_callbacks_imagecallbacks.html">Callbacks, Image Callbacks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_callbacks_multithreadedimagecallbacks.html">Callbacks, Multithreaded Image Callbacks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_chunkdata.html">Chunk Data, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_chunkdata_crcvalidation.html">Chunk Data, CRC Validation</a></li>
@@ -126,11 +127,17 @@
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_forceip.html">Force IP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_lut.html">Lookup Table, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_pixelcorrection.html">Pixel Correction, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_polarization_dolpaolp.html">Polarization, DoLP AoLP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_polarization_colordolpaolp.html">Polarization, Color DoLP AoLP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_record.html">Record, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_save.html">Save, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_save_filenamepattern.html">Save, File Name Pattern</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_save_ply.html">Save, Ply</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_scheduledactioncommands.html">Scheduled Action Commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_sequencer_hdr.html">Sequencer, HDR</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_streamables.html">Streamables</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_trigger.html">Trigger, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="cpp_examples_trigger_overlappingtrigger.html">Trigger, Overlapping Trigger</a></li>
 <li class="toctree-l4"><a class="reference internal" href="cpp_examples_usersets.html">User Sets</a></li>
 </ul>
 </li>
@@ -210,7 +217,7 @@
 <h1>Acquisition, Introduction<a class="headerlink" href="#acquisition-introduction" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-c++"><div class="highlight"><pre><span class="cm">/***************************************************************************************</span>
 <span class="cm"> ***                                                                                 ***</span>
-<span class="cm"> ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***</span>
+<span class="cm"> ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***</span>
 <span class="cm"> ***                                                                                 ***</span>
 <span class="cm"> ***  THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***</span>
 <span class="cm"> ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***</span>
@@ -229,20 +236,22 @@
 <span class="cp">#define TAB2 &quot;    &quot;</span>
 
 <span class="c1">// Acquisition: Introduction</span>
-<span class="c1">//    This example introduces the basics of image acquisition including</span>
-<span class="c1">//    acquisition and buffer handling modes, starting and stopping the stream,</span>
-<span class="c1">//    grabbing and requeuing buffers, and retrieving data on images.</span>
+<span class="c1">//    This example introduces the basics of image acquisition. This includes</span>
+<span class="c1">//    setting image acquisition and buffer handling modes, setting the device to</span>
+<span class="c1">//    automatically negotiate packet size, and setting the stream packet resend</span>
+<span class="c1">//    node before starting the image stream. The example then starts acquiring</span>
+<span class="c1">//    images by grabbing and requeuing buffers, and retrieving data on images</span>
+<span class="c1">//    before finally stopping the image stream.</span>
 
 <span class="c1">// =-=-=-=-=-=-=-=-=-</span>
 <span class="c1">// =-=- SETTINGS =-=-</span>
 <span class="c1">// =-=-=-=-=-=-=-=-=-</span>
 
 <span class="c1">// Image timeout</span>
-<span class="c1">//    Timeout for grabbing images (in milliseconds). If no image is available</span>
-<span class="c1">//    at the end of the timeout, an exception is thrown. The timeout is the</span>
-<span class="c1">//    maximum time to wait for an image; however, getting an image will return</span>
-<span class="c1">//    as soon as an image is available, not waiting the full extent of the</span>
-<span class="c1">//    timeout.</span>
+<span class="c1">//    Timeout for grabbing images (in milliseconds). If no image is available at</span>
+<span class="c1">//    the end of the timeout, an exception is thrown. The timeout is the maximum</span>
+<span class="c1">//    time to wait for an image; however, getting an image will return as soon as</span>
+<span class="c1">//    an image is available, not waiting the full extent of the timeout.</span>
 <span class="cp">#define TIMEOUT 2000</span>
 
 <span class="c1">// number of images to grab</span>
@@ -255,24 +264,26 @@
 <span class="c1">// demonstrates acquisition</span>
 <span class="c1">// (1) sets acquisition mode</span>
 <span class="c1">// (2) sets buffer handling mode</span>
-<span class="c1">// (3) starts the stream</span>
-<span class="c1">// (4) gets a number of images</span>
-<span class="c1">// (5) prints information from images</span>
-<span class="c1">// (6) requeues buffers</span>
-<span class="c1">// (7) stops the stream</span>
+<span class="c1">// (3) enables auto negotiate packet size</span>
+<span class="c1">// (4) enables packet resend</span>
+<span class="c1">// (5) starts the stream</span>
+<span class="c1">// (6) gets a number of images</span>
+<span class="c1">// (7) prints information from images</span>
+<span class="c1">// (8) requeues buffers</span>
+<span class="c1">// (9) stops the stream</span>
 <span class="kt">void</span> <span class="nf">AcquireImages</span><span class="p">(</span><span class="n">Arena</span><span class="o">::</span><span class="n">IDevice</span><span class="o">*</span> <span class="n">pDevice</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="c1">// get node values that will be changed in order to return their values</span>
-        <span class="c1">// at the end of the example</span>
+        <span class="c1">// get node values that will be changed in order to return their values at</span>
+        <span class="c1">// the end of the example</span>
         <span class="n">GenICam</span><span class="o">::</span><span class="n">gcstring</span> <span class="n">acquisitionModeInitial</span> <span class="o">=</span> <span class="n">Arena</span><span class="o">::</span><span class="n">GetNodeValue</span><span class="o">&lt;</span><span class="n">GenICam</span><span class="o">::</span><span class="n">gcstring</span><span class="o">&gt;</span><span class="p">(</span><span class="n">pDevice</span><span class="o">-&gt;</span><span class="n">GetNodeMap</span><span class="p">(),</span> <span class="s">&quot;AcquisitionMode&quot;</span><span class="p">);</span>
 
         <span class="c1">// Set acquisition mode</span>
         <span class="c1">//    Set acquisition mode before starting the stream. Starting the stream</span>
-        <span class="c1">//    requires the acquisition mode to be set beforehand. The acquisition mode</span>
-        <span class="c1">//    controls the number of images a device acquires once the stream has been</span>
-        <span class="c1">//    started. Setting the acquisition mode to &#39;Continuous&#39; keeps the stream</span>
-        <span class="c1">//    from stopping. This example returns the camera to its initial</span>
-        <span class="c1">//    acquisition mode near the end of the example.</span>
+        <span class="c1">//    requires the acquisition mode to be set beforehand. The acquisition</span>
+        <span class="c1">//    mode controls the number of images a device acquires once the stream</span>
+        <span class="c1">//    has been started. Setting the acquisition mode to &#39;Continuous&#39; keeps</span>
+        <span class="c1">//    the stream from stopping. This example returns the camera to its</span>
+        <span class="c1">//    initial acquisition mode near the end of the example.</span>
         <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">TAB1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Set acquisition mode to &#39;Continuous&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
         <span class="n">Arena</span><span class="o">::</span><span class="n">SetNodeValue</span><span class="o">&lt;</span><span class="n">GenICam</span><span class="o">::</span><span class="n">gcstring</span><span class="o">&gt;</span><span class="p">(</span>
@@ -281,10 +292,10 @@
                 <span class="s">&quot;Continuous&quot;</span><span class="p">);</span>
 
         <span class="c1">// Set buffer handling mode</span>
-        <span class="c1">//    Set buffer handling mode before starting the stream. Starting the stream</span>
-        <span class="c1">//    requires the buffer handling mode to be set beforehand. The buffer</span>
-        <span class="c1">//    handling mode determines the order and behavior of buffers in the</span>
-        <span class="c1">//    underlying stream engine. Setting the buffer handling mode to</span>
+        <span class="c1">//    Set buffer handling mode before starting the stream. Starting the</span>
+        <span class="c1">//    stream requires the buffer handling mode to be set beforehand. The</span>
+        <span class="c1">//    buffer handling mode determines the order and behavior of buffers in</span>
+        <span class="c1">//    the underlying stream engine. Setting the buffer handling mode to</span>
         <span class="c1">//    &#39;NewestOnly&#39; ensures the most recent image is delivered, even if it</span>
         <span class="c1">//    means skipping frames.</span>
         <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">TAB1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Set buffer handling mode to &#39;NewestOnly&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
@@ -294,13 +305,41 @@
                 <span class="s">&quot;StreamBufferHandlingMode&quot;</span><span class="p">,</span>
                 <span class="s">&quot;NewestOnly&quot;</span><span class="p">);</span>
 
+        <span class="c1">// Enable stream auto negotiate packet size</span>
+        <span class="c1">//    Setting the stream packet size is done before starting the stream.</span>
+        <span class="c1">//    Setting the stream to automatically negotiate packet size instructs the</span>
+        <span class="c1">//    camera to receive the largest packet size that the system will allow.</span>
+        <span class="c1">//    This generally increases frame rate and results in fewer interrupts per</span>
+        <span class="c1">//    image, thereby reducing CPU load on the host system. Ethernet settings</span>
+        <span class="c1">//    may also be manually changed to allow for a larger packet size.</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">TAB1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enable stream to auto negotiate packet size</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+        <span class="n">Arena</span><span class="o">::</span><span class="n">SetNodeValue</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span>
+                <span class="n">pDevice</span><span class="o">-&gt;</span><span class="n">GetTLStreamNodeMap</span><span class="p">(),</span>
+                <span class="s">&quot;StreamAutoNegotiatePacketSize&quot;</span><span class="p">,</span>
+                <span class="nb">true</span><span class="p">);</span>
+
+        <span class="c1">// Enable stream packet resend</span>
+        <span class="c1">//    Enable stream packet resend before starting the stream. Images are sent</span>
+        <span class="c1">//    from the camera to the host in packets using UDP protocol, which</span>
+        <span class="c1">//    includes a header image number, packet number, and timestamp</span>
+        <span class="c1">//    information. If a packet is missed while receiving an image, a packet</span>
+        <span class="c1">//    resend is requested and this information is used to retrieve and</span>
+        <span class="c1">//    redeliver the missing packet in the correct order.</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">TAB1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enable stream packet resend</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+        <span class="n">Arena</span><span class="o">::</span><span class="n">SetNodeValue</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span>
+                <span class="n">pDevice</span><span class="o">-&gt;</span><span class="n">GetTLStreamNodeMap</span><span class="p">(),</span>
+                <span class="s">&quot;StreamPacketResendEnable&quot;</span><span class="p">,</span>
+                <span class="nb">true</span><span class="p">);</span>
+
         <span class="c1">// Start stream</span>
         <span class="c1">//    Start the stream before grabbing any images. Starting the stream</span>
         <span class="c1">//    allocates buffers, which can be passed in as an argument (default: 10),</span>
         <span class="c1">//    and begins filling them with data. Starting the stream blocks write</span>
-        <span class="c1">//    access to many features such as width, height, and pixel format, as well</span>
-        <span class="c1">//    as acquisition and buffer handling modes, among others. The stream needs</span>
-        <span class="c1">//    to be stopped later.</span>
+        <span class="c1">//    access to many features such as width, height, and pixel format, as</span>
+        <span class="c1">//    well as acquisition and buffer handling modes, among others. The stream</span>
+        <span class="c1">//    needs to be stopped later.</span>
         <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">TAB1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Start stream</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
         <span class="n">pDevice</span><span class="o">-&gt;</span><span class="n">StartStream</span><span class="p">();</span>
@@ -311,16 +350,18 @@
         <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NUM_IMAGES</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
         <span class="p">{</span>
                 <span class="c1">// Get image</span>
-                <span class="c1">//    Retrieve images after the stream has started. If the timeout expires</span>
-                <span class="c1">//    before an image is retrieved, example will throw. Because of this, the</span>
-                <span class="c1">//    timeout should be at least a bit larger than the exposure time.</span>
+                <span class="c1">//    Retrieve images after the stream has started. If the timeout</span>
+                <span class="c1">//    expires before an image is retrieved, the example will throw.</span>
+                <span class="c1">//    Because of this, the timeout should be at least a bit larger than</span>
+                <span class="c1">//    the exposure time.</span>
                 <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">TAB2</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Get image &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">;</span>
 
                 <span class="n">Arena</span><span class="o">::</span><span class="n">IImage</span><span class="o">*</span> <span class="n">pImage</span> <span class="o">=</span> <span class="n">pDevice</span><span class="o">-&gt;</span><span class="n">GetImage</span><span class="p">(</span><span class="n">TIMEOUT</span><span class="p">);</span>
 
                 <span class="c1">// Get image information</span>
-                <span class="c1">//    Images have information available from them beyond the basics including</span>
-                <span class="c1">//    information related to data type, image parameters, and error handling.</span>
+                <span class="c1">//    Images have information available from them beyond the basics</span>
+                <span class="c1">//    including information related to data type, image parameters, and</span>
+                <span class="c1">//    error handling.</span>
                 <span class="kt">size_t</span> <span class="n">size</span> <span class="o">=</span> <span class="n">pImage</span><span class="o">-&gt;</span><span class="n">GetSizeFilled</span><span class="p">();</span>
                 <span class="kt">size_t</span> <span class="n">width</span> <span class="o">=</span> <span class="n">pImage</span><span class="o">-&gt;</span><span class="n">GetWidth</span><span class="p">();</span>
                 <span class="kt">size_t</span> <span class="n">height</span> <span class="o">=</span> <span class="n">pImage</span><span class="o">-&gt;</span><span class="n">GetHeight</span><span class="p">();</span>
@@ -330,18 +371,18 @@
                 <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; (&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">size</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; bytes; &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">width</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;x&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">height</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;; &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">pixelFormat</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;; timestamp (ns): &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">timestampNs</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span><span class="p">;</span>
 
                 <span class="c1">// Requeue image buffer</span>
-                <span class="c1">//    Requeue an image buffer when access to it is no longer needed. Notice</span>
-                <span class="c1">//    that failing to requeue buffers may cause memory to leak and may also</span>
-                <span class="c1">//    result in the stream engine being starved due to there being no</span>
-                <span class="c1">//    available buffers.</span>
+                <span class="c1">//    Requeue an image buffer when access to it is no longer needed.</span>
+                <span class="c1">//    Notice that failing to requeue buffers may cause memory to leak and</span>
+                <span class="c1">//    may also result in the stream engine being starved due to there</span>
+                <span class="c1">//    being no available buffers.</span>
                 <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; and requeue</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
                 <span class="n">pDevice</span><span class="o">-&gt;</span><span class="n">RequeueBuffer</span><span class="p">(</span><span class="n">pImage</span><span class="p">);</span>
         <span class="p">}</span>
 
         <span class="c1">// Stop stream</span>
-        <span class="c1">//    Stop the stream after all images have been requeued. Failing to stop the</span>
-        <span class="c1">//    stream will leak memory.</span>
+        <span class="c1">//    Stop the stream after all images have been requeued. Failing to stop</span>
+        <span class="c1">//    the stream will leak memory.</span>
         <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">TAB1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Stop stream</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
 
         <span class="n">pDevice</span><span class="o">-&gt;</span><span class="n">StopStream</span><span class="p">();</span>
@@ -456,7 +497,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.4.0',
+            VERSION:'0.1.18.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

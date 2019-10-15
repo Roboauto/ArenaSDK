@@ -1,16 +1,16 @@
 /***************************************************************************************
-***                                                                                 ***
-***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
-***                                                                                 ***
-***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
-***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
-***  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    ***
-***  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         ***
-***  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  ***
-***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
-***  SOFTWARE.                                                                      ***
-***                                                                                 ***
-***************************************************************************************/
+ ***                                                                                 ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
+ ***                                                                                 ***
+ ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
+ ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
+ ***  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    ***
+ ***  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         ***
+ ***  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  ***
+ ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
+ ***  SOFTWARE.                                                                      ***
+ ***                                                                                 ***
+ ***************************************************************************************/
 
 #include "stdafx.h"
 #include "ArenaCApi.h"
@@ -19,9 +19,9 @@
 
 // Streamables
 //    This example introduces streamables, which uses files to pass settings
-//    around between devices. This example writes all streamable features from
-//    a source device to a file, and then writes them from the file to all
-//    other connected devices.
+//    around between devices. This example writes all streamable features from a
+//    source device to a file, and then writes them from the file to all other
+//    connected devices.
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
@@ -32,6 +32,9 @@
 
 // maximum number of devices to stream features to
 #define MAX_DEVICES 10
+
+// maximum buffer length
+#define MAX_BUF 256
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- EXAMPLE -=-=-
@@ -48,8 +51,8 @@ AC_ERROR WriteAndReadStreamables(acDevice hSrcDevice, acDevice* phDstDevices, si
 
 	// Write features to file
 	//    Write streamable features from a device to a file. Each node map
-	//    requires a separate feature stream object. When writing to a file, if no
-	//    features are explicitly selected, all will be written by default.
+	//    requires a separate feature stream object. When writing to a file, if
+	//    no features are explicitly selected, all will be written by default.
 	printf("%sSave features from device 0 to %s\n", TAB1, FILE_NAME);
 
 	// get node map
@@ -119,11 +122,19 @@ AC_ERROR WriteAndReadStreamables(acDevice hSrcDevice, acDevice* phDstDevices, si
 // =- & CLEAN UP =-=-
 // =-=-=-=-=-=-=-=-=-
 
-#define CHECK_RETURN                                      \
-	if (err != AC_ERR_SUCCESS)                            \
-	{                                                     \
-		printf("Error: %d\n\nExample completed.\n", err); \
-		return -1;                                        \
+// error buffer length
+#define ERR_BUF 512
+
+#define CHECK_RETURN                                  \
+	if (err != AC_ERR_SUCCESS)                        \
+	{                                                 \
+		char pMessageBuf[ERR_BUF];                    \
+		size_t pBufLen = ERR_BUF;                     \
+		acGetLastErrorMessage(pMessageBuf, &pBufLen); \
+		printf("\nError: %s", pMessageBuf);           \
+		printf("\n\nPress enter to complete\n");      \
+		getchar();                                    \
+		return -1;                                    \
 	}
 
 int main()
@@ -131,6 +142,7 @@ int main()
 	printf("C_Streamables\n");
 	printf("Example may change device settings -- proceed? ('y' to continue) ");
 	char continueExample = getchar();
+	getchar(); // newline
 
 	if (continueExample == 'y')
 	{
@@ -147,16 +159,18 @@ int main()
 		CHECK_RETURN;
 		if (numDevices == 0)
 		{
-			printf("Error: no devices connected, example requires at least one device\n");
-			return 0;
+			printf("\nNo camera connected, example requires at least 1 camera\n");
+			printf("Press enter to complete\n");
+			getchar();
+			return -1;
 		}
 		else if (numDevices == 1)
 		{
-			printf("Warning: only one device connected, example runs best with at least 2 devices\n");
+			printf("Warning: only one camera connected, example runs best with at least 2 cameras\n");
 		}
 		else if (numDevices > MAX_DEVICES)
 		{
-			printf("Warning: too many devices, example set to run with only %d devices\n", MAX_DEVICES);
+			printf("Warning: too many cameras, example set to run with only %d cameras\n", MAX_DEVICES);
 		}
 
 		acDevice hSrcDevice = NULL;
@@ -183,6 +197,9 @@ int main()
 		printf("\nExample complete\n");
 
 		// clean up example
+		err = acSystemDestroyDevice(hSystem, hSrcDevice);
+		CHECK_RETURN;
+
 		for (i = 0; i < numDevices - 1; i++)
 		{
 			err = acSystemDestroyDevice(hSystem, phDstDevices[i]);
@@ -191,7 +208,7 @@ int main()
 		CHECK_RETURN;
 	}
 
-	printf("Press any key to complete\n");
+	printf("Press enter to complete\n");
 	getchar();
 	return 0;
 }

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Image &mdash; Arena 0.1.4.0 documentation</title>
+  <title>Image &mdash; Arena 0.1.18.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.18.0 documentation" href="index.html"/>
         <link rel="up" title="Arena C" href="c_arena.html"/>
         <link rel="next" title="Arena" href="c_arena_arena.html"/>
         <link rel="prev" title="ChunkData" href="c_arena_chunkdata.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.18
               </div>
             
           
@@ -515,7 +515,7 @@
 <dl class="function">
 <dt>
 <span class="target" id="_arena_c_image_8h_1ada249dec9e43970371ff7175c62efb41"></span><code class="descname">AC_ERROR AC_API acImageGetTimestamp(acBuffer hBuffer, uint64_t * pTimestamp)</code></dt>
-<dd><p><strong> acImageGetTimestamp </strong> gets the timestamp of the image in milliseconds. Images are self-describing, so the device does not need to be queried to get this information. <dl class="docutils">
+<dd><p><strong> acImageGetTimestamp </strong> gets the timestamp of the image in nanoseconds. Images are self-describing, so the device does not need to be queried to get this information. <dl class="docutils">
 <dt><strong>Return</strong></dt>
 <dd><ul class="simple">
 <li>Type: AC_ERROR</li>
@@ -533,9 +533,9 @@
 </li>
 <li><code class="docutils literal"><span class="pre">pTimestamp</span></code>: <ul>
 <li>Type: uint64_t*</li>
-<li>Unit: milliseconds</li>
+<li>Unit: nanoseconds</li>
 <li>[Out] parameter</li>
-<li>Timestamp of the image in milliseconds</li>
+<li>Timestamp of the image in nanoseconds</li>
 </ul>
 </li>
 </ul>
@@ -659,7 +659,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.4.0',
+            VERSION:'0.1.18.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

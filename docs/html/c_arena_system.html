@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>System &mdash; Arena 0.1.4.0 documentation</title>
+  <title>System &mdash; Arena 0.1.18.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.18.0 documentation" href="index.html"/>
         <link rel="up" title="Arena C" href="c_arena.html"/>
         <link rel="next" title="Nodes" href="c_arena_nodes.html"/>
         <link rel="prev" title="Callback" href="c_arena_callback.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.18
               </div>
             
           
@@ -1179,12 +1179,12 @@
 </dd></dl>
 
 </div>
-<div class="section" id="acsystemgetdeviceuserdefinedname">
-<h2>acSystemGetDeviceUserDefinedName<a class="headerlink" href="#acsystemgetdeviceuserdefinedname" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="acsystemforceipaddress">
+<h2>acSystemForceIpAddress<a class="headerlink" href="#acsystemforceipaddress" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt>
-<span class="target" id="_arena_c_system_8h_1a8631c80c08fed054c1b997f6d6e999e7"></span><code class="descname">AC_ERROR AC_API acSystemGetDeviceUserDefinedName(acSystem hSystem, size_t index, char * pUserDefinedName, size_t * pBufLen)</code></dt>
-<dd><p><strong> acSystemGetDeviceUserDefinedName </strong> gets the user-defined name of a device. If supported, it is a customizable string with a maximum of 16 bytes that can be used to identify a device. <dl class="docutils">
+<span class="target" id="_arena_c_system_8h_1ab245bd6a8bdcec7df083536ba941ca43"></span><code class="descname">AC_ERROR AC_API acSystemForceIpAddress(acSystem hSystem, uint64_t macAddress, uint64_t ipAddress, uint64_t subnetMask, uint64_t defaultGateway)</code></dt>
+<dd><p><strong> acSystemForceIpAddress </strong> force sets the IP address of a device on the network <dl class="docutils">
 <dt><strong>Return</strong></dt>
 <dd><ul class="simple">
 <li>Type: AC_ERROR</li>
@@ -1192,6 +1192,55 @@
 <li>Returns AC_ERR_SUCCESS (0) on success</li>
 </ul>
 </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal"><span class="pre">hSystem</span></code>: <ul>
+<li>Type: acSystem</li>
+<li>[In] parameter</li>
+<li>The system object</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">macAddress</span></code>: <ul>
+<li>Type: uint64_t</li>
+<li>[In] parameter</li>
+<li>MAC address</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">ipAddress</span></code>: <ul>
+<li>Type: uint64_t</li>
+<li>[In] parameter</li>
+<li>Ip address</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">subnetMask</span></code>: <ul>
+<li>Type: uint64_t</li>
+<li>[In] parameter</li>
+<li>subnetMask address</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">defaultGateway</span></code>: <ul>
+<li>Type: uint64_t</li>
+<li>[In] parameter</li>
+<li>defaultGateway address</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="section" id="acsystemgetdeviceuserdefinedname">
+<h2>acSystemGetDeviceUserDefinedName<a class="headerlink" href="#acsystemgetdeviceuserdefinedname" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt>
+<span class="target" id="_arena_c_system_8h_1a8631c80c08fed054c1b997f6d6e999e7"></span><code class="descname">AC_ERROR AC_API acSystemGetDeviceUserDefinedName(acSystem hSystem, size_t index, char * pUserDefinedName, size_t * pBufLen)</code></dt>
+<dd><p><ul class="simple">
+<li>(In) Length of the buffer</li>
+<li>(Out) Length of the value</li>
+</ul>
+<dl class="docutils">
 <dt><strong>Parameters</strong></dt>
 <dd><ul class="breatheparameterlist first last simple">
 <li><code class="docutils literal"><span class="pre">hSystem</span></code>: <ul>
@@ -1216,10 +1265,18 @@
 <li><code class="docutils literal"><span class="pre">pBufLen</span></code>: <ul>
 <li>Type: size_t*</li>
 <li>[In/out] parameter</li>
-<li>(In) Length of the buffer</li>
-<li>(Out) Length of the value</li>
 </ul>
 </li>
+</ul>
+</dd>
+</dl>
+</p>
+<p><strong> acSystemGetDeviceUserDefinedName </strong> gets the user-defined name of a device. If supported, it is a customizable string with a maximum of 16 bytes that can be used to identify a device. <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd><ul class="simple">
+<li>Type: AC_ERROR</li>
+<li>Error code for the function</li>
+<li>Returns AC_ERR_SUCCESS (0) on success</li>
 </ul>
 </dd>
 </dl>
@@ -1538,7 +1595,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.4.0',
+            VERSION:'0.1.18.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>IImage &mdash; Arena 0.1.4.0 documentation</title>
+  <title>IImage &mdash; Arena 0.1.18.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.18.0 documentation" href="index.html"/>
         <link rel="up" title="Arena C++" href="cpp_arena.html"/>
         <link rel="next" title="FeatureStream" href="cpp_arena_featurestream.html"/>
         <link rel="prev" title="InterfaceInfo" href="cpp_arena_interfaceinfo.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.18
               </div>
             
           
@@ -345,7 +345,7 @@
 </dl>
 </p>
 <p>Images are either retrieved from a device (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device"><span class="std std-ref">Arena::IDevice</span></a>) or created by the image factory (<a class="reference internal" href="cpp_arena_imagefactory.html#class_arena_1_1_image_factory"><span class="std std-ref">Arena::ImageFactory</span></a>). If the image was retrieved from a device, the offset X is populated by the acquisition engine payload leader. The device itself is not queried as this data is present in the image data. If the image was created by the image factory, the offset X is populated by the arguments.</p>
-<p>The image factory can create an image from another image (<a class="reference internal" href="#class_arena_1_1_i_image"><span class="std std-ref">Arena::IImage</span></a>) or from a minimal set of parameters (data, width, height, pixel format). If the created from parameters, the offset X will be set to 0, no matter its original value.</p>
+<p>The image factory can create an image from another image (<a class="reference internal" href="#class_arena_1_1_i_image"><span class="std std-ref">Arena::IImage</span></a>) or from a minimal set of parameters (data, width, height, pixel format). If the image is created from parameters, the offset X will be set to 0, no matter its original value.</p>
 <p><dl class="docutils">
 <dt><strong>Warning</strong></dt>
 <dd><ul class="simple">
@@ -456,8 +456,8 @@
 </dd>
 </dl>
 </p>
-<p>Images are either retrieved from a device (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device"><span class="std std-ref">Arena::IDevice</span></a>) or created by the image factory (<a class="reference internal" href="cpp_arena_imagefactory.html#class_arena_1_1_image_factory"><span class="std std-ref">Arena::ImageFactory</span></a>). If the image was retrieved from a device, the padding X is populated by the acquisition engine payload leader. The device itself is not queried as this data is present in the image data. If the image was created by the image factory, the padding X is populated by the arguments.</p>
-<p>The image factory can create an image from another image (<a class="reference internal" href="#class_arena_1_1_i_image"><span class="std std-ref">Arena::IImage</span></a>) or from a minimal set of parameters (data, width, height, pixel format). If the image was created from parameters, the padding X will be set to 0, no matter its original value.</p>
+<p>Images are either retrieved from a device (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device"><span class="std std-ref">Arena::IDevice</span></a>) or created by the image factory (<a class="reference internal" href="cpp_arena_imagefactory.html#class_arena_1_1_image_factory"><span class="std std-ref">Arena::ImageFactory</span></a>). If the image was retrieved from a device, the padding Y is populated by the acquisition engine payload leader. The device itself is not queried as this data is present in the image data. If the image was created by the image factory, the padding Y is populated by the arguments.</p>
+<p>The image factory can create an image from another image (<a class="reference internal" href="#class_arena_1_1_i_image"><span class="std std-ref">Arena::IImage</span></a>) or from a minimal set of parameters (data, width, height, pixel format). If the image was created from parameters, the padding Y will be set to 0, no matter its original value.</p>
 <p>Padding Y specifically refers to the number of bytes padding the end of an image. This number will not affect the pitch/stride/step of an image.</p>
 <p><dl class="docutils">
 <dt><strong>Warning</strong></dt>
@@ -585,19 +585,19 @@
 <dl class="function">
 <dt id="_CPPv2N5Arena6IImage12GetTimestampEv">
 <span id="Arena::IImage::GetTimestamp"></span><span class="target" id="class_arena_1_1_i_image_1a9e07e3c344052797d20dbc5cef0e48e6"></span>uint64_t <code class="descclassname">Arena::IImage::</code><code class="descname">GetTimestamp</code><span class="sig-paren">(</span><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv2N5Arena6IImage12GetTimestampEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><strong> GetTimestamp </strong> gets the timestamp of the image in milliseconds. Images are self-describing, so the device does not need to be queried to get this information.<dl class="docutils">
+<dd><p><strong> GetTimestamp </strong> gets the timestamp of the image in nanoseconds. Images are self-describing, so the device does not need to be queried to get this information.<dl class="docutils">
 <dt><strong>Return</strong></dt>
 <dd><ul class="simple">
 <li>Type: uint64_t</li>
-<li>Unit: milliseconds</li>
-<li>Timestamp of the image in milliseconds</li>
+<li>Unit: nanoseconds</li>
+<li>Timestamp of the image in nanoseconds</li>
 </ul>
 </dd>
 </dl>
 </p>
 <p>Images are either retrieved from a device (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device"><span class="std std-ref">Arena::IDevice</span></a>) or created by the image factory (<a class="reference internal" href="cpp_arena_imagefactory.html#class_arena_1_1_image_factory"><span class="std std-ref">Arena::ImageFactory</span></a>). If the image was retrieved from a device, the timestamp is populated by the acquisition engine payload leader. The device itself is not queried as this data is present in the image data. If the image was created by the image factory, the timestamp is populated by the arguments.</p>
 <p>The image factory can create an image from another image (<a class="reference internal" href="#class_arena_1_1_i_image"><span class="std std-ref">Arena::IImage</span></a>) or from a minimal set of parameters (data, width, height, pixel format). If the image was created from parameters, the timestamp will be set to 0, no matter its original value.</p>
-<p>If more granularity is needed, the timestamp can also be retrieved in nanoseconds (<a class="reference internal" href="#class_arena_1_1_i_image_1a13cd8f5b136dc4e8ee20ec3418456951"><span class="std std-ref">Arena::IImage::GetTimestampNs</span></a>).</p>
+<p>This is the same as the nanosecond timestamp call (<a class="reference internal" href="#class_arena_1_1_i_image_1a13cd8f5b136dc4e8ee20ec3418456951"><span class="std std-ref">Arena::IImage::GetTimestampNs</span></a>).</p>
 <p><dl class="docutils">
 <dt><strong>Warning</strong></dt>
 <dd><ul class="simple">
@@ -636,7 +636,7 @@
 </p>
 <p>Images are either retrieved from a device (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device"><span class="std std-ref">Arena::IDevice</span></a>) or created by the image factory (<a class="reference internal" href="cpp_arena_imagefactory.html#class_arena_1_1_image_factory"><span class="std std-ref">Arena::ImageFactory</span></a>). If the image was retrieved from a device, the timestamp is populated by the acquisition engine payload leader. The device itself is not queried as this data is present in the image data. If the image was created by the image factory, the timestamp is populated by the arguments.</p>
 <p>The image factory can create an image from another image (<a class="reference internal" href="#class_arena_1_1_i_image"><span class="std std-ref">Arena::IImage</span></a>) or from a minimal set of parameters (data, width, height, pixel format). If the image was created from parameters, the timestamp will be set to 0, no matter its original value.</p>
-<p>If less granularity is needed, the timestamp can also be retrieved in milliseconds (<a class="reference internal" href="#class_arena_1_1_i_image_1a9e07e3c344052797d20dbc5cef0e48e6"><span class="std std-ref">Arena::IImage::GetTimestamp</span></a>).</p>
+<p>This is the same as the general timestamp call (<a class="reference internal" href="#class_arena_1_1_i_image_1a9e07e3c344052797d20dbc5cef0e48e6"><span class="std std-ref">Arena::IImage::GetTimestamp</span></a>).</p>
 <p><dl class="docutils">
 <dt><strong>Warning</strong></dt>
 <dd><ul class="simple">
@@ -1140,7 +1140,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.4.0',
+            VERSION:'0.1.18.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

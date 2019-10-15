@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 
 #include "stdafx.h"
 #include "ArenaApi.h"
@@ -24,7 +24,7 @@
 //    pattern, which uses the <count> and <timestamp> tags to differentiate
 //    between saved images. The essential points of the example include setting
 //    the image writer up with a file name pattern and using the cascading I/O
-//    operator (<<) to update the timestamp and save each image. 
+//    operator (<<) to update the timestamp and save each image.
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
@@ -32,12 +32,15 @@
 
 // File name pattern
 //    File name patterns can use tags to easily customize your file names.
-//    Customizable tags can be added to a file name pattern and later set on
-//    the fly. Two tags, <count> and <datetime> have been built in to the save
-//    library. As seen below, <datetime> can take an argument to specify
-//    output. <count> also accepts arguments (local, path, and global) to
-//    specify what exactly is being counted. 
+//    Customizable tags can be added to a file name pattern and later set on the
+//    fly. Two tags, <count> and <datetime> have been built in to the save
+//    library. As seen below, <datetime> can take an argument to specify output.
+//    <count> also accepts arguments (local, path, and global) to specify what
+//    exactly is being counted.
 #define FILE_NAME_PATTERN "Images/Cpp_Save_FileNamePattern/<vendor>_<model>_<serial>_image<count>-<datetime:yyMMdd_hhmmss_fff>.bmp"
+
+// pixel format
+#define PIXEL_FORMAT BGR8
 
 // number of images to acquire and save
 #define NUM_IMAGES 25
@@ -75,10 +78,10 @@ void AcquireAndSaveImages(Arena::IDevice* pDevice)
 	// Prepare image parameters from device settings
 	//    An image's width, height, and bits per pixel are required to save to
 	//    disk. Its size and stride (i.e. pitch) can be calculated from those 3
-	//    inputs. Notice that an image's size and stride use bytes as a unit whiel
-	//    the bits per pixel uses bits. Arena defines its pixel formats by the
-	//    PFNC (Pixel Format Naming Convention), which embeds the number of bits
-	//    per pixel within a pixel format's integer representation. 
+	//    inputs. Notice that an image's size and stride use bytes as a unit
+	//    while the bits per pixel uses bits. Arena defines its pixel formats by
+	//    the PFNC (Pixel Format Naming Convention), which embeds the number of
+	//    bits per pixel within a pixel format's integer representation.
 	std::cout << TAB1 << "Prepare image parameters\n";
 
 	Save::ImageParams params(
@@ -88,13 +91,13 @@ void AcquireAndSaveImages(Arena::IDevice* pDevice)
 
 	// Prepare image writer
 	//    The image writer requires 3 arguments to save an image: the image's
-	//    parameters, a specified file name or pattern, and the iamge data to
+	//    parameters, a specified file name or pattern, and the image data to
 	//    save. If a file name pattern uses the <timestamp> tag, then a timestamp
 	//    must also be provided. Providing these should result in a successfully
 	//    saved file on the disk. Because an image's parameters and file name
 	//    pattern may repeat, they can be passed into the image writer's
 	//    constructor. However, they can also be passed in dynamically using the
-	//    cascading I/O operator (<<). 
+	//    cascading I/O operator (<<).
 	std::cout << TAB1 << "Prepare image writer\n";
 
 	Save::ImageWriter writer(
@@ -105,7 +108,7 @@ void AcquireAndSaveImages(Arena::IDevice* pDevice)
 	//    Tags are set on the fly by passing strings into the cascading I/O
 	//    operator. Tags are accepted as any string surrounded by angle brackets
 	//    <...> while values are accepted as everything else. A value will be set
-	//    to the last input tag. 
+	//    to the last input tag.
 	std::cout << TAB1 << "Update tags\n";
 
 	// <vendor> tag
@@ -127,13 +130,13 @@ void AcquireAndSaveImages(Arena::IDevice* pDevice)
 
 	// update
 	writer << "<vendor>"
-		 << "LUCID"
+		   << "LUCID"
 
-		 << "<model>"
-		 << model
+		   << "<model>"
+		   << model
 
-		 << "<serial>"
-		 << serial;
+		   << "<serial>"
+		   << serial;
 
 	// start stream
 	std::cout << TAB1 << "Start stream\n";
@@ -150,17 +153,25 @@ void AcquireAndSaveImages(Arena::IDevice* pDevice)
 		// get image
 		Arena::IImage* pImage = pDevice->GetImage(TIMEOUT);
 
+		// convert the image to a displayable pixel format.
+		Arena::IImage* pConverted = Arena::ImageFactory::Convert(
+			pImage,
+			PIXEL_FORMAT);
+
 		// save image
-		writer << pImage->GetData();
+		writer << pConverted->GetData();
 
 		// Get last file name
 		//    The image writer allows for the retrieval of paths, file names, and
 		//    extensions. They can be retrieved together or separately, and it is
-		//    possible to get the pattern, peek ahead at the next file name, or get
-		//    the last file name. 
+		//    possible to get the pattern, peek ahead at the next file name, or
+		//    get the last file name.
 		std::cout << " at " << writer.GetLastFileName(true) << "\n";
 
-		// reque image buffer
+		// destroy converted image
+		Arena::ImageFactory::Destroy(pConverted);
+
+		// requeue image buffer
 		pDevice->RequeueBuffer(pImage);
 	}
 
@@ -175,8 +186,8 @@ void AcquireAndSaveImages(Arena::IDevice* pDevice)
 
 // Example preparation & clean up
 //    Prepares the example by opening the system, creating a device, and
-//    configuring it. Cleans up the example by destroying the device and
-//    closing the system. 
+//    configuring it. Cleans up the example by destroying the device and closing
+//    the system.
 int main()
 {
 	// flag to track when an exception has been thrown

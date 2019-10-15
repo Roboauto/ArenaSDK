@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Save, File Name Pattern &mdash; Arena 0.1.4.0 documentation</title>
+  <title>Save, File Name Pattern &mdash; Arena 0.1.18.0 documentation</title>
   
 
   
@@ -35,9 +35,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.18.0 documentation" href="index.html"/>
         <link rel="up" title="C Code Samples" href="c_examples.html"/>
-        <link rel="next" title="Streamables" href="c_examples_streamables.html"/>
+        <link rel="next" title="Save, Ply" href="c_examples_save_ply.html"/>
         <link rel="prev" title="Save, Introduction" href="c_examples_save.html"/> 
 
   
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.18
               </div>
             
           
@@ -110,19 +110,33 @@
 <li class="toctree-l4"><a class="reference internal" href="c_examples_simpleacquisition.html">Simple Acquisition, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_acquisition.html">Acquisition, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_acquisition_rapidacquisition.html">Acquisition, Rapid Acquisition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_imagecallbacks.html">Callback, Image Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_multithreadedimagecallbacks.html">Callback, Multithreaded Image Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_onevent.html">Callback, On Event</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_callback_onnodechange.html">Callback, On Node Change</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_polling.html">Callback, Polling</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_chunkdata.html">Chunk Data, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_chunkdata_crcvalidation.html">Chunk Data, CRC Validation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_enumeration.html">Enumeration, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_enumeration_handlingdisconnections.html">Enumeration, Handling Disconnections</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodemaps.html">Explore, Node Maps</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_exposure.html">Exposure, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodes.html">Explore, Nodes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodetypes.html">Explore, Node Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_forceip.html">Force IP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_lut.html">LUT, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_pixelcorrection.html">Pixel Correction, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_polarization_colordolpaolp.html">Polarization, Color DoLP AoLP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_polarization_dolpaolp.html">Polarization, DoLP AoLP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_record.html">Record, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_save.html">Save, Introduction</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Save, File Name Pattern</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_save_ply.html">Save, Ply</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_scheduledactioncommands.html">Scheduled Action Commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_sequencer_hdr.html">Sequencer, HDR</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_streamables.html">Streamables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_trigger.html">Trigger, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_trigger_overlappingtrigger.html">Trigger, Overlapping Trigger</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_usersets.html">User Sets, Introduction</a></li>
 </ul>
 </li>
@@ -200,18 +214,18 @@
   <div class="section" id="save-file-name-pattern">
 <h1>Save, File Name Pattern<a class="headerlink" href="#save-file-name-pattern" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-c++"><div class="highlight"><pre><span class="cm">/***************************************************************************************</span>
-<span class="cm">***                                                                                 ***</span>
-<span class="cm">***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***</span>
-<span class="cm">***                                                                                 ***</span>
-<span class="cm">***  THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***</span>
-<span class="cm">***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***</span>
-<span class="cm">***  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    ***</span>
-<span class="cm">***  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         ***</span>
-<span class="cm">***  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  ***</span>
-<span class="cm">***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***</span>
-<span class="cm">***  SOFTWARE.                                                                      ***</span>
-<span class="cm">***                                                                                 ***</span>
-<span class="cm">***************************************************************************************/</span>
+<span class="cm"> ***                                                                                 ***</span>
+<span class="cm"> ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***</span>
+<span class="cm"> ***                                                                                 ***</span>
+<span class="cm"> ***  THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***</span>
+<span class="cm"> ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***</span>
+<span class="cm"> ***  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    ***</span>
+<span class="cm"> ***  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         ***</span>
+<span class="cm"> ***  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  ***</span>
+<span class="cm"> ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***</span>
+<span class="cm"> ***  SOFTWARE.                                                                      ***</span>
+<span class="cm"> ***                                                                                 ***</span>
+<span class="cm"> ***************************************************************************************/</span>
 
 <span class="cp">#include</span> <span class="cpf">&quot;stdafx.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;ArenaCApi.h&quot;</span><span class="cp"></span>
@@ -232,14 +246,16 @@
 
 <span class="c1">// File name pattern</span>
 <span class="c1">//    File name patterns can use tags to easily customize your file names.</span>
-<span class="c1">//    Customizable tags can be added to a file name pattern and later set on</span>
-<span class="c1">//    the fly. Two tags, &lt;count&gt; and &lt;datetime&gt; have been built in to the save</span>
-<span class="c1">//    library. As seen below, &lt;datetime&gt; can take an argument to specify</span>
-<span class="c1">//    output. &lt;count&gt; also accepts arguments (local, path, and global) to</span>
-<span class="c1">//    specify what exactly is being counted. Aside from PNG (.png),</span>
-<span class="c1">//    images can be saved as JPEG (.jpg), TIFF (.tiff), BMP (.bmp), and raw</span>
-<span class="c1">//    (.raw) files.</span>
+<span class="c1">//    Customizable tags can be added to a file name pattern and later set on the</span>
+<span class="c1">//    fly. Two tags, &lt;count&gt; and &lt;datetime&gt; have been built in to the save</span>
+<span class="c1">//    library. As seen below, &lt;datetime&gt; can take an argument to specify output.</span>
+<span class="c1">//    &lt;count&gt; also accepts arguments (local, path, and global) to specify what</span>
+<span class="c1">//    exactly is being counted. Aside from PNG (.png), images can be saved as</span>
+<span class="c1">//    JPEG (.jpg), TIFF (.tiff), BMP (.bmp), and raw (.raw) files.</span>
 <span class="cp">#define FILE_NAME &quot;Images/C_Save_FileNamePattern/&lt;vendor&gt;_&lt;model&gt;_&lt;serial&gt;_image&lt;count&gt;-&lt;datetime:yyMMdd_hhmmss_fff&gt;.bmp&quot;</span>
+
+<span class="c1">// pixel format</span>
+<span class="cp">#define PIXEL_FORMAT 0x02180015 </span><span class="c1">// BGR8</span>
 
 <span class="c1">// system timeout (milliseconds)</span>
 <span class="cp">#define SYSTEM_TIMEOUT 100</span>
@@ -279,10 +295,10 @@
         <span class="c1">// Prepare image parameters from device settings</span>
         <span class="c1">//    An image&#39;s width, height, and bits per pixel are required to save to</span>
         <span class="c1">//    disk. Its size and stride (i.e. pitch) can be calculated from those 3</span>
-        <span class="c1">//    inputs. Notice that an image&#39;s size and stride use bytes as a unit while</span>
-        <span class="c1">//    the bits per pixel uses bits. Arena defines its pixel formats by the</span>
-        <span class="c1">//    PFNC (Pixel Format Naming Convention), which embeds the number of bits</span>
-        <span class="c1">//    per pixel within a pixel format&#39;s integer representation.</span>
+        <span class="c1">//    inputs. Notice that an image&#39;s size and stride use bytes as a unit</span>
+        <span class="c1">//    while the bits per pixel uses bits. Arena defines its pixel formats by</span>
+        <span class="c1">//    the PFNC (Pixel Format Naming Convention), which embeds the number of</span>
+        <span class="c1">//    bits per pixel within a pixel format&#39;s integer representation.</span>
         <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%sPrepare image parameters</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">TAB1</span><span class="p">);</span>
 
         <span class="c1">// get width</span>
@@ -403,10 +419,16 @@
                 <span class="k">if</span> <span class="p">(</span><span class="n">acErr</span> <span class="o">!=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">)</span>
                         <span class="k">return</span> <span class="n">acErr</span><span class="p">;</span>
 
+                <span class="c1">// convert the image to a displayable pixel format.</span>
+                <span class="n">acBuffer</span> <span class="n">hConverted</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+                <span class="n">acErr</span> <span class="o">=</span> <span class="n">acImageFactoryConvert</span><span class="p">(</span><span class="n">hBuffer</span><span class="p">,</span> <span class="n">PIXEL_FORMAT</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hConverted</span><span class="p">);</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">acErr</span> <span class="o">!=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="n">acErr</span><span class="p">;</span>
                 <span class="c1">// get image</span>
                 <span class="kt">uint8_t</span><span class="o">*</span> <span class="n">pData</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
 
-                <span class="n">acErr</span> <span class="o">=</span> <span class="n">acImageGetData</span><span class="p">(</span><span class="n">hBuffer</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pData</span><span class="p">);</span>
+                <span class="n">acErr</span> <span class="o">=</span> <span class="n">acImageGetData</span><span class="p">(</span><span class="n">hConverted</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pData</span><span class="p">);</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">acErr</span> <span class="o">!=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">)</span>
                         <span class="k">return</span> <span class="n">acErr</span><span class="p">;</span>
 
@@ -418,8 +440,8 @@
                 <span class="c1">// Get last file name</span>
                 <span class="c1">//    The image writer allows for the retrieval of paths, file names, and</span>
                 <span class="c1">//    extensions. They can be retrieved together or separately, and it is</span>
-                <span class="c1">//    possible to get the pattern, peek ahead at the next file name, or get</span>
-                <span class="c1">//    the last file name.</span>
+                <span class="c1">//    possible to get the pattern, peek ahead at the next file name, or</span>
+                <span class="c1">//    get the last file name.</span>
                 <span class="kt">char</span> <span class="n">fileName</span><span class="p">[</span><span class="n">MAX_BUF</span><span class="p">];</span>
                 <span class="kt">size_t</span> <span class="n">fileLen</span> <span class="o">=</span> <span class="n">MAX_BUF</span><span class="p">;</span>
 
@@ -453,12 +475,19 @@
 <span class="c1">// =- &amp; CLEAN UP =-=-</span>
 <span class="c1">// =-=-=-=-=-=-=-=-=-</span>
 
-<span class="cp">#define CHECK_RETURN                         \</span>
-<span class="cp">        if (err != AC_ERR_SUCCESS)               \</span>
-<span class="cp">        {                                        \</span>
-<span class="cp">                printf(&quot;Press Enter to complete\n&quot;); \</span>
-<span class="cp">                getchar();                           \</span>
-<span class="cp">                return -1;                           \</span>
+<span class="c1">// error buffer length</span>
+<span class="cp">#define ERR_BUF 512</span>
+
+<span class="cp">#define CHECK_RETURN                                  \</span>
+<span class="cp">        if (err != AC_ERR_SUCCESS)                        \</span>
+<span class="cp">        {                                                 \</span>
+<span class="cp">                char pMessageBuf[ERR_BUF];                    \</span>
+<span class="cp">                size_t pBufLen = ERR_BUF;                     \</span>
+<span class="cp">                acGetLastErrorMessage(pMessageBuf, &amp;pBufLen); \</span>
+<span class="cp">                printf(&quot;\nError: %s&quot;, pMessageBuf);           \</span>
+<span class="cp">                printf(&quot;\n\nPress enter to complete\n&quot;);      \</span>
+<span class="cp">                getchar();                                    \</span>
+<span class="cp">                return -1;                                    \</span>
 <span class="cp">        }</span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
@@ -477,8 +506,7 @@
         <span class="n">CHECK_RETURN</span><span class="p">;</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">numDevices</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
         <span class="p">{</span>
-                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Error: no devices connected, example requires at least one device</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Press Enter to complete</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">No camera connected</span><span class="se">\n</span><span class="s">Press enter to complete</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
                 <span class="n">getchar</span><span class="p">();</span>
                 <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
         <span class="p">}</span>
@@ -498,7 +526,7 @@
         <span class="n">err</span> <span class="o">=</span> <span class="n">acCloseSystem</span><span class="p">(</span><span class="n">hSystem</span><span class="p">);</span>
         <span class="n">CHECK_RETURN</span><span class="p">;</span>
 
-        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Press Enter to complete</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Press enter to complete</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
         <span class="n">getchar</span><span class="p">();</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
@@ -516,7 +544,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="c_examples_streamables.html" class="btn btn-neutral float-right" title="Streamables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="c_examples_save_ply.html" class="btn btn-neutral float-right" title="Save, Ply" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="c_examples_save.html" class="btn btn-neutral" title="Save, Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -549,7 +577,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.4.0',
+            VERSION:'0.1.18.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

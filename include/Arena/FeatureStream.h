@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 #pragma once
 
 namespace Arena
@@ -38,9 +38,9 @@ namespace Arena
 	 *
 	 * Feature streams can stream all streamable features on a device or a select
 	 * few. By default, a feature stream will not have had any features selected
-	 * and will save or load all available streamable features. For a more precise
-	 * list, features may be selected (Arena::FeatureStream::Select, cascading I/O
-	 * operator <<).
+	 * and will save or load all available streamable features. For a more
+	 * precise list, features may be selected (Arena::FeatureStream::Select,
+	 * cascading I/O operator <<).
 	 *
 	 * \code{.cpp}
 	 * 	// saving just width and height to a file
@@ -79,18 +79,19 @@ namespace Arena
 		 * @fn FeatureStream(GenApi::INodeMap* pNodeMap)
 		 *
 		 * @param pNodeMap
-		 *  - Type: GenApi::INodeMap* 
+		 *  - Type: GenApi::INodeMap*
 		 *  - Pointer to the node map to stream
 		 *
-		 * The <B> constructor </B> builds a feature stream from a device's node map
+		 * The <B> constructor </B> builds a feature stream from a device's node
+		 * map
 		 * (GenApi::INodeMap). This node map cannot be changed later; another feature
 		 * stream must be created to stream another node map.
 		 *
-		 * By default, a feature stream will have a flag set to stream all streamable
-		 * features. A subset of streamable features may be selected
+		 * By default, a feature stream will have a flag set to stream all
+		 * streamable features. A subset of streamable features may be selected
 		 * (Arena::FeatureStream::Select), reversing the flag. If a non-streamable
-		 * feature is selected, the call will throw and the flag will remain as it
-		 * originally was.
+		 * feature is selected, the call will throw and the flag will remain as
+		 * it originally was.
 		 *
 		 * @see 
 		 *  - Arena::FeatureStream::Select
@@ -101,8 +102,8 @@ namespace Arena
 		 * @fn virtual void Write(const GenICam::gcstring fileName = "features.txt")
 		 *
 		 * @param fileName
-		 *  - Type: const GenICam::gcstring 
-		 *  - Default: features.txt 
+		 *  - Type: const GenICam::gcstring
+		 *  - Default: features.txt
 		 *  - Name of the file to write to
 		 *
 		 * @return 
@@ -111,19 +112,19 @@ namespace Arena
 		 * <B> Write </B> streams all selected features from the node map
 		 * (GenApi::INodeMap) to a file.
 		 *
-		 * By default, a feature stream will have a flag set to stream all streamable
-		 * features. A subset of streamable features may be selected
+		 * By default, a feature stream will have a flag set to stream all
+		 * streamable features. A subset of streamable features may be selected
 		 * (Arena::FeatureStream::Select), reversing the flag. If a non-streamable
-		 * feature is selected, the call will throw and the flag will remain as it
-		 * originally was.
+		 * feature is selected, the call will throw and the flag will remain as
+		 * it originally was.
 		 *
-		 * Essentially, if no features have been selected, <B> Write </B> will stream
-		 * all available streamable features from the node map to the file; if one or
-		 * more features have been selected, only the selected features will be
-		 * streamed.
+		 * Essentially, if no features have been selected, <B> Write </B> will
+		 * stream all available streamable features from the node map to the
+		 * file; if one or more features have been selected, only the selected
+		 * features will be streamed.
 		 *
 		 * @warning 
-		 *  - May throw GenICam::GenericException or other derived exception 
+		 *  - May throw GenICam::GenericException or other derived exception
 		 *  - May throw exception related to file access permissions
 		 *
 		 * @see 
@@ -135,22 +136,24 @@ namespace Arena
 		 * @fn virtual void Read(const GenICam::gcstring fileName = "features.txt")
 		 *
 		 * @param fileName
-		 *  - Type: const GenICam::gcstring 
-		 *  - Default: features.txt 
+		 *  - Type: const GenICam::gcstring
+		 *  - Default: features.txt
 		 *  - Name of the file to read from
 		 *
 		 * @return 
 		 *  - none
 		 *
-		 * <B> Read </B> streams all selected features from a file to the node map
+		 * <B> Read </B> streams all selected features from a file to the node
+		 * map
 		 * (GenApi::INodeMap).
 		 *
-		 * Calling <B> Read </B> streams all features from a file. Selecting features
+		 * Calling <B> Read </B> streams all features from a file. Selecting
+		 * features
 		 * (Arena::FeatureStream::Select) only applies to <B> Write </B>.
 		 *
 		 * @warning 
-		 *  - May throw GenICam::GenericException or other derived exception 
-		 *  - May throw exception related to file access permissions 
+		 *  - May throw GenICam::GenericException or other derived exception
+		 *  - May throw exception related to file access permissions
 		 *  - Selecting features only applies to write
 		 *
 		 * @see 
@@ -162,20 +165,20 @@ namespace Arena
 		 * @fn virtual void Select(GenICam::gcstring featureName)
 		 *
 		 * @param featureName
-		 *  - Type: GenICam::gcstring 
+		 *  - Type: GenICam::gcstring
 		 *  - Name of the feature to select
 		 *
 		 * @return 
 		 *  - none
 		 *
-		 * <B> Select </B> adds a single streamable feature to the list of selected
-		 * features to stream. If called for the first time, <B> Select </B> also
-		 * sets an internal 'select-all' flag to false.
+		 * <B> Select </B> adds a single streamable feature to the list of
+		 * selected features to stream. If called for the first time, <B> Select
+		 * </B> also sets an internal 'select-all' flag to false.
 		 *
-		 * By default, a feature stream will have a flag set to stream all streamable
-		 * features. A subset of streamable features may be selected, reversing the
-		 * flag. If a non-streamable feature is selected, the call will throw and the
-		 * flag will remain as it originally was.
+		 * By default, a feature stream will have a flag set to stream all
+		 * streamable features. A subset of streamable features may be selected,
+		 * reversing the flag. If a non-streamable feature is selected, the call
+		 * will throw and the flag will remain as it originally was.
 		 *
 		 * Trying to select a non-streamable feature will throw. If unsure, check
 		 * streamability:
@@ -191,10 +194,10 @@ namespace Arena
 		 * \endcode
 		 *
 		 * @warning 
-		 *  - Provides same functionality as << operator 
-		 *  - Selecting features only applies to write operation 
+		 *  - Provides same functionality as << operator
+		 *  - Selecting features only applies to write operation
 		 *  - Throws GenICam::InvalidArgumentException if selected feature not
-		 *    streamable 
+		 *    streamable
 		 *  - May throw child of GenICam::GenericExceptio
 		 */
 		virtual void Select(GenICam::gcstring featureName);
@@ -203,22 +206,22 @@ namespace Arena
 		 * @fn virtual FeatureStream& operator<<(GenICam::gcstring featureName)
 		 *
 		 * @param featureName
-		 *  - Type: GenICam::gcstring 
+		 *  - Type: GenICam::gcstring
 		 *  - Name of the feature to select
 		 *
 		 * @return 
-		 *  - Type: FeatureStream& 
+		 *  - Type: FeatureStream&
 		 *  - Same feature stream object, allowing for cascading
 		 *
-		 * The <B> cascading I/O operator (<<) </B> adds a single streamable feature
-		 * to the list of selected features to stream. If called for the first time,
-		 * it also sets an internal 'select-all' flag to false.
+		 * The <B> cascading I/O operator (<<) </B> adds a single streamable
+		 * feature to the list of selected features to stream. If called for the
+		 * first time, it also sets an internal 'select-all' flag to false.
 		 *
 		 * By default, a feature stream has a flag set to stream all streamable
 		 * features. A subset of streamable features may be selected
 		 * (Arena::FeatureStream::Select), reversing the flag. If a non-streamable
-		 * feature is selected, the call will throw and the flag will remain as it
-		 * originally was.
+		 * feature is selected, the call will throw and the flag will remain as
+		 * it originally was.
 		 *
 		 * Trying to select a non-streamable feature will throw. If unsure, check
 		 * streamability:
@@ -246,15 +249,15 @@ namespace Arena
 		 * \endcode
 		 *
 		 * @warning 
-		 *  - Provides same functionality as Arena::FeatureStream::Select with the
-		 *    added bonus of cascading calls 
-		 *  - Selecting features only applies to write operation 
+		 *  - Provides same functionality as Arena::FeatureStream::Select with
+		 *    the added bonus of cascading calls
+		 *  - Selecting features only applies to write operation
 		 *  - Throws GenICam::InvalidArgumentException if selected feature not
-		 *    streamable 
+		 *    streamable
 		 *  - May throw GenICam::GenericException or other derived exception
 		 *
 		 * @see 
-		 *  - Arena::FeatureStream 
+		 *  - Arena::FeatureStream
 		 *  - Arena::FeatureStream::Select
 		 */
 		virtual FeatureStream& operator<<(GenICam::gcstring featureName);

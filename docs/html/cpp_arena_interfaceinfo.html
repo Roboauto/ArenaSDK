@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>InterfaceInfo &mdash; Arena 0.1.4.0 documentation</title>
+  <title>InterfaceInfo &mdash; Arena 0.1.18.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.18.0 documentation" href="index.html"/>
         <link rel="up" title="Arena C++" href="cpp_arena.html"/>
         <link rel="next" title="IImage" href="cpp_arena_iimage.html"/>
         <link rel="prev" title="IBuffer" href="cpp_arena_ibuffer.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.18
               </div>
             
           
@@ -203,24 +203,22 @@
 <dl class="class">
 <dt id="_CPPv2N5Arena13InterfaceInfoE">
 <span id="Arena::InterfaceInfo"></span><span class="target" id="class_arena_1_1_interface_info"></span><em class="property">class </em><code class="descname">InterfaceInfo</code><a class="headerlink" href="#_CPPv2N5Arena13InterfaceInfoE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Device information objects contain device discovery information used to find, filter, and create devices.</p>
-<p>A list of device information objects is retrieved and maintained in the system (<a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system"><span class="std std-ref">Arena::ISystem</span></a>). A device information object provides a device’s discovery information:<ul class="simple">
-<li>model and vendor names</li>
-<li>serial number</li>
+<dd><p>Interface information objects contain interface information used to find, filter, and create devices on a specific interface on the host.</p>
+<p>A list of interface information objects is retrieved and maintained in the system (<a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system"><span class="std std-ref">Arena::ISystem</span></a>). An interface information object provides a:<ul class="simple">
 <li>IP and MAC addresses</li>
 <li>subnet mask</li>
 </ul>
 </p>
-<p>Discovery information is acquired prior to device creation and used primarily to filter and find specific devices. A std::vector of <a class="reference internal" href="#class_arena_1_1_interface_info"><span class="std std-ref">Arena::InterfaceInfo</span></a> objects is retrieved from the system (via <a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1a0ccf4b568c69f06c9bf31d15b4adfbfd"><span class="std std-ref">Arena::ISystem::GetDevices</span></a>). They are then individually passed back to the system to create devices (via <a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1a3d11a7c15755d2ede684fa1f5a7410ac"><span class="std std-ref">Arena::ISystem::CreateDevice</span></a>).</p>
-<p>The list of DeviceInfos is returned as a std::vector in order to make use of STL filter and search tools. The following code snippet demonstrates searching for a device with a specific serial number:</p>
-<p><div class="highlight-cpp"><div class="highlight"><pre><span class="c1">// searching for a specific device</span>
+<p>Interface information is acquired prior to device creation and used primarily to filter and find specific interface. A std::vector of <a class="reference internal" href="#class_arena_1_1_interface_info"><span class="std std-ref">Arena::InterfaceInfo</span></a> objects is retrieved from the system (via <a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1a07302025ab6a9c8ac9afbbe0ca4f31f4"><span class="std std-ref">Arena::ISystem::GetInterfaces</span></a>).</p>
+<p>The list of InterfaceInfos is returned as a std::vector in order to make use of STL filter and search tools. The following code snippet demonstrates searching for an interface with a specific Mac address:</p>
+<p><div class="highlight-cpp"><div class="highlight"><pre><span class="c1">// searching for a specific interface</span>
 <span class="p">{</span>
-    <span class="n">GenICam</span><span class="o">::</span><span class="n">gcstring</span> <span class="n">serialToFind</span> <span class="o">=</span> <span class="s">&quot;12345&quot;</span><span class="p">;</span>
-    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Arena</span><span class="o">::</span><span class="n">InterfaceInfo</span><span class="o">&gt;</span> <span class="n">devs</span> <span class="o">=</span> <span class="n">pSystem</span><span class="o">-&gt;</span><span class="n">GetDevices</span><span class="p">();</span>
+    <span class="n">GenICam</span><span class="o">::</span><span class="n">gcstring</span> <span class="n">macToFind</span> <span class="o">=</span> <span class="s">&quot;ab:cd:ef:aa:aa:aa&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Arena</span><span class="o">::</span><span class="n">InterfaceInfo</span><span class="o">&gt;</span> <span class="n">intf</span> <span class="o">=</span> <span class="n">pSystem</span><span class="o">-&gt;</span><span class="n">GetInterfaces</span><span class="p">();</span>
     
-    <span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">find_if</span><span class="p">(</span><span class="n">begin</span><span class="p">(</span><span class="n">devs</span><span class="p">),</span> <span class="n">end</span><span class="p">(</span><span class="n">devs</span><span class="p">),</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">serialToFind</span><span class="p">](</span><span class="n">Arena</span><span class="o">::</span><span class="n">InterfaceInfo</span> <span class="n">deviceInfo</span><span class="p">)</span>
+    <span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">find_if</span><span class="p">(</span><span class="n">begin</span><span class="p">(</span><span class="n">intf</span><span class="p">),</span> <span class="n">end</span><span class="p">(</span><span class="n">intf</span><span class="p">),</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">macToFind</span><span class="p">](</span><span class="n">Arena</span><span class="o">::</span><span class="n">InterfaceInfo</span> <span class="n">intf_temp</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="k">return</span> <span class="n">deviceInfo</span><span class="p">.</span><span class="n">SerialNumber</span><span class="p">()</span> <span class="o">==</span> <span class="n">serialToFind</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">Intf_temp</span><span class="p">.</span><span class="n">MacAddressStr</span><span class="p">()</span> <span class="o">==</span> <span class="n">macToFind</span><span class="p">;</span>
     <span class="p">});</span>
 <span class="p">}</span>
 </pre></div>
@@ -243,36 +241,31 @@
 <dl class="function">
 <dt id="_CPPv2N5Arena13InterfaceInfo9IpAddressEv">
 <span id="Arena::InterfaceInfo::IpAddress"></span><span class="target" id="class_arena_1_1_interface_info_1a6d4088bd612072301ee9ea910b830405"></span>uint32_t <code class="descclassname">Arena::InterfaceInfo::</code><code class="descname">IpAddress</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N5Arena13InterfaceInfo9IpAddressEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><strong> IpAddress </strong> gets the IP address of a device on the network, returning it as its raw integer value.<dl class="docutils">
+<dd><p><strong> IpAddress </strong> gets the IP address of an interface on the host, returning it as its raw integer value.<dl class="docutils">
 <dt><strong>Return</strong></dt>
 <dd><ul class="simple">
 <li>Type: uint32_t</li>
-<li>IP address of the device as an integer</li>
+<li>IP address of the interface as an integer</li>
 </ul>
 </dd>
 </dl>
 </p>
-<p>The GigE Vision specification only allows for IPv4 IP addresses. The IP address is represented by the lower 32 bits of the integer returned. Both <strong> IpAddress </strong> and <strong> IpAddressStr </strong> represent the same IP address. Where <strong> IpAddress </strong> returns the value in its raw integer format, <strong> IpAddressStr </strong> returns it as a more human-readable string:<ul class="simple">
+<p>Both <strong> IpAddress </strong> and <strong> IpAddressStr </strong> represent the same IP address. Where <strong> IpAddress </strong> returns the value in its raw integer format, <strong> IpAddressStr </strong> returns it as a more human-readable string:<ul class="simple">
 <li><strong> IpAddress </strong>: 0xA9FE0101</li>
 <li><strong> IpAddressStr </strong>: 169.254.1.1</li>
 </ul>
 </p>
-<p>A device may have its IP address, subnet mask, and default gateway assigned by LLA or DHCP, set as persistent, or temporarily forced. They can be checked through the main node map (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPAddress’, ‘GevCurrentSubnetMask’, ‘GevCurrentDefaultGateway’).</p>
-<p>DHCP (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPConfigurationDHCP’) and IP persistence (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPConfigurationPersistentIP’) can be enabled/disabled through the node map. If both are enabled, a device will default to its persistent IP settings. If neither, it will default to LLA (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPConfigurationLLA’), which cannot be disabled.</p>
-<p>In order to configure a device to use a persistent IP configuration, not only must IP persistence be enabled (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPConfigurationPersistentIP’), but the IP address (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevPersistentIPAddress’), subnet mask (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevPersistentSubnetMask’), and default gateway (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevPersistentDefaultGateway’) must be set.</p>
-<p>Forcing an IP (Arena::IDevice::ForceIP) temporarily changes an IP address, subnet mask, and default gateway of a device. A forced IP configuration will reset on a device reboot (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘DeviceReset’).</p>
-<p>The IP address returned by this getter is the same as the one received in the GigE Vision discovery acknowledgement.</p>
+<p>An interface may have its IP address, subnet mask, and MAC Address checked through the main node map (<a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1ae06d76c322521f87c983eb47dbf0be5d"><span class="std std-ref">Arena::ISystem::GetTLInterfaceNodeMap</span></a>, ‘GevInterfaceIPAddress’, ‘GevInterfaceSubnetMask’, ‘GevInterfaceMACAddress’)</p>
 <p><dl class="docutils">
 <dt><strong>Warning</strong></dt>
 <dd><ul class="simple">
 <li>Represents same information as <a class="reference internal" href="#class_arena_1_1_interface_info_1ae0e8664c8c1d3266ea0498975d6b1dda"><span class="std std-ref">Arena::InterfaceInfo::IpAddressStr</span></a></li>
-<li>A persistent IP may be quicker to enumerate than DHCP, which should be faster than LLA</li>
 </ul>
 </dd>
 <dt><strong>See</strong></dt>
 <dd><ul class="simple">
-<li><a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a></li>
-<li>Arena::IDevice::ForceIP</li>
+<li><a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1a07302025ab6a9c8ac9afbbe0ca4f31f4"><span class="std std-ref">Arena::ISystem::GetInterfaces</span></a></li>
+<li><a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1ae06d76c322521f87c983eb47dbf0be5d"><span class="std std-ref">Arena::ISystem::GetTLInterfaceNodeMap</span></a></li>
 <li><a class="reference internal" href="#class_arena_1_1_interface_info_1ae0e8664c8c1d3266ea0498975d6b1dda"><span class="std std-ref">Arena::InterfaceInfo::IpAddressStr</span></a> </li>
 </ul>
 </dd>
@@ -286,36 +279,30 @@
 <dl class="function">
 <dt id="_CPPv2N5Arena13InterfaceInfo12IpAddressStrEv">
 <span id="Arena::InterfaceInfo::IpAddressStr"></span><span class="target" id="class_arena_1_1_interface_info_1ae0e8664c8c1d3266ea0498975d6b1dda"></span>GenICam::gcstring <code class="descclassname">Arena::InterfaceInfo::</code><code class="descname">IpAddressStr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N5Arena13InterfaceInfo12IpAddressStrEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><strong> IpAddressStr </strong> gets the IP address of a device on the network, returning it as a string.<dl class="docutils">
+<dd><p><strong> IpAddressStr </strong> gets the IP address of an interface on the host, returning it as a string.<dl class="docutils">
 <dt><strong>Return</strong></dt>
 <dd><ul class="simple">
 <li>Type: GenICam::gcstring</li>
-<li>IP address of the device as a string</li>
+<li>IP address of the interface as a string</li>
 </ul>
 </dd>
 </dl>
 </p>
-<p>The GigE Vision specification only allows for IPv4 IP addresses. Both <strong> IpAddress </strong> and <strong> IpAddressStr </strong> represent the same IP address. Where <strong> IpAddress </strong> returns the value in its raw integer format, <strong> IpAddressStr </strong> returns it as a more human-readable string:<ul class="simple">
+<p>Both <strong> IpAddress </strong> and <strong> IpAddressStr </strong> represent the same IP address. Where <strong> IpAddress </strong> returns the value in its raw integer format, <strong> IpAddressStr </strong> returns it as a more human-readable string:<ul class="simple">
 <li><strong> IpAddress </strong>: 0xA9FE0101</li>
 <li><strong> IpAddressStr </strong>: 169.254.1.1</li>
 </ul>
 </p>
-<p>A device may have its IP address, subnet mask, and default gateway assigned by LLA or DHCP, set as persistent, or temporarily forced. They can be checked through the main node map (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPAddress’, ‘GevCurrentSubnetMask’, ‘GevCurrentDefaultGateway’).</p>
-<p>DHCP (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPConfigurationDHCP’) and IP persistence (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPConfigurationPersistentIP’) can be enabled/disabled through the node map. If both are enabled, a device will default to its persistent IP settings. If neither, it will default to LLA (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPConfigurationLLA’), which cannot be disabled.</p>
-<p>In order to configure a device to use a persistent IP configuration, not only must IP persistence be enabled (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPConfigurationPersistentIP’), but the IP address (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevPersistentIPAddress’), subnet mask (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevPersistentSubnetMask’), and default gateway (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevPersistentDefaultGateway’) must be set.</p>
-<p>Forcing an IP (Arena::IDevice::ForceIP) temporarily changes an IP address, subnet mask, and default gateway of a device. A forced IP configuration will reset on a device reboot (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘DeviceReset’).</p>
-<p>The IP address returned by this getter is the same as the one received in the GigE Vision discovery acknowledgement, but as a dot-separated string.</p>
 <p><dl class="docutils">
 <dt><strong>Warning</strong></dt>
 <dd><ul class="simple">
 <li>Represents same information as <a class="reference internal" href="#class_arena_1_1_interface_info_1a6d4088bd612072301ee9ea910b830405"><span class="std std-ref">Arena::InterfaceInfo::IpAddress</span></a></li>
-<li>A persistent IP may be quicker to enumerate than DHCP, which should be faster than LLA</li>
 </ul>
 </dd>
 <dt><strong>See</strong></dt>
 <dd><ul class="simple">
-<li><a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a></li>
-<li>Arena::IDevice::ForceIP</li>
+<li><a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1a07302025ab6a9c8ac9afbbe0ca4f31f4"><span class="std std-ref">Arena::ISystem::GetInterfaces</span></a></li>
+<li><a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1ae06d76c322521f87c983eb47dbf0be5d"><span class="std std-ref">Arena::ISystem::GetTLInterfaceNodeMap</span></a></li>
 <li><a class="reference internal" href="#class_arena_1_1_interface_info_1a6d4088bd612072301ee9ea910b830405"><span class="std std-ref">Arena::InterfaceInfo::IpAddress</span></a> </li>
 </ul>
 </dd>
@@ -329,36 +316,31 @@
 <dl class="function">
 <dt id="_CPPv2N5Arena13InterfaceInfo10SubnetMaskEv">
 <span id="Arena::InterfaceInfo::SubnetMask"></span><span class="target" id="class_arena_1_1_interface_info_1a57cb7af8316ded3517fdebddea956522"></span>uint32_t <code class="descclassname">Arena::InterfaceInfo::</code><code class="descname">SubnetMask</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N5Arena13InterfaceInfo10SubnetMaskEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><strong> SubnetMask </strong> gets the subnet mask of a device on the network, returning it as its raw integer value.<dl class="docutils">
+<dd><p><strong> SubnetMask </strong> gets the subnet mask of an interface on the host, returning it as its raw integer value.<dl class="docutils">
 <dt><strong>Return</strong></dt>
 <dd><ul class="simple">
 <li>Type: uint32_t</li>
-<li>Subnet mask of the device as an integer</li>
+<li>Subnet mask of the interface as an integer</li>
 </ul>
 </dd>
 </dl>
 </p>
-<p>The GigE Vision specification only allows for IPv4 subnet masks. The subnet mask is represented by the lower 32 bits of the integer returned. Both <strong> SubnetMask </strong> and <strong> SubnetMaskStr </strong> represent the same subnet mask. Where <strong> SubnetMask </strong> returns the value in its raw integer format, <strong> SubnetMaskStr </strong> returns it as a more human-readable string:<ul class="simple">
+<p>Both <strong> SubnetMask </strong> and <strong> SubnetMaskStr </strong> represent the same subnet mask. Where <strong> SubnetMask </strong> returns the value in its raw integer format, <strong> SubnetMaskStr </strong> returns it as a more human-readable string:<ul class="simple">
 <li><strong> SubnetMask </strong>: 0xFFFF0000</li>
 <li><strong> SubnetMaskStr </strong>: 255.255.0.0</li>
 </ul>
 </p>
-<p>A device may have its IP address, subnet mask, and default gateway assigned by LLA or DHCP, set as persistent, or temporarily forced. They can be checked through the main node map (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPAddress’, ‘GevCurrentSubnetMask’, ‘GevCurrentDefaultGateway’).</p>
-<p>DHCP (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPConfigurationDHCP’) and IP persistence (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPConfigurationPersistentIP’) can be enabled/disabled through the node map. If both are enabled, a device will default to its persistent IP settings. If neither, it will default to LLA (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPConfigurationLLA’), which cannot be disabled.</p>
-<p>In order to configure a device to use a persistent IP configuration, not only must IP persistence be enabled (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPConfigurationPersistentIP’), but the IP address (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevPersistentIPAddress’), subnet mask (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevPersistentSubnetMask’), and default gateway (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevPersistentDefaultGateway’) must be set.</p>
-<p>Forcing an IP (Arena::IDevice::ForceIP) temporarily changes an IP address, subnet mask, and default gateway of a device. A forced IP configuration will reset on a device reboot (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘DeviceReset’).</p>
-<p>The subnet mask returned by this getter is the same as the one received in the GigE Vision discovery acknowledgement.</p>
+<p>An interface may have its IP address, subnet mask, and MAC Address checked through the main node map (<a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1ae06d76c322521f87c983eb47dbf0be5d"><span class="std std-ref">Arena::ISystem::GetTLInterfaceNodeMap</span></a>, ‘GevInterfaceIPAddress’, ‘GevInterfaceSubnetMask’, ‘GevInterfaceMACAddress’).</p>
 <p><dl class="docutils">
 <dt><strong>Warning</strong></dt>
 <dd><ul class="simple">
 <li>Represents same information as <a class="reference internal" href="#class_arena_1_1_interface_info_1a16cd9e63ade5e3a6c475061a51b712d3"><span class="std std-ref">Arena::InterfaceInfo::SubnetMaskStr</span></a></li>
-<li>A persistent IP may be quicker to enumerate than DHCP, which should be faster than LLA</li>
 </ul>
 </dd>
 <dt><strong>See</strong></dt>
 <dd><ul class="simple">
-<li><a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a></li>
-<li>Arena::IDevice::ForceIP</li>
+<li><a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1a07302025ab6a9c8ac9afbbe0ca4f31f4"><span class="std std-ref">Arena::ISystem::GetInterfaces</span></a></li>
+<li><a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1ae06d76c322521f87c983eb47dbf0be5d"><span class="std std-ref">Arena::ISystem::GetTLInterfaceNodeMap</span></a></li>
 <li><a class="reference internal" href="#class_arena_1_1_interface_info_1a16cd9e63ade5e3a6c475061a51b712d3"><span class="std std-ref">Arena::InterfaceInfo::SubnetMaskStr</span></a> </li>
 </ul>
 </dd>
@@ -372,7 +354,7 @@
 <dl class="function">
 <dt id="_CPPv2N5Arena13InterfaceInfo13SubnetMaskStrEv">
 <span id="Arena::InterfaceInfo::SubnetMaskStr"></span><span class="target" id="class_arena_1_1_interface_info_1a16cd9e63ade5e3a6c475061a51b712d3"></span>GenICam::gcstring <code class="descclassname">Arena::InterfaceInfo::</code><code class="descname">SubnetMaskStr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N5Arena13InterfaceInfo13SubnetMaskStrEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><strong> SubnetMaskStr </strong> gets the subnet mask of a device on the network, returning it as a string.<dl class="docutils">
+<dd><p><strong> SubnetMaskStr </strong> gets the subnet mask of an interface on the host, returning it as a string.<dl class="docutils">
 <dt><strong>Return</strong></dt>
 <dd><ul class="simple">
 <li>Type: GenICam::gcstring</li>
@@ -381,27 +363,21 @@
 </dd>
 </dl>
 </p>
-<p>The GigE Vision specification only allows for IPv4 IP addresses. Both <strong> SubnetMask </strong> and <strong> SubnetMaskStr </strong> represent the same subnet mask. Where <strong> SubnetMask </strong> returns the value in its raw integer format, <strong> SubnetMaskStr </strong> returns it as a more human-readable string:<ul class="simple">
+<p>Both <strong> SubnetMask </strong> and <strong> SubnetMaskStr </strong> represent the same subnet mask. Where <strong> SubnetMask </strong> returns the value in its raw integer format, <strong> SubnetMaskStr </strong> returns it as a more human-readable string:<ul class="simple">
 <li><strong> SubnetMask </strong>: 0xFFFF0000</li>
-<li><strong> SUbnetMaskStr </strong>: 255.255.0.0</li>
+<li><strong> SubnetMaskStr </strong>: 255.255.0.0</li>
 </ul>
 </p>
-<p>A device may have its IP address, subnet mask, and default gateway assigned by LLA or DHCP, set as persistent, or temporarily forced. They can be checked through the main node map (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPAddress’, ‘GevCurrentSubnetMask’, ‘GevCurrentDefaultGateway’).</p>
-<p>DHCP (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPConfigurationDHCP’) and IP persistence (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPConfigurationPersistentIP’) can be enabled/disabled through the node map. If both are enabled, a device will default to its persistent IP settings. If neither, it will default to LLA (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPConfigurationLLA’), which cannot be disabled.</p>
-<p>In order to configure a device to use a persistent IP configuration, not only must IP persistence be enabled (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevCurrentIPConfigurationPersistentIP’), but the IP address (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevPersistentIPAddress’), subnet mask (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevPersistentSubnetMask’), and default gateway (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘GevPersistentDefaultGateway’) must be set.</p>
-<p>Forcing an IP (Arena::IDevice::ForceIP) temporarily changes an IP address, subnet mask, and default gateway of a device. A forced IP configuration will reset on a device reboot (<a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a>, ‘DeviceReset’).</p>
-<p>The subnet mask returned by this getter is the same as the one received in the GigE Vision discovery acknowledgement, but as a dot-separated string.</p>
 <p><dl class="docutils">
 <dt><strong>Warning</strong></dt>
 <dd><ul class="simple">
 <li>Represents same information as <a class="reference internal" href="#class_arena_1_1_interface_info_1a57cb7af8316ded3517fdebddea956522"><span class="std std-ref">Arena::InterfaceInfo::SubnetMask</span></a></li>
-<li>A persistent IP may be quicker to enumerate than DHCP, which should be faster than LLA</li>
 </ul>
 </dd>
 <dt><strong>See</strong></dt>
 <dd><ul class="simple">
-<li><a class="reference internal" href="cpp_arena_idevice.html#class_arena_1_1_i_device_1af5e97a2c24ecd66ff490db3f134b4d45"><span class="std std-ref">Arena::IDevice::GetNodeMap</span></a></li>
-<li>Arena::IDevice::ForceIP</li>
+<li><a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1a07302025ab6a9c8ac9afbbe0ca4f31f4"><span class="std std-ref">Arena::ISystem::GetInterfaces</span></a></li>
+<li><a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1ae06d76c322521f87c983eb47dbf0be5d"><span class="std std-ref">Arena::ISystem::GetTLInterfaceNodeMap</span></a></li>
 <li><a class="reference internal" href="#class_arena_1_1_interface_info_1a57cb7af8316ded3517fdebddea956522"><span class="std std-ref">Arena::InterfaceInfo::SubnetMask</span></a> </li>
 </ul>
 </dd>
@@ -415,11 +391,11 @@
 <dl class="function">
 <dt id="_CPPv2N5Arena13InterfaceInfo10MacAddressEv">
 <span id="Arena::InterfaceInfo::MacAddress"></span><span class="target" id="class_arena_1_1_interface_info_1a32476b080bdbefc8b814e0fd0a9e80aa"></span>uint64_t <code class="descclassname">Arena::InterfaceInfo::</code><code class="descname">MacAddress</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N5Arena13InterfaceInfo10MacAddressEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><strong> MacAddress </strong> gets the MAC address of a device on the network, returning it as its raw integer value.<dl class="docutils">
+<dd><p><strong> MacAddress </strong> gets the MAC address of an interface on the host, returning it as its raw integer value.<dl class="docutils">
 <dt><strong>Return</strong></dt>
 <dd><ul class="simple">
 <li>Type: uint64_t</li>
-<li>MAC address of the device as an integer</li>
+<li>MAC address of the interface as an integer</li>
 </ul>
 </dd>
 </dl>
@@ -429,7 +405,6 @@
 <li><strong> MacAddressStr </strong>: 1C:0F:AF:01:01:01</li>
 </ul>
 </p>
-<p>The MAC address returned by this getter is the same as the one received in the GigE Vision discovery acknowledgement.</p>
 <p><dl class="docutils">
 <dt><strong>Warning</strong></dt>
 <dd><ul class="simple">
@@ -438,6 +413,8 @@
 </dd>
 <dt><strong>See</strong></dt>
 <dd><ul class="simple">
+<li><a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1a07302025ab6a9c8ac9afbbe0ca4f31f4"><span class="std std-ref">Arena::ISystem::GetInterfaces</span></a></li>
+<li><a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1ae06d76c322521f87c983eb47dbf0be5d"><span class="std std-ref">Arena::ISystem::GetTLInterfaceNodeMap</span></a></li>
 <li><a class="reference internal" href="#class_arena_1_1_interface_info_1a0d9e9f9b5358e07a8f37c0b23382d704"><span class="std std-ref">Arena::InterfaceInfo::MacAddressStr</span></a> </li>
 </ul>
 </dd>
@@ -451,11 +428,11 @@
 <dl class="function">
 <dt id="_CPPv2N5Arena13InterfaceInfo13MacAddressStrEv">
 <span id="Arena::InterfaceInfo::MacAddressStr"></span><span class="target" id="class_arena_1_1_interface_info_1a0d9e9f9b5358e07a8f37c0b23382d704"></span>GenICam::gcstring <code class="descclassname">Arena::InterfaceInfo::</code><code class="descname">MacAddressStr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv2N5Arena13InterfaceInfo13MacAddressStrEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><strong> MacAddressStr </strong> gets the MAC address of a device on the network, returning it as a string.<dl class="docutils">
+<dd><p><strong> MacAddressStr </strong> gets the MAC address of an interface on the host, returning it as a string.<dl class="docutils">
 <dt><strong>Return</strong></dt>
 <dd><ul class="simple">
 <li>Type: GenICam::gcstring</li>
-<li>MAC address of the device as a string</li>
+<li>MAC address of the interface as a string</li>
 </ul>
 </dd>
 </dl>
@@ -465,7 +442,6 @@
 <li><strong> MacAddressStr </strong>: 1C:0F:AF:01:01:01</li>
 </ul>
 </p>
-<p>The MAC address returned by this getter is the same as the one received in the GigE Vision discovery acknowledgement.</p>
 <p><dl class="docutils">
 <dt><strong>Warning</strong></dt>
 <dd><ul class="simple">
@@ -474,6 +450,8 @@
 </dd>
 <dt><strong>See</strong></dt>
 <dd><ul class="simple">
+<li><a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1a07302025ab6a9c8ac9afbbe0ca4f31f4"><span class="std std-ref">Arena::ISystem::GetInterfaces</span></a></li>
+<li><a class="reference internal" href="cpp_arena_isystem.html#class_arena_1_1_i_system_1ae06d76c322521f87c983eb47dbf0be5d"><span class="std std-ref">Arena::ISystem::GetTLInterfaceNodeMap</span></a></li>
 <li><a class="reference internal" href="#class_arena_1_1_interface_info_1a32476b080bdbefc8b814e0fd0a9e80aa"><span class="std std-ref">Arena::InterfaceInfo::MacAddress</span></a> </li>
 </ul>
 </dd>
@@ -597,7 +575,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.4.0',
+            VERSION:'0.1.18.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

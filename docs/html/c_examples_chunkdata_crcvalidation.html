@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Chunk Data, CRC Validation &mdash; Arena 0.1.4.0 documentation</title>
+  <title>Chunk Data, CRC Validation &mdash; Arena 0.1.18.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.18.0 documentation" href="index.html"/>
         <link rel="up" title="C Code Samples" href="c_examples.html"/>
         <link rel="next" title="Enumeration, Introduction" href="c_examples_enumeration.html"/>
         <link rel="prev" title="Chunk Data, Introduction" href="c_examples_chunkdata.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.18
               </div>
             
           
@@ -110,19 +110,33 @@
 <li class="toctree-l4"><a class="reference internal" href="c_examples_simpleacquisition.html">Simple Acquisition, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_acquisition.html">Acquisition, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_acquisition_rapidacquisition.html">Acquisition, Rapid Acquisition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_imagecallbacks.html">Callback, Image Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_multithreadedimagecallbacks.html">Callback, Multithreaded Image Callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_onevent.html">Callback, On Event</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_callback_onnodechange.html">Callback, On Node Change</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_callback_polling.html">Callback, Polling</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_chunkdata.html">Chunk Data, Introduction</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Chunk Data, CRC Validation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_enumeration.html">Enumeration, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_enumeration_handlingdisconnections.html">Enumeration, Handling Disconnections</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodemaps.html">Explore, Node Maps</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_exposure.html">Exposure, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodes.html">Explore, Nodes</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_explore_nodetypes.html">Explore, Node Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_forceip.html">Force IP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_lut.html">LUT, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_pixelcorrection.html">Pixel Correction, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_polarization_colordolpaolp.html">Polarization, Color DoLP AoLP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_polarization_dolpaolp.html">Polarization, DoLP AoLP</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_record.html">Record, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_save.html">Save, Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_save_filenamepattern.html">Save, File Name Pattern</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_save_ply.html">Save, Ply</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_scheduledactioncommands.html">Scheduled Action Commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_sequencer_hdr.html">Sequencer, HDR</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_streamables.html">Streamables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_trigger.html">Trigger, Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="c_examples_trigger_overlappingtrigger.html">Trigger, Overlapping Trigger</a></li>
 <li class="toctree-l4"><a class="reference internal" href="c_examples_usersets.html">User Sets, Introduction</a></li>
 </ul>
 </li>
@@ -200,18 +214,18 @@
   <div class="section" id="chunk-data-crc-validation">
 <h1>Chunk Data, CRC Validation<a class="headerlink" href="#chunk-data-crc-validation" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-c++"><div class="highlight"><pre><span class="cm">/***************************************************************************************</span>
-<span class="cm">***                                                                                 ***</span>
-<span class="cm">***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***</span>
-<span class="cm">***                                                                                 ***</span>
-<span class="cm">***  THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***</span>
-<span class="cm">***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***</span>
-<span class="cm">***  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    ***</span>
-<span class="cm">***  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         ***</span>
-<span class="cm">***  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  ***</span>
-<span class="cm">***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***</span>
-<span class="cm">***  SOFTWARE.                                                                      ***</span>
-<span class="cm">***                                                                                 ***</span>
-<span class="cm">***************************************************************************************/</span>
+<span class="cm"> ***                                                                                 ***</span>
+<span class="cm"> ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***</span>
+<span class="cm"> ***                                                                                 ***</span>
+<span class="cm"> ***  THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***</span>
+<span class="cm"> ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***</span>
+<span class="cm"> ***  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    ***</span>
+<span class="cm"> ***  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         ***</span>
+<span class="cm"> ***  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  ***</span>
+<span class="cm"> ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***</span>
+<span class="cm"> ***  SOFTWARE.                                                                      ***</span>
+<span class="cm"> ***                                                                                 ***</span>
+<span class="cm"> ***************************************************************************************/</span>
 
 <span class="cp">#include</span> <span class="cpf">&quot;stdafx.h&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&quot;ArenaCApi.h&quot;</span><span class="cp"></span>
@@ -225,9 +239,9 @@
 <span class="c1">// Chunk Data: CRC Validation</span>
 <span class="c1">//    This example demonstrates the use of chunk data to verify data through a</span>
 <span class="c1">//    Cyclical Redundancy Check (or CRC for short). CRCs are meant to check the</span>
-<span class="c1">//    validity of sent data. It is performed by doing a series of calculations</span>
-<span class="c1">//    on the raw data before and after it is sent. If the resultant integer</span>
-<span class="c1">//    values match, then it is safe to assume the integrity of the data.</span>
+<span class="c1">//    validity of sent data. It is performed by doing a series of calculations on</span>
+<span class="c1">//    the raw data before and after it is sent. If the resultant integer values</span>
+<span class="c1">//    match, then it is safe to assume the integrity of the data.</span>
 
 <span class="c1">// =-=-=-=-=-=-=-=-=-</span>
 <span class="c1">// =-=- SETTINGS =-=-</span>
@@ -235,6 +249,9 @@
 
 <span class="c1">// image timeout</span>
 <span class="cp">#define TIMEOUT 2000</span>
+
+<span class="c1">// maximum buffer length</span>
+<span class="cp">#define MAX_BUF 256</span>
 
 <span class="c1">// =-=-=-=-=-=-=-=-=-</span>
 <span class="c1">// =-=- EXAMPLE -=-=-</span>
@@ -252,8 +269,8 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
 
-        <span class="c1">// get node initial values that will be changed in order to</span>
-        <span class="c1">// return their values at the end of the example</span>
+        <span class="c1">// get node initial values that will be changed in order to return their</span>
+        <span class="c1">// values at the end of the example</span>
         <span class="n">acNode</span> <span class="n">hChunkModeActiveNode</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
         <span class="n">bool8_t</span> <span class="n">chunkModeActiveInitial</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
 
@@ -278,9 +295,9 @@
                 <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
 
         <span class="c1">// Activate CRC chunk</span>
-        <span class="c1">//    Activate chunk data and enable the CRC chunk before starting the stream.</span>
-        <span class="c1">//    This involves activating chunk mode, selecting the CRC chunk, and</span>
-        <span class="c1">//    enabling it.</span>
+        <span class="c1">//    Activate chunk data and enable the CRC chunk before starting the</span>
+        <span class="c1">//    stream. This involves activating chunk mode, selecting the CRC chunk,</span>
+        <span class="c1">//    and enabling it.</span>
         <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%sActivate chunk mode and enable CRC chunk</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">TAB1</span><span class="p">);</span>
 
         <span class="c1">// activate chunk mode</span>
@@ -323,7 +340,11 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">AC_ERR_SUCCESS</span><span class="p">)</span>
                 <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">isIncomplete</span><span class="p">)</span>
-                <span class="n">printf</span><span class="p">(</span><span class="s">&quot; (incomplete)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="p">{</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n\n</span><span class="s">Error: Payload data incomplete. Please review network </span><span class="se">\n</span><span class="s">configurations, increase &quot;</span>
+                           <span class="s">&quot;packet size, increase inter-packet </span><span class="se">\n</span><span class="s">delay and/or reduce image size, then retry example</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="k">return</span> <span class="n">err</span><span class="p">;</span>
+        <span class="p">}</span>
 
         <span class="c1">// Calculate CRC from data</span>
         <span class="c1">//    The CRC can be calculated using a global Arena function. This global</span>
@@ -390,11 +411,12 @@
 
         <span class="c1">// Compare CRCs</span>
         <span class="c1">//    Compare CRCs to verify whether the data is correct. If the calculated</span>
-        <span class="c1">//    CRC and the chunk CRC match, then the data is assumed valid and correct;</span>
-        <span class="c1">//    otherwise, invalid and incorrect.</span>
+        <span class="c1">//    CRC and the chunk CRC match, then the data is assumed valid and</span>
+        <span class="c1">//    correct; otherwise, invalid and incorrect.</span>
         <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%sCompare chunk CRC to calculated CRC</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">TAB2</span><span class="p">);</span>
+        <span class="kt">size_t</span> <span class="n">chunkCRC_size_t</span> <span class="o">=</span> <span class="p">(</span><span class="kt">size_t</span><span class="p">)</span><span class="n">chunkCRCValue</span><span class="p">;</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">chunkCRCValue</span> <span class="o">==</span> <span class="n">dataCRCValue</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">chunkCRC_size_t</span> <span class="o">==</span> <span class="n">dataCRCValue</span><span class="p">)</span>
                 <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%sCRCs match, data correct</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">TAB3</span><span class="p">);</span>
         <span class="k">else</span>
                 <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%sCRCs do not match, data incorrect</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">TAB3</span><span class="p">);</span>
@@ -441,12 +463,19 @@
 <span class="c1">// =- &amp; CLEAN UP =-=-</span>
 <span class="c1">// =-=-=-=-=-=-=-=-=-</span>
 
-<span class="cp">#define CHECK_RETURN                         \</span>
-<span class="cp">        if (err != AC_ERR_SUCCESS)               \</span>
-<span class="cp">        {                                        \</span>
-<span class="cp">                printf(&quot;Press enter to complete\n&quot;); \</span>
-<span class="cp">                getchar();                           \</span>
-<span class="cp">                return -1;                           \</span>
+<span class="c1">// error buffer length</span>
+<span class="cp">#define ERR_BUF 512</span>
+
+<span class="cp">#define CHECK_RETURN                                  \</span>
+<span class="cp">        if (err != AC_ERR_SUCCESS)                        \</span>
+<span class="cp">        {                                                 \</span>
+<span class="cp">                char pMessageBuf[ERR_BUF];                    \</span>
+<span class="cp">                size_t pBufLen = ERR_BUF;                     \</span>
+<span class="cp">                acGetLastErrorMessage(pMessageBuf, &amp;pBufLen); \</span>
+<span class="cp">                printf(&quot;\nError: %s&quot;, pMessageBuf);           \</span>
+<span class="cp">                printf(&quot;\n\nPress enter to complete\n&quot;);      \</span>
+<span class="cp">                getchar();                                    \</span>
+<span class="cp">                return -1;                                    \</span>
 <span class="cp">        }</span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
@@ -465,8 +494,7 @@
         <span class="n">CHECK_RETURN</span><span class="p">;</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">numDevices</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
         <span class="p">{</span>
-                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Error: no devices connected, example requires at least one device.</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">);</span>
-                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Press enter to complete</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">No camera connected</span><span class="se">\n</span><span class="s">Press enter to complete</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
                 <span class="n">getchar</span><span class="p">();</span>
                 <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
         <span class="p">}</span>
@@ -537,7 +565,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.4.0',
+            VERSION:'0.1.18.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

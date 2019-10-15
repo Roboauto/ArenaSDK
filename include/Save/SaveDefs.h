@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -30,7 +30,8 @@ namespace Save
 		Tiff, /*!< TIFF image file format */
 		Avi, /*!< AVI video file format */
 		Mov, /*!< MOV video file format */
-		Mp4 /*!< MPEG-4 video file format */
+		Mp4, /*!< MPEG-4 video file format */
+		Ply /*!< PLY 3D polygon file format*/
 	} EFileFormat;
 
 	/**
@@ -48,8 +49,8 @@ namespace Save
 	/**
 	 * @typedef EJpegSubsampling
 	 * 
-	 * The <B> EJpegSubsampling </B> enum represents different types of subsampling
-	 * available to saving JPEG images.
+	 * The <B> EJpegSubsampling </B> enum represents different types of
+	 * subsampling available to saving JPEG images.
 	 */
 	typedef enum _EJpegSubsampling {
 		NoSubsampling, /*!< Save with no chroma subsampling (4:4:4) */
@@ -61,8 +62,8 @@ namespace Save
 	/**
 	 * @typedef ETiffCompression
 	 *
-	 * The <B> ETiffCompression </B> enum represents different available compression
-	 * algorithms for saving images as TIFFs.
+	 * The <B> ETiffCompression </B> enum represents different available
+	 * compression algorithms for saving images as TIFFs.
 	 */
 	typedef enum _ETiffCompression {
 		NoCompression, /*!< Save without any compression */
@@ -325,6 +326,9 @@ namespace Save
 		PolarizeMono12p = 0x810C0047,
 		PolarizeMono12Packed = 0x810C0006,
 		PolarizeMono16 = 0x81100007,
+
+		// Custom 3D formats
+		Coord3D_ABCY16 = 0x82400400,
 
 		InvalidPixelFormat = 0
 	} PfncFormat;

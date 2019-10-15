@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 
 #include "stdafx.h"
 #include "ArenaApi.h"
@@ -20,11 +20,10 @@
 
 // User sets
 //    This example introduces user sets, a feature which allows for the saving
-//    and loading of multiple configurations. The example starts by changing
-//    two features, width and height. The device configuration is then saved to
-//    user set 1. The default user set is then loaded, followed by user set 1
-//    again to demonstrate the the device configuration changing back and
-//    forth. 
+//    and loading of multiple configurations. The example starts by changing two
+//    features, width and height. The device configuration is then saved to user
+//    set 1. The default user set is then loaded, followed by user set 1 again to
+//    demonstrate the the device configuration changing back and forth.
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
@@ -49,8 +48,8 @@
 void SaveAndLoadUserSets(Arena::IDevice* pDevice)
 {
 	// Get width and height nodes
-	//    This example focuses on width and height nodes to demonstrate the saving
-	//    and loading of user sets. 
+	//    This example focuses on width and height nodes to demonstrate the
+	//    saving and loading of user sets.
 	std::cout << TAB1 << "Get width and height nodes\n";
 
 	GenApi::CIntegerPtr pWidth = pDevice->GetNodeMap()->GetNode("Width");
@@ -73,9 +72,9 @@ void SaveAndLoadUserSets(Arena::IDevice* pDevice)
 	pHeight->SetValue(HEIGHT);
 
 	// Save to user set 1
-	//    Saving the user set saves the new width and height values. Saving a user
-	//    set involves selecting the user set to save to on the selector node and
-	//    then executing the save on the command node. 
+	//    Saving the user set saves the new width and height values. Saving a
+	//    user set involves selecting the user set to save to on the selector
+	//    node and then executing the save on the command node.
 	std::cout << TAB1 << "Save to user set 1\n";
 
 	// select user set 1
@@ -95,9 +94,9 @@ void SaveAndLoadUserSets(Arena::IDevice* pDevice)
 
 	// Load default user set
 	//    Loading a user set is quite similar to saving: select the user set to
-	//    load using the selector node and then execute the load using the command
-	//    node. Notice that loading the default user set changes the width and
-	//    height values. 
+	//    load using the selector node and then execute the load using the
+	//    command node. Notice that loading the default user set changes the
+	//    width and height values.
 	std::cout << TAB1 << "Load default user set\n";
 
 	// select default user set
@@ -116,8 +115,8 @@ void SaveAndLoadUserSets(Arena::IDevice* pDevice)
 	std::cout << TAB2 << "Height " << pHeight->GetValue() << "\n";
 
 	// Load user set 1
-	//    Load user set 1 to return width and height to the values that were saved
-	//    earlier. The process is the same as above. 
+	//    Load user set 1 to return width and height to the values that were
+	//    saved earlier. The process is the same as above.
 	std::cout << TAB1 << "Load user set 1\n";
 
 	// select user set 1
@@ -162,6 +161,10 @@ int main()
 			if (deviceInfos.size() == 0)
 			{
 				std::cout << "\nNo camera connected\nPress enter to complete\n";
+
+				// clear input
+				while (std::cin.get() != '\n')
+					continue;
 				std::getchar();
 				return 0;
 			}

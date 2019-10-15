@@ -267,11 +267,44 @@
 #define LUCID_PolarizeMono8						 0x81080001
 #define LUCID_PolarizeMono12p					 0x810C0047
 #define LUCID_PolarizeMono12Packed				 0x810C0006
+#define LUCID_PolarizeMono12					 0x81100008
 #define LUCID_PolarizeMono16					 0x81100007
+
+#define LUCID_PolarizedAngles_0d_45d_90d_135d_Mono8   0x8220000F
+#define LUCID_PolarizedAngles_0d_45d_90d_135d_Mono12p 0x8230001F
+#define LUCID_PolarizedAngles_0d_45d_90d_135d_Mono16  0x8240002F
+#define LUCID_PolarizedStokes_S0_S1_S2_Mono8	      0x8218003F
+#define LUCID_PolarizedStokes_S0_S1_S2_Mono12p		  0x8224004F
+#define LUCID_PolarizedStokes_S0_S1_S2_Mono16		  0x8230005F
+#define LUCID_PolarizedStokes_S0_S1_S2_S3_Mono8		  0x8220006F
+#define LUCID_PolarizedStokes_S0_S1_S2_S3_Mono12p	  0x8230007F
+#define LUCID_PolarizedStokes_S0_S1_S2_S3_Mono16	  0x8240008F
+#define LUCID_PolarizedAolp_Mono8					  0x810800DF
+#define LUCID_PolarizedAolp_Mono12p					  0x810C00EF
+#define LUCID_PolarizedDolp_Mono8					  0x810800BF
+#define LUCID_PolarizedDolp_Mono12p					  0x810C00CF
+#define LUCID_PolarizedDolpAolp_Mono8				  0x8210009F
+#define LUCID_PolarizedDolpAolp_Mono12p				  0x821800AF
+
+#define LUCID_Coord3D_ABCY16						  0x82400400
+
+#define LUCID_PolarizedAngles_0d_45d_90d_135d_BayerRG8		0x8220020F
+#define LUCID_PolarizedAngles_0d_45d_90d_135d_BayerRG12p	0x8230021F
+#define LUCID_PolarizedStokes_S0_S1_S2_BayerRG8				0x8218023F
+#define LUCID_PolarizedStokes_S0_S1_S2_BayerRG12p			0x8224024F
+#define LUCID_PolarizedStokes_S0_S1_S2_S3_BayerRG8			0x8220026F
+#define LUCID_PolarizedStokes_S0_S1_S2_S3_BayerRG12p		0x8230027F
+#define LUCID_PolarizedAolp_BayerRG8						0x810802DF
+#define LUCID_PolarizedAolp_BayerRG12p						0x810C02EF
+#define LUCID_PolarizedDolp_BayerRG8						0x810802BF
+#define LUCID_PolarizedDolp_BayerRG12p						0x810C02CF
+#define LUCID_PolarizedDolpAolp_BayerRG8					0x8210029F
+#define LUCID_PolarizedDolpAolp_BayerRG12p					0x821802AF
+
 
 /* Identical set of formats in the form of an enum */
 
-typedef enum PfncFormat_
+typedef enum PfncFormat_ : uint32_t
 {
 	Mono1p = 0x01010037, /* Monochrome 1-bit packed */
 	Mono2p = 0x01020038, /* Monochrome 2-bit packed */
@@ -517,10 +550,40 @@ typedef enum PfncFormat_
 	RGB12V1Packed = 0x02240034, /* GigE Vision specific format, Red-Green-Blue 12-bit packed - variant 1 */
 
 	// Custom pixel formats
-	PolarizeMono8 = LUCID_PolarizeMono8,
-	PolarizeMono12p = LUCID_PolarizeMono12p,
-	PolarizeMono12Packed = LUCID_PolarizeMono12Packed,
-	PolarizeMono16 = LUCID_PolarizeMono16,
+	PolarizeMono8 = static_cast<uint32_t>(LUCID_PolarizeMono8),
+	PolarizeMono12p = static_cast<uint32_t>(LUCID_PolarizeMono12p),
+	PolarizeMono12Packed = static_cast<uint32_t>(LUCID_PolarizeMono12Packed),
+	PolarizeMono16 = static_cast<uint32_t>(LUCID_PolarizeMono16),
+	PolarizeMono12 = static_cast<uint32_t>(LUCID_PolarizeMono12),
+	PolarizedAngles_0d_45d_90d_135d_Mono8 = static_cast<uint32_t>(LUCID_PolarizedAngles_0d_45d_90d_135d_Mono8),
+	PolarizedAngles_0d_45d_90d_135d_Mono12p = static_cast<uint32_t>(LUCID_PolarizedAngles_0d_45d_90d_135d_Mono12p),
+	PolarizedAngles_0d_45d_90d_135d_Mono16 = static_cast<uint32_t>(LUCID_PolarizedAngles_0d_45d_90d_135d_Mono16),
+	PolarizedStokes_S0_S1_S2_Mono8 = static_cast<uint32_t>(LUCID_PolarizedStokes_S0_S1_S2_Mono8),
+	PolarizedStokes_S0_S1_S2_Mono12p = static_cast<uint32_t>(LUCID_PolarizedStokes_S0_S1_S2_Mono12p),
+	PolarizedStokes_S0_S1_S2_Mono16 = static_cast<uint32_t>(LUCID_PolarizedStokes_S0_S1_S2_Mono16),
+	PolarizedStokes_S0_S1_S2_S3_Mono8 = static_cast<uint32_t>(LUCID_PolarizedStokes_S0_S1_S2_S3_Mono8),
+	PolarizedStokes_S0_S1_S2_S3_Mono12p = static_cast<uint32_t>(LUCID_PolarizedStokes_S0_S1_S2_S3_Mono12p),
+	PolarizedStokes_S0_S1_S2_S3_Mono16 = static_cast<uint32_t>(LUCID_PolarizedStokes_S0_S1_S2_S3_Mono16),
+	PolarizedAolp_Mono8 = static_cast<uint32_t>(LUCID_PolarizedAolp_Mono8),
+	PolarizedAolp_Mono12p = static_cast<uint32_t>(LUCID_PolarizedAolp_Mono12p),
+	PolarizedDolp_Mono8 = static_cast<uint32_t>(LUCID_PolarizedDolp_Mono8),
+	PolarizedDolp_Mono12p = static_cast<uint32_t>(LUCID_PolarizedDolp_Mono12p),
+	PolarizedDolpAolp_Mono8 = static_cast<uint32_t>(LUCID_PolarizedDolpAolp_Mono8),
+	PolarizedDolpAolp_Mono12p = static_cast<uint32_t>(LUCID_PolarizedDolpAolp_Mono12p),
+	Coord3D_ABCY16 = static_cast<uint32_t>(LUCID_Coord3D_ABCY16),
+
+	PolarizedAngles_0d_45d_90d_135d_BayerRG8 = static_cast<uint32_t>(LUCID_PolarizedAngles_0d_45d_90d_135d_BayerRG8),
+	PolarizedAngles_0d_45d_90d_135d_BayerRG12p = static_cast<uint32_t>(LUCID_PolarizedAngles_0d_45d_90d_135d_BayerRG12p),
+	PolarizedStokes_S0_S1_S2_BayerRG8 = static_cast<uint32_t>(LUCID_PolarizedStokes_S0_S1_S2_BayerRG8),
+	PolarizedStokes_S0_S1_S2_BayerRG12p = static_cast<uint32_t>(LUCID_PolarizedStokes_S0_S1_S2_BayerRG12p),
+	PolarizedStokes_S0_S1_S2_S3_BayerRG8 = static_cast<uint32_t>(LUCID_PolarizedStokes_S0_S1_S2_S3_BayerRG8),
+	PolarizedStokes_S0_S1_S2_S3_BayerRG12p = static_cast<uint32_t>(LUCID_PolarizedStokes_S0_S1_S2_S3_BayerRG12p),
+	PolarizedAolp_BayerRG8 = static_cast<uint32_t>(LUCID_PolarizedAolp_BayerRG8),
+	PolarizedAolp_BayerRG12p = static_cast<uint32_t>(LUCID_PolarizedAolp_BayerRG12p),
+	PolarizedDolp_BayerRG8 = static_cast<uint32_t>(LUCID_PolarizedDolp_BayerRG8),
+	PolarizedDolp_BayerRG12p = static_cast<uint32_t>(LUCID_PolarizedDolp_BayerRG12p),
+	PolarizedDolpAolp_BayerRG8 = static_cast<uint32_t>(LUCID_PolarizedDolpAolp_BayerRG8),
+	PolarizedDolpAolp_BayerRG12p = static_cast<uint32_t>(LUCID_PolarizedDolpAolp_BayerRG12p),
 
 	InvalidPixelFormat = 0
 } PfncFormat;
@@ -817,9 +880,43 @@ static PFNC_INLINE const char* GetPixelFormatName(PfncFormat format)
 	case BayerRG12Packed:                         return "BayerRG12Packed";
 	case RGB10V1Packed:                           return "RGB10V1Packed";
 	case RGB12V1Packed:                           return "RGB12V1Packed";
+	
+	case PolarizeMono8:							  return "PolarizeMono8";
+	case PolarizeMono12p:						  return "PolarizeMono12p";
+	case PolarizeMono12Packed:					  return "PolarizeMono12Packed";
+	case PolarizeMono16:						  return "PolarizeMono16";
+	case PolarizeMono12:						  return "PolarizeMono12";
+	case PolarizedAngles_0d_45d_90d_135d_Mono8:   return "PolarizedAngles_0d_45d_90d_135d_Mono8";
+	case PolarizedAngles_0d_45d_90d_135d_Mono12p: return "PolarizedAngles_0d_45d_90d_135d_Mono12p";
+	case PolarizedAngles_0d_45d_90d_135d_Mono16:  return "PolarizedAngles_0d_45d_90d_135d_Mono16";
+	case PolarizedStokes_S0_S1_S2_Mono8:		  return "PolarizedStokes_S0_S1_S2_Mono8";
+	case PolarizedStokes_S0_S1_S2_Mono12p:		  return "PolarizedStokes_S0_S1_S2_Mono12p";
+	case PolarizedStokes_S0_S1_S2_Mono16:		  return "PolarizedStokes_S0_S1_S2_Mono16";
+	case PolarizedStokes_S0_S1_S2_S3_Mono8:		  return "PolarizedStokes_S0_S1_S2_S3_Mono8";
+	case PolarizedStokes_S0_S1_S2_S3_Mono12p:     return "PolarizedStokes_S0_S1_S2_S3_Mono12p";
+	case PolarizedStokes_S0_S1_S2_S3_Mono16:	  return "PolarizedStokes_S0_S1_S2_S3_Mono16";
+	case PolarizedAolp_Mono8:					  return "PolarizedAolp_Mono8";
+	case PolarizedAolp_Mono12p:					  return "PolarizedAolp_Mono12p";
+	case PolarizedDolp_Mono8:					  return "PolarizedDolp_Mono8";
+	case PolarizedDolp_Mono12p:					  return "PolarizedDolp_Mono12p";
+	case PolarizedDolpAolp_Mono8:				  return "PolarizedDolpAolp_Mono8";
+	case PolarizedDolpAolp_Mono12p:				  return "PolarizedDolpAolp_Mono12p";
+	case Coord3D_ABCY16:						  return "Coord3D_ABCY16";
+
+	case PolarizedAngles_0d_45d_90d_135d_BayerRG8:		return "PolarizedAngles_0d_45d_90d_135d_BayerRG8";
+	case PolarizedAngles_0d_45d_90d_135d_BayerRG12p:	return "PolarizedAngles_0d_45d_90d_135d_BayerRG12p";
+	case PolarizedStokes_S0_S1_S2_BayerRG8:				return "PolarizedStokes_S0_S1_S2_BayerRG8";
+	case PolarizedStokes_S0_S1_S2_BayerRG12p:			return "PolarizedStokes_S0_S1_S2_BayerRG12p";
+	case PolarizedStokes_S0_S1_S2_S3_BayerRG8:			return "PolarizedStokes_S0_S1_S2_S3_BayerRG8";
+	case PolarizedStokes_S0_S1_S2_S3_BayerRG12p:		return "PolarizedStokes_S0_S1_S2_S3_BayerRG12p";
+	case PolarizedAolp_BayerRG8:						return "PolarizedAolp_BayerRG8";
+	case PolarizedAolp_BayerRG12p:						return "PolarizedAolp_BayerRG12p";
+	case PolarizedDolp_BayerRG8:						return "PolarizedDolp_BayerRG8";
+	case PolarizedDolp_BayerRG12p:						return "PolarizedDolp_BayerRG12p";
+	case PolarizedDolpAolp_BayerRG8:					return "PolarizedDolpAolp_BayerRG8";
+	case PolarizedDolpAolp_BayerRG12p:					return "PolarizedDolpAolp_BayerRG12p";
 
 	case InvalidPixelFormat: return "InvalidPixelFormat";
-
 	default: return "UnknownPixelFormat";
 	}
 }
@@ -1069,9 +1166,42 @@ static PFNC_INLINE const char* GetPixelFormatDescription(PfncFormat format)
 	case BayerRG12Packed:                         return "Bayer Red-Green 12-bit packed";
 	case RGB10V1Packed:                           return "Red-Green-Blue 10-bit packed - variant 1";
 	case RGB12V1Packed:                           return "Red-Green-Blue 12-bit packed - variant 1";
+	case PolarizeMono8:							  return "Polarized mono 8-bit";
+	case PolarizeMono12p:						  return "Polarized mono 12-bit packed";
+	case PolarizeMono12Packed:					  return "Polarized mono 12-bit packed";
+	case PolarizeMono16:						  return "Polarized mono 16-bit";
+	case PolarizeMono12:						  return "Polarized mono 12-bit";
+	case PolarizedAngles_0d_45d_90d_135d_Mono8:   return "Polarization angles 0, 45, 90, 135 monochrome 8-bit";
+	case PolarizedAngles_0d_45d_90d_135d_Mono12p: return "Polarization angles 0, 45, 90, 135 monochrome 12-bit packed";
+	case PolarizedAngles_0d_45d_90d_135d_Mono16:  return "Polarization angles 0, 45, 90, 135 monochrome 16-bit";
+	case PolarizedStokes_S0_S1_S2_Mono8:		  return "Polarization 3-channel stokes S0 S1 S2 monochrome 8-bit";
+	case PolarizedStokes_S0_S1_S2_Mono12p:		  return "Polarization 3-channel stokes S0 S1 S2 monochrome 12-bit packed";
+	case PolarizedStokes_S0_S1_S2_Mono16:		  return "Polarization 3-channel stokes S0 S1 S2 monochrome 16-bit";
+	case PolarizedStokes_S0_S1_S2_S3_Mono8:		  return "Polarization 4-channel stokes S0 S1 S2 S3 monochrome 8-bit";
+	case PolarizedStokes_S0_S1_S2_S3_Mono12p:     return "Polarization 4-channel stokes S0 S1 S2 S3 monochrome 12-bit packed";
+	case PolarizedStokes_S0_S1_S2_S3_Mono16:	  return "Polarization 4-channel stokes S0 S1 S2 S3 monochrome 16-bit";
+	case PolarizedAolp_Mono8:					  return "Polarization AoLP (Angle of Linear Polarization) monochrome 8-bit";
+	case PolarizedAolp_Mono12p:					  return "Polarization AoLP (Angle of Linear Polarization) monochrome 12-bit packed";
+	case PolarizedDolp_Mono8:					  return "Polarization DoLP (Degree of Linear Polarization) monochrome 8-bit";
+	case PolarizedDolp_Mono12p:					  return "Polarization DoLP (Degree of Linear Polarization) monochrome 12-bit packed";
+	case PolarizedDolpAolp_Mono8:				  return "Polarization 2-channel DoLP, AoLP monochrome 8-bit";
+	case PolarizedDolpAolp_Mono12p:				  return "Polarization 2-channel DoLP, AoLP monochrome 12-bit packed";
+	case Coord3D_ABCY16:						  return "3D coordinate A-B-C, intensity Y 16-bit";
+
+	case PolarizedAngles_0d_45d_90d_135d_BayerRG8:		return "Polarization angles 0, 45, 90, 135 Bayer Red-Green 8-bit";
+	case PolarizedAngles_0d_45d_90d_135d_BayerRG12p:	return "Polarization angles 0, 45, 90, 135 Bayer Red-Green 12-bit packed";
+	case PolarizedStokes_S0_S1_S2_BayerRG8:				return "Polarization 3-channel stokes S0 S1 S2 Bayer Red-Green 8-bit";
+	case PolarizedStokes_S0_S1_S2_BayerRG12p:			return "Polarization 3-channel stokes S0 S1 S2 Bayer Red-Green 12-bit packed";
+	case PolarizedStokes_S0_S1_S2_S3_BayerRG8:			return "Polarization 4-channel stokes S0 S1 S2 S3 Bayer Red-Green 8-bit";
+	case PolarizedStokes_S0_S1_S2_S3_BayerRG12p:		return "Polarization 4-channel stokes S0 S1 S2 S3 Bayer Red-Green 12-bit packed";
+	case PolarizedAolp_BayerRG8:						return "Polarization AoLP (Angle of Linear Polarization) Bayer Red-Green 8-bit";
+	case PolarizedAolp_BayerRG12p:						return "Polarization AoLP (Angle of Linear Polarization) Bayer Red-Green 12-bit packed";
+	case PolarizedDolp_BayerRG8:						return "Polarization DoLP (Degree of Linear Polarization) Bayer Red-Green 8-bit";
+	case PolarizedDolp_BayerRG12p:						return "Polarization DoLP (Degree of Linear Polarization) Bayer Red-Green 12-bit packed";
+	case PolarizedDolpAolp_BayerRG8:					return "Polarization 2-channel DoLP, AoLP Bayer Red-Green 8-bit";
+	case PolarizedDolpAolp_BayerRG12p:					return "Polarization 2-channel DoLP, AoLP Bayer Red-Green 12-bit packed";
 
 	case InvalidPixelFormat: return "Invalid pixel format value";
-
 	default: return "Unknown pixel format value";
 	}
 }

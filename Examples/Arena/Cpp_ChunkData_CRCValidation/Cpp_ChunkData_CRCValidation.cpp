@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 
 #include "stdafx.h"
 #include "ArenaApi.h"
@@ -22,9 +22,9 @@
 // Chunk Data: CRC Validation
 //    This example demonstrates the use of chunk data to verify data through a
 //    Cyclical Redundancy Check (or CRC for short). CRCs are meant to check the
-//    validity of sent data. It is performed by doing a series of calculations
-//    on the raw data before and after it is sent. If the resultant integer
-//    values match, then it is safe to assume the integrity of the data. 
+//    validity of sent data. It is performed by doing a series of calculations on
+//    the raw data before and after it is sent. If the resultant integer values
+//    match, then it is safe to assume the integrity of the data.
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
@@ -40,14 +40,14 @@
 // configure device to receive CRC chunk and verify CRC
 void ConfigureAndValidateCRC(Arena::IDevice* pDevice)
 {
-	// get node values that will be changed in order to return their values
-	// at the end of the example
+	// get node values that will be changed in order to return their values at
+	// the end of the example
 	bool chunkModeActiveInitial = Arena::GetNodeValue<bool>(pDevice->GetNodeMap(), "ChunkModeActive");
 
 	// Activate CRC chunk
-	//    Activate chunk data and enable the CRC chunk before starting the stream.
-	//    This involves activating chunk mode, selecting the CRC chunk, and
-	//    enabling it. 
+	//    Activate chunk data and enable the CRC chunk before starting the
+	//    stream. This involves activating chunk mode, selecting the CRC chunk,
+	//    and enabling it.
 	std::cout << TAB1 << "Activate chunk mode and enable CRC chunk\n";
 
 	// activate chunk mode
@@ -75,19 +75,21 @@ void ConfigureAndValidateCRC(Arena::IDevice* pDevice)
 
 	// Check for completeness
 	//    Check for image completeness before checking the CRC. If an image is
-	//    incomplete, the CRCs will definitely not match. Attempting to verify the
-	//    CRC on an incomplete image will throw. 
+	//    incomplete, the CRCs will definitely not match. Attempting to verify
+	//    the CRC on an incomplete image will throw.
 	std::cout << TAB2 << "Check for completeness\n";
 
 	if (pImage->IsIncomplete())
 	{
-		throw GenICam::GenericException("Image is incomplete", __FILE__, __LINE__);
+		std::cout << "\nError: Payload data incomplete. Please review network \nconfigurations, "
+				  << "increase packet size, increase inter-packet \ndelay and/or reduce image size, then retry example\n";
+		return;
 	}
 
 	// Calculate CRC from data
 	//    The CRC can be calculated using a global Arena function. This global
 	//    function is called to calculate the CRC internally when verifying the
-	//    CRC. 
+	//    CRC.
 	std::cout << TAB2 << "Calculate CRC from data";
 
 	const uint8_t* pData = pImage->GetData();
@@ -100,7 +102,7 @@ void ConfigureAndValidateCRC(Arena::IDevice* pDevice)
 	// Retrieve CRC from chunk
 	//    When the chunk is enabled, the CRC is calculated by the device and sent
 	//    as a piece of chunk data. The CRC value can then be retrieved as a
-	//    chunk. 
+	//    chunk.
 	std::cout << TAB2 << "Retrieve CRC from chunk";
 
 	Arena::IChunkData* pChunkData = pImage->AsChunkData();
@@ -111,8 +113,8 @@ void ConfigureAndValidateCRC(Arena::IDevice* pDevice)
 
 	// Compare CRCs
 	//    Compare CRCs to verify whether the data is correct. If the calculated
-	//    CRC and the chunk CRC match, then the data is assumed valid and correct;
-	//    otherwise, invalid and incorrect. 
+	//    CRC and the chunk CRC match, then the data is assumed valid and
+	//    correct; otherwise, invalid and incorrect.
 	std::cout << TAB2 << "Compare chunk CRC to calculated CRC\n";
 
 	if (chunkCrc == calcCrc)
@@ -127,7 +129,7 @@ void ConfigureAndValidateCRC(Arena::IDevice* pDevice)
 	// Validate CRC automatically
 	//    The easiest way to validate a CRC is by using the function provided by
 	//    Arena. The functions that verify CRC go through the same steps just
-	//    explained above. 
+	//    explained above.
 	std::cout << TAB2 << "Validate CRC automatically\n";
 
 	if (pChunkData->VerifyCRC())

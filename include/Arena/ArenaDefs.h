@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,14 +10,17 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 
- /**
+/**
  * @file ArenaDefs.h
  * This file defines global Arena enums.
  */
 
 #pragma once
+
+// define infinite macro
+#define ARENA_INFINITE  0xFFFFFFFFFFFFFFFFULL  /* Infinite value to be used in various function calls. Equals GENTL_INFINITE */
 
 namespace Arena
 {
@@ -27,8 +30,8 @@ namespace Arena
 	 * The <B> ENumBufferFlags </B> predefined number of buffers options for the
 	 * stream.
 	 *
-	 * The enum values and their descriptions: 
-	 *  - NumBuffersAuto 
+	 * The enum values and their descriptions:
+	 *  - NumBuffersAuto
 	 *    - Value: 0xFFFFFFFF
 	 *    - Description: Auto calculate numBuffers based on max throughput
 	 */
@@ -40,34 +43,34 @@ namespace Arena
 	/**
 	 * @typedef EBufferPayloadType
 	 *
-	 * The <B> EBufferPayloadType </B> enum represents the different types of GVSP
-	 * data that can be acquired by the acquisition engine. This enum is returned
-	 * from: 
-	 *  - buffers (Arena::IBuffer::GetPayloadType) 
-	 *  - images (Arena::IImage::GetPayloadType) 
+	 * The <B> EBufferPayloadType </B> enum represents the different types of
+	 * GVSP data that can be acquired by the acquisition engine. This enum is
+	 * returned from:
+	 *  - buffers (Arena::IBuffer::GetPayloadType)
+	 *  - images (Arena::IImage::GetPayloadType)
 	 *  - chunk data (Arena::IChunkData::GetPayloadType)
 	 *
-	 * The enum values and their descriptions: 
-	 *  - BufferPayloadTypeImage 
+	 * The enum values and their descriptions:
+	 *  - BufferPayloadTypeImage
 	 *    - Value: 0x0001
 	 *    - Description: Image data only
-	 *  - BufferPayloadTypeImageExtendedChunk 
+	 *  - BufferPayloadTypeImageExtendedChunk
 	 *    - Value: 0x4001
 	 *    - Description: Image data extended with chunk data
-	 *  - BufferPayloadTypeChunkData 
+	 *  - BufferPayloadTypeChunkData
 	 *    - Value: 0x0004
 	 *    - Description: Chunk data only; image data may be present as chunk
 	 *
 	 * @see 
-	 *  - Arena::IBuffer::GetPayloadType 
-	 *  - Arena::IImage::GetPayloadType 
+	 *  - Arena::IBuffer::GetPayloadType
+	 *  - Arena::IImage::GetPayloadType
 	 *  - Arena::IChunkData::GetPayloadType
 	 */
 	typedef enum _EBufferPayloadType
 	{
-		BufferPayloadTypeImage = 0x0001,              /*!< Image data only */
+		BufferPayloadTypeImage = 0x0001,			  /*!< Image data only */
 		BufferPayloadTypeImageExtendedChunk = 0x4001, /*!< Image data extended with chunk data */
-		BufferPayloadTypeChunkData = 0x0004           /*!< Chunk data only; image data may be present as chunk */
+		BufferPayloadTypeChunkData = 0x0004			  /*!< Chunk data only; image data may be present as chunk */
 	} EBufferPayloadType;
 
 	/**
@@ -77,14 +80,14 @@ namespace Arena
 	 * multi-byte pixels. This enum is returned from images
 	 * (Arena::IImage::GetPixelEndianness).
 	 *
-	 * The enum values and their descriptions: 
-	 *  - PixelEndiannessUnknown 
+	 * The enum values and their descriptions:
+	 *  - PixelEndiannessUnknown
 	 *    - Value: 0
 	 *    - Description: Unknown pixel endianness
-	 *  - PixelEndiannessLittle 
+	 *  - PixelEndiannessLittle
 	 *    - Value: 1
 	 *    - Description: Little endian
-	 *  - PixelEndiannessBig 
+	 *  - PixelEndiannessBig
 	 *    - Value: 2
 	 *    - Description: Big endian
 	 *
@@ -94,8 +97,8 @@ namespace Arena
 	typedef enum _EPixelEndianness
 	{
 		PixelEndiannessUnknown = 0, /*!< Unknown pixel endianness */
-		PixelEndiannessLittle = 1,  /*!< Little endian */
-		PixelEndiannessBig = 2,     /*!< Big endian */
+		PixelEndiannessLittle = 1,	/*!< Little endian */
+		PixelEndiannessBig = 2,		/*!< Big endian */
 	} EPixelEndianness;
 
 	/**
@@ -105,13 +108,13 @@ namespace Arena
 	 * interpreting bayer patterns. Provide this enum when converting an image
 	 * from any bayer pattern (Arena::ImageFactory::Create).
 	 *
-	 * The enum values and their descriptions 
-	 *  - DirectionalInterpolation 
+	 * The enum values and their descriptions
+	 *  - DirectionalInterpolation
 	 *    - Description: Algorithm that averages nearest neighbours (faster)
-	 *  - AdaptiveHomogeneityDirected 
+	 *  - AdaptiveHomogeneityDirected
 	 *    - Description: Adaptive algorithm that uses directional data (slower,
 	 *      more accurate coloring)
-	 *  - _UndefinedAlgorithm 
+	 *  - _UndefinedAlgorithm
 	 *    - Description: Object not yet initialized
 	 *
 	 * @see 
@@ -119,8 +122,8 @@ namespace Arena
 	 */
 	typedef enum _EBayerAlgorithm
 	{
-		DirectionalInterpolation,    /*!< Algorithm that averages nearest neighbours (faster) */
+		DirectionalInterpolation,	 /*!< Algorithm that averages nearest neighbours (faster) */
 		AdaptiveHomogeneityDirected, /*!< Adaptive algorithm that uses directional data (slower, more accurate coloring) */
-		_UndefinedAlgorithm          /*!< Undefined algorithm */
+		_UndefinedAlgorithm			 /*!< Undefined algorithm */
 	} EBayerAlgorithm;
 } // namespace Arena

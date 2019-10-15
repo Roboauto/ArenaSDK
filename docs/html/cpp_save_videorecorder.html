@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>VideoRecorder &mdash; Arena 0.1.4.0 documentation</title>
+  <title>VideoRecorder &mdash; Arena 0.1.18.0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Arena 0.1.4.0 documentation" href="index.html"/>
+    <link rel="top" title="Arena 0.1.18.0 documentation" href="index.html"/>
         <link rel="up" title="Save C++" href="cpp_save.html"/>
         <link rel="next" title="ImageParams" href="cpp_save_imageparams.html"/>
         <link rel="prev" title="Definitions" href="cpp_save_defs.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.1.4
+                0.1.18
               </div>
             
           
@@ -405,6 +405,21 @@
 </ul>
 </dd>
 </dl>
+</p>
+<p><div class="highlight-cpp"><div class="highlight"><pre><span class="c1">// prepare and open video recorder to prepare to create recorded video</span>
+<span class="p">{</span>
+       <span class="kt">void</span> <span class="n">RecordVideo</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Arena</span><span class="o">::</span><span class="n">IImage</span><span class="o">*&gt;&amp;</span> <span class="n">images</span><span class="p">)</span>
+       <span class="p">{</span>
+           <span class="n">Save</span><span class="o">::</span><span class="n">VideoParams</span> <span class="n">params</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">GetWidth</span><span class="p">(),</span> <span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">GetHeight</span><span class="p">(),</span> <span class="mi">25</span><span class="p">);</span>
+           <span class="n">Save</span><span class="o">::</span><span class="n">VideoRecorder</span> <span class="n">videoRecorder</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">Cpp_Record</span><span class="o">/</span><span class="n">video</span><span class="p">.</span><span class="n">mp4</span><span class="p">);</span>
+
+           <span class="n">videoRecorder</span><span class="p">.</span><span class="n">SetH264Mp4BGR8</span><span class="p">();</span>
+
+           <span class="n">videoRecorder</span><span class="p">.</span><span class="n">Open</span><span class="p">();</span>
+       <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </p>
 <p><dl class="docutils">
 <dt><strong>Warning</strong></dt>
@@ -924,7 +939,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.1.4.0',
+            VERSION:'0.1.18.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 
 #include "stdafx.h"
 #include "ArenaApi.h"
@@ -20,7 +20,7 @@
 // Simple Acquisition
 //    This examples demonstrates the most basic code path of acquiring an image
 //    using Arena SDK. This includes device enumeration, image acquisition, and
-//    clean up. 
+//    clean up.
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
@@ -46,7 +46,7 @@ void EnumerateDeviceAndAcquireImage()
 	//    Starting Arena just requires opening the system. From there, update and
 	//    grab the device list, and create the device. Notice that failing to
 	//    update the device list will return an empty list, even if devices are
-	//    connected. 
+	//    connected.
 	std::cout << TAB1 << "Enumerate device\n";
 
 	Arena::ISystem* pSystem = Arena::OpenSystem();
@@ -58,8 +58,8 @@ void EnumerateDeviceAndAcquireImage()
 		Arena::IDevice* pDevice = pSystem->CreateDevice(deviceInfos[0]);
 
 		// Acquire image
-		//    Once a device is created, it is only a single call to acquire an image.
-		//    The timeout must be larger than the exposure time. 
+		//    Once a device is created, it is only a single call to acquire an
+		//    image. The timeout must be larger than the exposure time.
 		std::cout << TAB1 << "Acquire image\n";
 
 		pDevice->StartStream();
@@ -67,8 +67,8 @@ void EnumerateDeviceAndAcquireImage()
 
 		// Clean up
 		//    Clean up each of the 3 objects in reverse order: image, device, and
-		//    system. The list of devices is a standard vector, so it cleans itself
-		//    up at the end of scope. 
+		//    system. The list of devices is a standard vector, so it cleans
+		//    itself up at the end of scope.
 		std::cout << TAB1 << "Clean up Arena\n";
 
 		pDevice->RequeueBuffer(pImage);

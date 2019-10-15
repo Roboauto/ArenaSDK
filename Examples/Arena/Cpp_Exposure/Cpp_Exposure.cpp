@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -10,7 +10,7 @@
  ***  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  ***
  ***  SOFTWARE.                                                                      ***
  ***                                                                                 ***
- ***************************************************************************************/      
+ ***************************************************************************************/
 
 #include "stdafx.h"
 #include "ArenaApi.h"
@@ -21,8 +21,8 @@
 // Exposure: Introduction
 //    This example introduces the exposure feature. An image's exposure time
 //    refers to the amount of time that a device's sensor is exposed to a scene
-//    before the data is collected. The exposure can be handled automatically
-//    or manually. 
+//    before the data is collected. The exposure can be handled automatically or
+//    manually.
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
@@ -30,13 +30,13 @@
 
 // Exposure time
 //    Time that the sensor will be exposed when grabbing an image (in
-//    microseconds). Exposure time depends on the application, but generally
-//    the less available the light, the higher the exposure time. 
+//    microseconds). Exposure time depends on the application, but generally the
+//    less available the light, the higher the exposure time.
 #define EXPOSURE_TIME 4000.0
 
 // Image timeout
 //    Timeout for grabbing images (in milliseconds). Have the timeout at least
-//    larger than the exposure time to ensure timeout exceptions are avoided. 
+//    larger than the exposure time to ensure timeout exceptions are avoided.
 #define TIMEOUT 2000
 
 // number of images to grab
@@ -54,8 +54,8 @@
 // (5) acquires images
 void ConfigureExposureAndAcquireImages(Arena::IDevice* pDevice)
 {
-	// get node values that will be changed in order to return their values
-	// at the end of the example
+	// get node values that will be changed in order to return their values at
+	// the end of the example
 	GenICam::gcstring exposureAutoInitial = Arena::GetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "ExposureAuto");
 	double exposureTimeInitial = Arena::GetNodeValue<double>(pDevice->GetNodeMap(), "ExposureTime");
 
@@ -64,7 +64,7 @@ void ConfigureExposureAndAcquireImages(Arena::IDevice* pDevice)
 	//    exposure controls whether the exposure time is set manually or
 	//    automatically by the device. Setting automatic exposure to 'Off' stops
 	//    the device from automatically updating the exposure time while
-	//    streaming. 
+	//    streaming.
 	std::cout << TAB1 << "Disable automatic exposure\n";
 
 	Arena::SetNodeValue<GenICam::gcstring>(
@@ -75,8 +75,8 @@ void ConfigureExposureAndAcquireImages(Arena::IDevice* pDevice)
 	// Get exposure time node
 	//    In order to get the exposure time maximum and minimum values, get the
 	//    exposure time node. Failed attempts to get a node return null, so check
-	//    that the node exists. And because we expect to set its value, check that
-	//    the exposure time node is writable. 
+	//    that the node exists. And because we expect to set its value, check
+	//    that the exposure time node is writable.
 	std::cout << TAB1 << "Get exposure time node\n";
 
 	GenApi::CFloatPtr pExposureTime = pDevice->GetNodeMap()->GetNode("ExposureTime");
@@ -93,9 +93,9 @@ void ConfigureExposureAndAcquireImages(Arena::IDevice* pDevice)
 
 	// Set exposure time
 	//    Before setting the exposure time, check that new exposure time is not
-	//    outside of the exposure time's acceptable range. If above the maximum or
-	//    below the minimum, update value to be within range. Lastly, set new
-	//    exposure time. 
+	//    outside of the exposure time's acceptable range. If above the maximum
+	//    or below the minimum, update value to be within range. Lastly, set new
+	//    exposure time.
 	double exposureTime = EXPOSURE_TIME;
 
 	if (exposureTime < pExposureTime->GetMin())
@@ -113,10 +113,10 @@ void ConfigureExposureAndAcquireImages(Arena::IDevice* pDevice)
 	pExposureTime->SetValue(exposureTime);
 
 	// Grab images with new exposure time
-	//    When getting images, ensure the timeout is longer than the exposure time
-	//    to avoid receiving an timeout exception. The timeout is in milliseconds
-	//    while the exposure time is in microseconds, so a timeout of 2000 is
-	//    quite a bit longer than an exposure time of 4000. 
+	//    When getting images, ensure the timeout is longer than the exposure
+	//    time to avoid receiving an timeout exception. The timeout is in
+	//    milliseconds while the exposure time is in microseconds, so a timeout
+	//    of 2000 is quite a bit longer than an exposure time of 4000.
 	std::cout << TAB1 << "Getting " << NUM_IMAGES << " images\n";
 
 	pDevice->StartStream();

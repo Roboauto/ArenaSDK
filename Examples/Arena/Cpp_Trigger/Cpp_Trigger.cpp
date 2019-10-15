@@ -1,6 +1,6 @@
 /***************************************************************************************
  ***                                                                                 ***
- ***  Copyright (c) 2018, Lucid Vision Labs, Inc.                                    ***
+ ***  Copyright (c) 2019, Lucid Vision Labs, Inc.                                    ***
  ***                                                                                 ***
  ***  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     ***
  ***  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       ***
@@ -34,8 +34,9 @@
 
 // Trigger: Introduction
 //    This example introduces basic trigger configuration and use. In order to
-//    configure trigger, enable trigger mode and set the source and selector.
-//    In order to use it, trigger and retrieve an image.
+//    configure trigger, enable trigger mode and set the source and selector. The
+//    trigger must be armed before it is prepared to execute. Once the trigger is
+//    armed, execute the trigger and retrieve an image.
 
 // =-=-=-=-=-=-=-=-=-
 // =-=- SETTINGS =-=-
@@ -51,14 +52,15 @@
 // demonstrates basic trigger configuration and use
 // (1) sets trigger mode, source, and selector
 // (2) starts stream
-// (3) triggers image
-// (4) gets image
-// (5) requeues buffer
-// (6) stops stream
+// (3) waits until trigger is armed
+// (4) triggers image
+// (5) gets image
+// (6) requeues buffer
+// (7) stops stream
 void ConfigureTriggerAndAcquireImage(Arena::IDevice* pDevice)
 {
-	// get node values that will be changed in order to return their values
-	// at the end of the example
+	// get node values that will be changed in order to return their values at
+	// the end of the example
 	GenICam::gcstring triggerModeInitial = Arena::GetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "TriggerMode");
 	GenICam::gcstring triggerSourceInitial = Arena::GetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "TriggerSource");
 	GenICam::gcstring triggerSelectorInitial = Arena::GetNodeValue<GenICam::gcstring>(pDevice->GetNodeMap(), "TriggerSelector");
@@ -87,8 +89,8 @@ void ConfigureTriggerAndAcquireImage(Arena::IDevice* pDevice)
 
 	// Set trigger selector
 	//    Set the trigger selector to FrameStart. When triggered, the device will
-	//    start acquiring a single frame. This can also be set to AcquisitionStart
-	//    or FrameBurstStart.
+	//    start acquiring a single frame. This can also be set to
+	//    AcquisitionStart or FrameBurstStart.
 	std::cout << TAB1 << "Set trigger selector to FrameStart\n";
 
 	Arena::SetNodeValue<GenICam::gcstring>(
@@ -98,12 +100,24 @@ void ConfigureTriggerAndAcquireImage(Arena::IDevice* pDevice)
 
 	// Start stream
 	//    When trigger mode is off and the acquisition mode is set to stream
-	//    continuously, starting the stream will have the camera begin acquiring a
-	//    steady stream of images. However, with trigger mode enabled, the device
-	//    will wait for the trigger before acquiring any.
+	//    continuously, starting the stream will have the camera begin acquiring
+	//    a steady stream of images. However, with trigger mode enabled, the
+	//    device will wait for the trigger before acquiring any.
 	std::cout << TAB1 << "Start stream\n";
 
 	pDevice->StartStream();
+
+	// Trigger Armed
+	//    Continually check until trigger is armed. Once the trigger is armed, it
+	//    is ready to be executed.
+	std::cout << TAB2 << "Wait until trigger is armed\n";
+	bool triggerArmed = false;
+
+	do
+	{
+		triggerArmed = Arena::GetNodeValue<bool>(pDevice->GetNodeMap(), "TriggerArmed");
+	} while (triggerArmed == false);
+
 
 	// Trigger an image
 	//    Trigger an image manually, since trigger mode is enabled. This triggers
@@ -126,7 +140,7 @@ void ConfigureTriggerAndAcquireImage(Arena::IDevice* pDevice)
 	std::cout << " (" << pImage->GetWidth() << "x" << pImage->GetHeight() << ")\n";
 
 	// requeue buffer
-	std::cout << TAB2 << "Reqeue buffer\n";
+	std::cout << TAB2 << "Requeue buffer\n";
 
 	pDevice->RequeueBuffer(pImage);
 
